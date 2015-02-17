@@ -1,0 +1,14 @@
+{
+  "name": "Killer Marmot",
+  "short_name": "Marmot",
+  "icons": [{
+        "src": "../marmot.png",
+        "sizes": "128x128",
+        "density": 1
+      }],
+  "chrome_related_applications": [{
+        "platform": "android",
+        "id": "com.android.chrome"
+      }],
+  "start_url": "index.html"
+}
