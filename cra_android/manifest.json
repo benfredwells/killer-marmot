@@ -8,7 +8,7 @@
       }],
   "chrome_related_applications": [{
         "platform": "android",
-        "id": "com.android.chrome"
+        "id": "com.sbg.crappybird"
       }],
   "start_url": "index.html"
 }
