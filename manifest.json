@@ -1,0 +1,10 @@
+{
+  "name": "Killer Marmot",
+  "short_name": "Marmot",
+  "icons": [{
+        "src": "marmot.png",
+        "sizes": "128x128",
+        "density": 1
+      }],
+  "start_url": "/index.html",
+}
