@@ -1,9 +1,9 @@
 importScripts('../serviceworker-cache-polyfill.js');
 
-var CACHE_NAME = 'killer-marmot-v1';
+var CACHE_NAME = 'killer-marmot-v2';
 var urlsToCache = [
-  'index.js',
-  'index.html'
+//  'index.js',
+//  'index.html'
 ];
 
 self.addEventListener('install', function(event) {
