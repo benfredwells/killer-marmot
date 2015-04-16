@@ -8,6 +8,6 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-window.onbeforeinstallprompt = function() {
+window.addEventListener("beforeinstallprompt", function() {
   document.write('Got beforeinstallprompt!!!');
-}
+});
