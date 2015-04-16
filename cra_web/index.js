@@ -16,7 +16,7 @@ window.addEventListener("beforeinstallprompt", function(e) {
     document.write('Yeah why not. Cancelled!');
     e.preventDefault();
   } else {
-    document.write('No, leti''s see the banner');
+    document.write("No, let's see the banner");
   }
   document.close();
 });
