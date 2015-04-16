@@ -7,7 +7,3 @@ if ('serviceWorker' in navigator) {
     console.log('ServiceWorker registration failed: ', err);
   });
 }
-
-window.onbeforeinstallprompt = function() {
-  document.write('Got beforeinstallprompt!!!');
-}
