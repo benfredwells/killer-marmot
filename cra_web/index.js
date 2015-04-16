@@ -11,7 +11,7 @@ if ('serviceWorker' in navigator) {
 window.addEventListener("beforeinstallprompt", function(e) {
   document.open();
   document.write('Got beforeinstallprompt!!!<br>');
-  document.write('platform: ');
+  document.write('platforms: ');
   document.write(e.platforms);
   document.write('<br>Should I cancel it? Hmmmm .... ');
   if (Math.random() > 0.5) {
