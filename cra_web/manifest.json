@@ -4,6 +4,7 @@
   "icons": [{
         "src": "../marmot.png",
         "sizes": "any",
+        "type": "image/png",
         "density": 1
       }],
   "start_url": "index.html"
