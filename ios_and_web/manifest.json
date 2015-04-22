@@ -10,7 +10,7 @@
   "prefer_related_applications": true,
   "related_applications": [{
         "platform": "ios",
-        "id": ".crappybird"
+        "id": "blahblahathisis"
       }],
   "start_url": "index.html"
 }
