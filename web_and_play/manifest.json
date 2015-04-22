@@ -3,8 +3,13 @@
   "short_name": "Marmot",
   "icons": [{
         "src": "../marmot.png",
-        "sizes": "128x128",
+        "sizes": "any",
+        "type": "image/png",
         "density": 1
+      }],
+  "related_applications": [{
+        "platform": "play",
+        "id": "com.sbg.crappybird"
       }],
   "start_url": "index.html"
 }

@@ -1,0 +1,10 @@
+{
+  "prefer_related_applications": true,
+  "related_applications": [{
+        "platform": "play",
+        "id": "com.sbg.crappybird"
+      },{
+        "platform": "ios",
+        "id": "basdfasdf"
+      }]
+}

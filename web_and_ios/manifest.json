@@ -1,0 +1,15 @@
+{
+  "name": "Killer Marmot",
+  "short_name": "Marmot",
+  "icons": [{
+        "src": "../marmot.png",
+        "sizes": "any",
+        "type": "image/png",
+        "density": 1
+      }],
+  "related_applications": [{
+        "platform": "ios",
+        "id": "blahblahblah"
+      }],
+  "start_url": "index.html"
+}
