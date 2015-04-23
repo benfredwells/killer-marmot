@@ -6,6 +6,16 @@
         "sizes": "any",
         "type": "image/png",
         "density": 1
+      }, {
+        "src": "../marmot_200.png",
+        "sizes": "200",
+        "type": "image/png",
+        "density": 1
+      }, {
+        "src": "../marmot_480.png",
+        "sizes": "480",
+        "type": "image/png",
+        "density": 1
       }],
   "start_url": "index.html"
 }
