@@ -19,6 +19,10 @@ window.addEventListener("beforeinstallprompt", function(e) {
     e.preventDefault();
   } else {
     document.write("No, let's see the banner");
+    e.userChoice.then(function(platform, outcome) {
+      document.write("platform is: '" + platform + "'");
+      document.write("outcome is: '" + outcome + "'");
+    }
   }
   document.close();
 });
