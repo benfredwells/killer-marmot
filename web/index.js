@@ -22,7 +22,7 @@ window.addEventListener("beforeinstallprompt", function(e) {
     e.userChoice.then(function(platform, outcome) {
       document.write("platform is: '" + platform + "'");
       document.write("outcome is: '" + outcome + "'");
-    }
+    });
   }
   document.close();
 });
