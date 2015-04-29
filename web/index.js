@@ -9,6 +9,7 @@ if ('serviceWorker' in navigator) {
 }
 
 window.addEventListener("beforeinstallprompt", function(e) {
+  e_copy = e;
   document.open();
   document.write('Got beforeinstallprompt!!!<br>');
   document.write('platforms: ');
@@ -20,12 +21,12 @@ window.addEventListener("beforeinstallprompt", function(e) {
   } else {
     document.write("No, let's see the banner");
     window.setTimeout(function() {
-      if (!e) {
+      if (!e_copy) {
         document.write("No event????");
         return;
       }
       document.write("Timer time!<br>");
-      e.userChoice.then(function(platform, outcome) {
+      e_copy.userChoice.then(function(platform, outcome) {
         document.write("platform is: '" + platform + "'<br>");
         document.write("outcome is: '" + outcome + "'");
       }, function() {
