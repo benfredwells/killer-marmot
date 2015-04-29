@@ -8,8 +8,6 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-var event = null;
-
 window.addEventListener("beforeinstallprompt", function(e) {
   event = e;
   document.open();
@@ -22,19 +20,18 @@ window.addEventListener("beforeinstallprompt", function(e) {
     e.preventDefault();
   } else {
     document.write("No, let's see the banner");
-    window.setTimeout(onTimer, 1000);
+    window.setTimeout(function() {
+      if (!e) {
+        document.write("No event????");
+        return;
+      }
+      document.write("Timer time!<br>");
+      event.userChoice.then(function(platform, outcome) {
+        document.write("platform is: '" + platform + "'<br>");
+        document.write("outcome is: '" + outcome + "'");
+      });
+    }, 1000);
   }
   document.close();
 });
 
-function onTimer() {
-  if (event == null) {
-    document.write("No event????");
-    return;
-  }
-  document.write("Timer time!<br>");
-  event.userChoice.then(function(platform, outcome) {
-    document.write("platform is: '" + platform + "'<br>");
-    document.write("outcome is: '" + outcome + "'");
-  });
-}
