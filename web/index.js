@@ -8,6 +8,8 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+e_copy = null;
+
 window.addEventListener("beforeinstallprompt", function(e) {
   e_copy = e;
   document.open();
@@ -21,20 +23,21 @@ window.addEventListener("beforeinstallprompt", function(e) {
   } else {
     document.write("No, let's see the banner");
     document.write("<br>The promise is: " + e_copy.userChoice);
-    window.setTimeout(function() {
-      if (!e_copy) {
-        document.write("No event????");
-        return;
-      }
-      document.write("Timer time!<br>");
-      e_copy.userChoice.then(function(platform, outcome) {
-        document.write("platform is: '" + platform + "'<br>");
-        document.write("outcome is: '" + outcome + "'");
-      }, function() {
-        document.write('Boo! an error');
-      });
-    }, 1000);
+    window.setTimeout(onTimer, 1000);
   }
   document.close();
 });
 
+function onTimer() {
+  if (!e_copy) {
+    document.write("No event????");
+    return;
+  }
+  document.write("Timer time!<br>");
+  e_copy.userChoice.then(function(platform, outcome) {
+    document.write("platform is: '" + platform + "'<br>");
+    document.write("outcome is: '" + outcome + "'");
+  }, function() {
+    document.write('Boo! an error');
+  });
+}
