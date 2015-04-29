@@ -20,6 +20,7 @@ window.addEventListener("beforeinstallprompt", function(e) {
     e.preventDefault();
   } else {
     document.write("No, let's see the banner");
+    document.write("<br>The promise is: " + e_copy.userChoice);
     window.setTimeout(function() {
       if (!e_copy) {
         document.write("No event????");
