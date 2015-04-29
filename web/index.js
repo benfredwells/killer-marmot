@@ -8,7 +8,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-event = null;
+var event = null;
 
 window.addEventListener("beforeinstallprompt", function(e) {
   event = e;
@@ -28,7 +28,7 @@ window.addEventListener("beforeinstallprompt", function(e) {
 });
 
 function onTimer() {
-  if (!event) {
+  if (event == null) {
     document.write("No event????");
     return;
   }
