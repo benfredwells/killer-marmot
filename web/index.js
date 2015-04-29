@@ -9,7 +9,6 @@ if ('serviceWorker' in navigator) {
 }
 
 window.addEventListener("beforeinstallprompt", function(e) {
-  event = e;
   document.open();
   document.write('Got beforeinstallprompt!!!<br>');
   document.write('platforms: ');
@@ -26,7 +25,7 @@ window.addEventListener("beforeinstallprompt", function(e) {
         return;
       }
       document.write("Timer time!<br>");
-      event.userChoice.then(function(platform, outcome) {
+      e.userChoice.then(function(platform, outcome) {
         document.write("platform is: '" + platform + "'<br>");
         document.write("outcome is: '" + outcome + "'");
       }, function() {
