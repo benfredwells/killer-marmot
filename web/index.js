@@ -29,6 +29,8 @@ window.addEventListener("beforeinstallprompt", function(e) {
       event.userChoice.then(function(platform, outcome) {
         document.write("platform is: '" + platform + "'<br>");
         document.write("outcome is: '" + outcome + "'");
+      }, function() {
+        document.write('Boo! an error');
       });
     }, 1000);
   }
