@@ -34,9 +34,9 @@ function onTimer() {
     return;
   }
   document.write("Timer time!<br>");
-  e_copy.userChoice.then(function(platform, outcome) {
-    document.write("platform is: '" + platform + "'<br>");
-    document.write("outcome is: '" + outcome + "'");
+  e_copy.userChoice.then(function(result) {
+    document.write("platform is: '" + result.platform + "'<br>");
+    document.write("outcome is: '" + result.outcome + "'");
   }, function() {
     document.write('Boo! an error');
   });
