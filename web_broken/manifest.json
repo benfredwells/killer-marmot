@@ -1,0 +1,36 @@
+{
+  "name": "Killer Marmot",
+  "short_name": "Marmot",
+  "icons": [{
+        "src": "../marmot.png",
+        "sizes": "any",
+        "type": "image/png",
+        "density": 1
+      }, {
+        "src": "../marmot_48.png",
+        "sizes": "48",
+        "type": "image/png",
+        "density": 1
+      }, {
+        "src": "../marmot_96.png",
+        "sizes": "96",
+        "type": "image/png",
+        "density": 1
+      }, {
+        "src": "../marmot_128.png",
+        "sizes": "128",
+        "type": "image/png",
+        "density": 1
+      }, {
+        "src": "../marmot_200.png",
+        "sizes": "200",
+        "type": "image/png",
+        "density": 1
+      }, {
+        "src": "../marmot_480.png",
+        "sizes": "480",
+        "type": "image/png",
+        "density": 1
+      }],
+  "start_url": "index."
+}
