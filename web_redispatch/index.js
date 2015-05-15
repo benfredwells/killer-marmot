@@ -8,10 +8,9 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-var evt = 0;
 var isTooSoon = (window.location.hash == "#redispatch");
 window.addEventListener("beforeinstallprompt", function(e) {
-  evt = e;
+  console.log(e);
   if (isTooSoon) {
     e.preventDefault(); // Prevents prompt display
     console.log("Delaying event!");
@@ -20,6 +19,7 @@ window.addEventListener("beforeinstallprompt", function(e) {
       isTooSoon = false;
       console.log("Dispatching event");
       window.dispatchEvent(e); // Shows prompt
+      console.log(e);
     }, 5000);
   }
 });
