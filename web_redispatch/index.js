@@ -8,8 +8,10 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+var evt;
 var isTooSoon = (window.location.hash == "#redispatch");
 window.addEventListener("beforeinstallprompt", function(e) {
+  evt = e;
   if (isTooSoon) {
     e.preventDefault(); // Prevents prompt display
     console.log("Delaying event!");
