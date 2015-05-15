@@ -8,7 +8,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-var evt;
+var evt = 0;
 var isTooSoon = (window.location.hash == "#redispatch");
 window.addEventListener("beforeinstallprompt", function(e) {
   evt = e;
