@@ -19,7 +19,10 @@ window.addEventListener("beforeinstallprompt", function(e) {
       isTooSoon = false;
       console.log("Dispatching event");
       e.prompt(); // Shows prompt
-      console.log(e);
+      e.userChoice.then(function(platform, outcome) {
+        console.log(platform);
+        console.log(outcome);
+      });
     }, 5000);
   }
 });
