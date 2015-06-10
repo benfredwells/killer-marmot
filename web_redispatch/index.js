@@ -1,4 +1,3 @@
-var testEarly = (window.location.hash == "#early");
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').then(function(registration) {
     // Registration was successful
@@ -7,16 +6,20 @@ if ('serviceWorker' in navigator) {
     // registration failed :(
     console.log('ServiceWorker registration failed: ', err);
   });
+}
+
+var testEarly = (window.location.hash == "#early");
+var isTooSoon = (window.location.hash == "#redispatch");
+var testLate = (window.location.hash == "#late");
+window.addEventListener("beforeinstallprompt", function(e) {
+  console.log(e);
+
   if (testEarly) {
     e.prompt().then(function(result) {
       console.log("testing early " + result.outcome);
     });
   }
-}
 
-var isTooSoon = (window.location.hash == "#redispatch");
-window.addEventListener("beforeinstallprompt", function(e) {
-  console.log(e);
   if (isTooSoon) {
     e.preventDefault(); // Prevents prompt display
     console.log("Delaying event!");
@@ -30,13 +33,13 @@ window.addEventListener("beforeinstallprompt", function(e) {
       });
     }, 5000);
   }
+
+  if (testLate) {
+    setTimeout(function() {
+      e.prompt().then(function(result) {
+        console.log("testing late" + result.outcome);
+      });
+    }, 15000);
+  }
 });
 
-var testLate = (window.location.hash == "#late");
-if (testLate) {
-  setTimeout(function() {
-    e.prompt().then(function(result) {
-      console.log("testing late" + result.outcome);
-    });
-  }, 15000);
-}
