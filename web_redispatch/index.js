@@ -1,3 +1,4 @@
+var testEarly = (window.location.hash == "#early");
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').then(function(registration) {
     // Registration was successful
@@ -6,6 +7,11 @@ if ('serviceWorker' in navigator) {
     // registration failed :(
     console.log('ServiceWorker registration failed: ', err);
   });
+  if (testEarly) {
+    e.prompt().then(function(result)) {
+      console.log("testing early " + result.outcome);
+    }
+  }
 }
 
 var isTooSoon = (window.location.hash == "#redispatch");
@@ -25,3 +31,12 @@ window.addEventListener("beforeinstallprompt", function(e) {
     }, 5000);
   }
 });
+
+var testLate = (window.location.hash == "#late");
+if (testLate) {
+  setTimeout(function() {
+    e.prompt().then(function(result)) {
+      console.log("testing late" + result.outcome);
+    }
+  }, 15000);
+}
