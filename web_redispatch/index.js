@@ -30,8 +30,13 @@ window.addEventListener("beforeinstallprompt", function(e) {
       isTooSoon = false;
       console.log("Dispatching event");
       e.prompt().then(function(result) {
-        console.log(result.platform);
-        console.log(result.outcome);
+        console.log("testing");
+        e.userChoice.then(function(result) {
+          console.log(result.platform);
+          console.log(result.outcome);
+        }, function(error) {
+          console.log("user rejected");
+        });
       }, function(error) {
         console.log("testing rejected");
       });
@@ -41,7 +46,7 @@ window.addEventListener("beforeinstallprompt", function(e) {
   if (testLate) {
     setTimeout(function() {
       e.prompt().then(function(result) {
-        console.log("testing late" + result.outcome);
+        console.log("testing late");
       }, function(err) {
         console.log("testing late rejected");
       });
