@@ -18,8 +18,7 @@ window.addEventListener("beforeinstallprompt", function(e) {
     setTimeout(function() {
       isTooSoon = false;
       console.log("Dispatching event");
-      e.prompt(); // Shows prompt
-      e.userChoice.then(function(result) {
+      e.prompt().then(function(result) {
         console.log(result.platform);
         console.log(result.outcome);
       });
