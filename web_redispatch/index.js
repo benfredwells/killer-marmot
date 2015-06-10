@@ -8,15 +8,17 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-var testEarly = (window.location.hash == "#early");
-var isTooSoon = (window.location.hash == "#redispatch");
-var testLate = (window.location.hash == "#late");
+var testEarly = (window.location.hash.indexOf("early") > -1);
+var isTooSoon = (window.location.hash.indexOf("redispatch") > -1);
+var testLate = (window.location.hash.indexOf("late") > -1);
 window.addEventListener("beforeinstallprompt", function(e) {
   console.log(e);
 
   if (testEarly) {
     e.prompt().then(function(result) {
       console.log("testing early " + result.outcome);
+    }, function(err) {
+      console.log("testing early rejected");
     });
   }
 
@@ -30,6 +32,8 @@ window.addEventListener("beforeinstallprompt", function(e) {
       e.prompt().then(function(result) {
         console.log(result.platform);
         console.log(result.outcome);
+      }, function(error) {
+        console.log("testing rejected");
       });
     }, 5000);
   }
@@ -38,6 +42,8 @@ window.addEventListener("beforeinstallprompt", function(e) {
     setTimeout(function() {
       e.prompt().then(function(result) {
         console.log("testing late" + result.outcome);
+      }, function(err) {
+        console.log("testing late rejected");
       });
     }, 15000);
   }
