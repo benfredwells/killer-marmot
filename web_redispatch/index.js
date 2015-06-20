@@ -9,16 +9,18 @@ if ('serviceWorker' in navigator) {
 }
 
 var testEarly = (window.location.hash.indexOf("early") > -1);
+var promptDuringUserChoice = (window.location.hash.indexOf("eprompt") > -1);
 var isTooSoon = (window.location.hash.indexOf("redispatch") > -1);
 var testLate = (window.location.hash.indexOf("late") > -1);
 window.addEventListener("beforeinstallprompt", function(e) {
   console.log(e);
 
   if (testEarly) {
-    e.prompt().then(function(result) {
-      console.log("testing early " + result.outcome);
-    }, function(err) {
+    e.prompt().then(function() {
+      console.log("testing early");
+    }, function(error) {
       console.log("testing early rejected");
+      console.log(error);
     });
   }
 
@@ -29,28 +31,30 @@ window.addEventListener("beforeinstallprompt", function(e) {
     setTimeout(function() {
       isTooSoon = false;
       console.log("Dispatching event");
-      e.prompt().then(function(result) {
+      e.prompt().then(function() {
         console.log("testing");
         e.userChoice.then(function(result) {
           console.log(result.platform);
           console.log(result.outcome);
         }, function(error) {
           console.log("user rejected");
+          console.log(error);
         });
       }, function(error) {
         console.log("testing rejected");
+        console.log(error);
       });
     }, 5000);
   }
 
   if (testLate) {
     setTimeout(function() {
-      e.prompt().then(function(result) {
+      e.prompt().then(function() {
         console.log("testing late");
-      }, function(err) {
+      }, function(error) {
         console.log("testing late rejected");
+        console.log(error);
       });
     }, 15000);
   }
 });
-
