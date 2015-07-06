@@ -1,7 +1,7 @@
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').then(function(registration) {
     // Registration was successful
-    console.log('ServiceWorker registration successful with scope: ',    registration.scope);
+    console.log('ServiceWorker registration successful with scope: ', registration.scope);
   }).catch(function(err) {
     // registration failed :(
     console.log('ServiceWorker registration failed: ', err);
@@ -13,11 +13,10 @@ var promptDuringUserChoice = (window.location.hash.indexOf("eprompt") > -1);
 var isTooSoon = (window.location.hash.indexOf("redispatch") > -1);
 var testLate = (window.location.hash.indexOf("late") > -1);
 window.addEventListener("beforeinstallprompt", function(e) {
-  console.log(e);
-
   if (testEarly) {
+    console.log("testing early");
     e.prompt().then(function() {
-      console.log("testing early");
+      console.log("testing early resolved");
     }, function(error) {
       console.log("testing early rejected");
       console.log(error);
@@ -25,8 +24,8 @@ window.addEventListener("beforeinstallprompt", function(e) {
   }
 
   if (isTooSoon) {
-    e.preventDefault(); // Prevents prompt display
     console.log("Delaying event!");
+    e.preventDefault(); // Prevents prompt display
     // Prompt later instead:
     setTimeout(function() {
       isTooSoon = false;
@@ -48,9 +47,10 @@ window.addEventListener("beforeinstallprompt", function(e) {
   }
 
   if (testLate) {
+    console.log("testing late");
     setTimeout(function() {
       e.prompt().then(function() {
-        console.log("testing late");
+        console.log("testing late resolved");
       }, function(error) {
         console.log("testing late rejected");
         console.log(error);
