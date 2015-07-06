@@ -8,11 +8,11 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-var testEarly = (window.location.hash.indexOf("early") > -1);
-var promptDuringUserChoice = (window.location.hash.indexOf("eprompt") > -1);
-var isTooSoon = (window.location.hash.indexOf("redispatch") > -1);
-var testLate = (window.location.hash.indexOf("late") > -1);
 window.addEventListener("beforeinstallprompt", function(e) {
+  var testEarly = (window.location.hash.indexOf("early") > -1);
+  var isTooSoon = (window.location.hash.indexOf("redispatch") > -1);
+  var testLate = (window.location.hash.indexOf("late") > -1);
+
   if (testEarly) {
     console.log("testing early");
     e.prompt().then(function() {
