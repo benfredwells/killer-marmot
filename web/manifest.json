@@ -32,5 +32,6 @@
         "type": "image/png",
         "density": 1
       }],
-  "start_url": "index.html"
+  "start_url": "index.html",
+  "display": "standalone"
 }
