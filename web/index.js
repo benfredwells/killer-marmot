@@ -17,15 +17,17 @@ window.addEventListener("beforeinstallprompt", function(e) {
   document.write('platforms: ');
   document.write(e.platforms);
   document.write('<br>Should I cancel it? Hmmmm .... ');
+
   if (Math.random() > 0.5) {
     document.write('Yeah why not. Cancelled!');
     e.preventDefault();
     document.close();
-  } else {
-    document.write("No, let's see the banner");
-    document.write("<br>The promise is: " + e_copy.userChoice);
-    window.setTimeout(onTimer, 1000);
+    return;
   }
+
+  document.write("No, let's see the banner");
+  document.write("<br>The promise is: " + e_copy.userChoice);
+  window.setTimeout(onTimer, 1000);
 });
 
 function onTimer() {
@@ -34,6 +36,7 @@ function onTimer() {
     document.close();
     return;
   }
+
   document.write("Timer time!<br>");
   e_copy.userChoice.then(function(result) {
     document.write("platform is: '" + result.platform + "'<br>");
@@ -41,5 +44,6 @@ function onTimer() {
   }, function() {
     document.write('Boo! an error');
   });
+
   document.close();
 }
