@@ -1,8 +1,8 @@
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').then(function(registration) {
+  navigator.serviceWorker.register('sw.js').then(registration => {
     // Registration was successful
     console.log('ServiceWorker registration successful with scope: ',    registration.scope);
-  }).catch(function(err) {
+  }).catch(err => {
     // registration failed :(
     console.log('ServiceWorker registration failed: ', err);
   });
@@ -10,7 +10,7 @@ if ('serviceWorker' in navigator) {
 
 e_copy = null;
 
-window.addEventListener('beforeinstallprompt', function(e) {
+window.addEventListener('beforeinstallprompt', e => {
   e_copy = e;
   document.open();
   document.write('Got beforeinstallprompt!!!<br>');
@@ -38,10 +38,10 @@ function onTimer() {
   }
 
   document.write('Timer time!<br>');
-  e_copy.userChoice.then(function(result) {
+  e_copy.userChoice.then(result => {
     document.write('platform is: \'' + result.platform + '\'<br>');
     document.write('outcome is: \'' + result.outcome + '\'');
-  }, function() {
+  }, () => {
     document.write('Boo! an error');
   });
 
