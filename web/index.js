@@ -20,17 +20,18 @@ window.addEventListener("beforeinstallprompt", function(e) {
   if (Math.random() > 0.5) {
     document.write('Yeah why not. Cancelled!');
     e.preventDefault();
+    document.close();
   } else {
     document.write("No, let's see the banner");
     document.write("<br>The promise is: " + e_copy.userChoice);
     window.setTimeout(onTimer, 1000);
   }
-  document.close();
 });
 
 function onTimer() {
   if (!e_copy) {
     document.write("No event????");
+    document.close();
     return;
   }
   document.write("Timer time!<br>");
@@ -40,4 +41,5 @@ function onTimer() {
   }, function() {
     document.write('Boo! an error');
   });
+  document.close();
 }
