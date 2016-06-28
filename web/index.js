@@ -10,7 +10,7 @@ if ('serviceWorker' in navigator) {
 
 e_copy = null;
 
-window.addEventListener("beforeinstallprompt", function(e) {
+window.addEventListener('beforeinstallprompt', function(e) {
   e_copy = e;
   document.open();
   document.write('Got beforeinstallprompt!!!<br>');
@@ -25,22 +25,22 @@ window.addEventListener("beforeinstallprompt", function(e) {
     return;
   }
 
-  document.write("No, let's see the banner");
-  document.write("<br>The promise is: " + e_copy.userChoice);
+  document.write('No, let\'s see the banner');
+  document.write('<br>The promise is: ' + e_copy.userChoice);
   window.setTimeout(onTimer, 1000);
 });
 
 function onTimer() {
   if (!e_copy) {
-    document.write("No event????");
+    document.write('No event????');
     document.close();
     return;
   }
 
-  document.write("Timer time!<br>");
+  document.write('Timer time!<br>');
   e_copy.userChoice.then(function(result) {
-    document.write("platform is: '" + result.platform + "'<br>");
-    document.write("outcome is: '" + result.outcome + "'");
+    document.write('platform is: \'' + result.platform + '\'<br>');
+    document.write('outcome is: \'' + result.outcome + '\'');
   }, function() {
     document.write('Boo! an error');
   });
