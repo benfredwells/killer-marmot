@@ -25,6 +25,26 @@ function logMessage(message, isError) {
     console.log(message);
 }
 
+// Logs a clickable link to the page. Returns a promise that resolves when the
+// user clicks the link.
+function logClickableLink(text) {
+  // Insert a paragraph into the page.
+  var logsDiv = document.querySelector('#logs');
+  var p = document.createElement('p');
+  logsDiv.appendChild(p);
+  var a = document.createElement('a');
+  p.appendChild(a);
+  a.setAttribute('href', '');
+  a.appendChild(document.createTextNode(text));
+
+  return new Promise((resolve, reject) => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      resolve()
+    });
+  });
+}
+
 window.addEventListener('beforeinstallprompt', e => {
   logMessage('Got beforeinstallprompt!!!');
   logMessage('platforms: ' + e.platforms);
@@ -33,6 +53,7 @@ window.addEventListener('beforeinstallprompt', e => {
   if (Math.random() > 0.5) {
     logMessage('Yeah why not. Cancelled!');
     e.preventDefault();
+    logClickableLink('Show the prompt after all.').then(() => e.prompt());
     return;
   }
 
