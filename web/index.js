@@ -8,37 +8,48 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// Logs a message to the page, and console.
+function logMessage(message, isError) {
+  // Insert a paragraph into the page.
+  var logsDiv = document.querySelector('#logs');
+  var p = document.createElement('p');
+  logsDiv.appendChild(p);
+  p.appendChild(document.createTextNode(message));
+  if (isError)
+    p.style.color = 'red';
+
+  // Also log to the console.
+  if (isError)
+    console.error(message);
+  else
+    console.log(message);
+}
+
 window.addEventListener('beforeinstallprompt', e => {
-  document.open();
-  document.write('Got beforeinstallprompt!!!<br>');
-  document.write('platforms: ');
-  document.write(e.platforms);
-  document.write('<br>Should I cancel it? Hmmmm .... ');
+  logMessage('Got beforeinstallprompt!!!');
+  logMessage('platforms: ' + e.platforms);
+  logMessage('Should I cancel it? Hmmmm .... ');
 
   if (Math.random() > 0.5) {
-    document.write('Yeah why not. Cancelled!');
+    logMessage('Yeah why not. Cancelled!');
     e.preventDefault();
-    document.close();
     return;
   }
 
-  document.write('No, let\'s see the banner');
-  document.write('<br>The promise is: ' + e.userChoice);
+  logMessage('No, let\'s see the banner');
+  logMessage('The promise is: ' + e.userChoice);
   window.setTimeout(() => {
     if (!e) {
-      document.write('No event????');
-      document.close();
+      logMessage('No event????', true);
       return;
     }
 
-    document.write('Timer time!<br>');
+    logMessage('Timer time!');
     e.userChoice.then(result => {
-      document.write('platform is: \'' + result.platform + '\'<br>');
-      document.write('outcome is: \'' + result.outcome + '\'');
+      logMessage('platform is: \'' + result.platform + '\'');
+      logMessage('outcome is: \'' + result.outcome + '\'');
     }, () => {
-      document.write('Boo! an error');
+      logMessage('Boo! an error', true);
     });
-
-    document.close();
   }, 1000);
 });
