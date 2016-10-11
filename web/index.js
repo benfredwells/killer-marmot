@@ -53,3 +53,7 @@ window.addEventListener('beforeinstallprompt', e => {
     });
   }, 1000);
 });
+
+window.addEventListener('appinstalled', e => {
+  logMessage('Got appinstalled!!!');
+});
