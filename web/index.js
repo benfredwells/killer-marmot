@@ -45,7 +45,7 @@ function logClickableLink(text) {
   });
 }
 
-window.addEventListener('beforeinstallprompt', e => {
+window.addEventListener('beforeinstallprompt', async e => {
   logMessage('Got beforeinstallprompt!!!');
   logMessage('platforms: ' + e.platforms);
   logMessage('Should I cancel it? Hmmmm .... ');
@@ -53,7 +53,13 @@ window.addEventListener('beforeinstallprompt', e => {
   if (Math.random() > 0.5) {
     logMessage('Yeah why not. Cancelled!');
     e.preventDefault();
-    logClickableLink('Show the prompt after all.').then(() => e.prompt());
+    await logClickableLink('Show the prompt after all.');
+    try {
+      await e.prompt();
+      logMessage('prompt() resolved');
+    } catch (ex) {
+      logMessage('prompt() rejected with ' + ex, true);
+    }
     return;
   }
 
