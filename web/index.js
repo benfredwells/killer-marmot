@@ -45,6 +45,24 @@ function logClickableLink(text) {
   });
 }
 
+function logUserChoice(e) {
+  logMessage('userChoice is: ' + e.userChoice);
+  window.setTimeout(() => {
+    if (!e) {
+      logMessage('No event????', true);
+      return;
+    }
+
+    logMessage('Timer time!');
+    e.userChoice.then(result => {
+      logMessage('platform is: \'' + result.platform + '\'');
+      logMessage('outcome is: \'' + result.outcome + '\'');
+    }, () => {
+      logMessage('Boo! an error', true);
+    });
+  }, 1000);
+}
+
 window.addEventListener('beforeinstallprompt', async e => {
   logMessage('Got beforeinstallprompt!!!');
   logMessage('platforms: ' + e.platforms);
@@ -60,25 +78,12 @@ window.addEventListener('beforeinstallprompt', async e => {
     } catch (ex) {
       logMessage('prompt() rejected with ' + ex, true);
     }
+    logUserChoice(e);
     return;
   }
 
   logMessage('No, let\'s see the banner');
-  logMessage('The promise is: ' + e.userChoice);
-  window.setTimeout(() => {
-    if (!e) {
-      logMessage('No event????', true);
-      return;
-    }
-
-    logMessage('Timer time!');
-    e.userChoice.then(result => {
-      logMessage('platform is: \'' + result.platform + '\'');
-      logMessage('outcome is: \'' + result.outcome + '\'');
-    }, () => {
-      logMessage('Boo! an error', true);
-    });
-  }, 1000);
+  logUserChoice(e);
 });
 
 window.addEventListener('appinstalled', e => {
