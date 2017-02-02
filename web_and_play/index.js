@@ -44,7 +44,13 @@ window.addEventListener('load', async e => {
   if (navigator.getInstalledRelatedApps === undefined) {
     logMessage('navigator.getInstalledRelatedApps is undefined');
   } else {
-    let relatedApps = await navigator.getInstalledRelatedApps();
+    let relatedApps;
+    try {
+      relatedApps = await navigator.getInstalledRelatedApps();
+    } catch (error) {
+      logMessage('getInstalledRelatedApps error: ' + error, true);
+      return;
+    }
     logMessage('Installed related apps:');
     for (let i = 0; i < relatedApps.length; i++) {
       let app = relatedApps[i];
