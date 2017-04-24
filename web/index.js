@@ -8,6 +8,13 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// Creates a promise that resolves after a given number of milliseconds.
+function sleep(milliseconds) {
+  return new Promise((resolve, reject) => {
+      window.setTimeout(resolve, milliseconds);
+  });
+}
+
 // Logs a message to the page, and console.
 function logMessage(message, isError) {
   // Insert a paragraph into the page.
@@ -45,22 +52,22 @@ function logClickableLink(text) {
   });
 }
 
-function logUserChoice(e) {
+async function logUserChoice(e) {
   logMessage('userChoice is: ' + e.userChoice);
-  window.setTimeout(() => {
-    if (!e) {
-      logMessage('No event????', true);
-      return;
-    }
+  await sleep(1000);
+  if (!e) {
+    logMessage('No event????', true);
+    return;
+  }
 
-    logMessage('Timer time!');
-    e.userChoice.then(result => {
-      logMessage('platform is: \'' + result.platform + '\'');
-      logMessage('outcome is: \'' + result.outcome + '\'');
-    }, () => {
-      logMessage('Boo! an error', true);
-    });
-  }, 1000);
+  logMessage('Timer time!');
+  try {
+    let {platform, outcome} = await e.userChoice;
+    logMessage('platform is: \'' + platform + '\'');
+    logMessage('outcome is: \'' + outcome + '\'');
+  } catch (e) {
+    logMessage('Boo! an error', true);
+  }
 }
 
 window.addEventListener('beforeinstallprompt', async e => {
