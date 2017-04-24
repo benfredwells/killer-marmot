@@ -17,4 +17,6 @@ self.addEventListener('install', function(event) {
   );
 });
 
-
+// Required to be installable.
+self.addEventListener('fetch', function(event) {
+});
