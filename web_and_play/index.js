@@ -8,6 +8,23 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// Logs a message to the page, and console.
+function logMessage(message, isError) {
+  // Insert a paragraph into the page.
+  var logsDiv = document.querySelector('#logs');
+  var p = document.createElement('p');
+  logsDiv.appendChild(p);
+  p.appendChild(document.createTextNode(message));
+  if (isError)
+    p.style.color = 'red';
+
+  // Also log to the console.
+  if (isError)
+    console.error(message);
+  else
+    console.log(message);
+}
+
 window.addEventListener("beforeinstallprompt", function(e) {
   document.open();
   document.write('Got beforeinstallprompt!!!<br>');
@@ -21,4 +38,26 @@ window.addEventListener("beforeinstallprompt", function(e) {
     document.write("No, let's see the banner");
   }
   document.close();
+});
+
+window.addEventListener('load', async e => {
+  if (navigator.getInstalledRelatedApps === undefined) {
+    logMessage('navigator.getInstalledRelatedApps is undefined');
+  } else {
+    let relatedApps;
+    try {
+      relatedApps = await navigator.getInstalledRelatedApps();
+    } catch (error) {
+      logMessage('getInstalledRelatedApps error: ' + error, true);
+      return;
+    }
+    logMessage('Installed related apps:');
+    for (let i = 0; i < relatedApps.length; i++) {
+      let app = relatedApps[i];
+      text = `id: ${JSON.stringify(app.id)}, `
+             + `platform: ${JSON.stringify(app.platform)}, `
+             + `url: ${JSON.stringify(app.url)}`;
+      logMessage(text);
+    }
+  }
 });
