@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Killer Marmot</string>
+    <string name="asset_statements">
+      [{
+        \"relation\": [\"delegate_permission/common.share_location\"],
+        \"target\": {
+          \"namespace\": \"web\",
+          \"site\": \"https://benfredwells.github.io\"
+        }
+      }]
+    </string>
+</resources>
