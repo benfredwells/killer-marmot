@@ -10,6 +10,9 @@
   "related_applications": [{
         "platform": "play",
         "id": "com.sbg.crappybird"
+      }, {
+        "platform": "play",
+        "id": "io.github.benfredwells.killermarmot"
       }],
   "start_url": "index.html"
 }
