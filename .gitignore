@@ -1,1 +1,5 @@
 *.swp
+
+# Python detritus.
+*.pyc
+*.pyo
