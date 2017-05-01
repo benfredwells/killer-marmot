@@ -18,7 +18,7 @@ window.addEventListener("beforeinstallprompt", function(e) {
     setTimeout(function() {
       isTooSoon = false;
       console.log("Dispatching event");
-      window.dispatchEvent(e); // Shows prompt
+      e.prompt() // Shows prompt
       console.log(e);
     }, 5000);
   }

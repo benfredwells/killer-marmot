@@ -14,5 +14,6 @@
         "platform": "play",
         "id": "io.github.benfredwells.killermarmot"
       }],
-  "start_url": "index.html"
+  "start_url": "index.html",
+  "display": "standalone"
 }
