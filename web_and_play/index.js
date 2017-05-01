@@ -26,18 +26,16 @@ function logMessage(message, isError) {
 }
 
 window.addEventListener("beforeinstallprompt", function(e) {
-  document.open();
-  document.write('Got beforeinstallprompt!!!<br>');
-  document.write('platforms: ');
-  document.write(e.platforms);
-  document.write('<br>Should I cancel it? Hmmmm .... ');
+  logMessage('Got beforeinstallprompt!!!<br>');
+  logMessage('platforms: ');
+  logMessage(e.platforms);
+  logMessage('<br>Should I cancel it? Hmmmm .... ');
   if (Math.random() > 0.5) {
-    document.write('Yeah why not. Cancelled!');
+    logMessage('Yeah why not. Cancelled!');
     e.preventDefault();
   } else {
-    document.write("No, let's see the banner");
+    logMessage("No, let's see the banner");
   }
-  document.close();
 });
 
 window.addEventListener('load', async e => {
