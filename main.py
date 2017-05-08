@@ -17,9 +17,19 @@ import mimetypes
 import jinja2
 import webapp2
 
+import app_data
+
 
 template_loader = jinja2.FileSystemLoader('templates')
 env = jinja2.Environment(loader=template_loader, autoescape=True)
+
+
+def get_index_template_params(appname):
+    """Get the template parameters for index.html."""
+    try:
+      return app_data.APPS[appname]
+    except KeyError:
+      webapp2.abort(404, explanation='No such app: %s' % appname)
 
 
 class IndexRedirect(webapp2.RequestHandler):
@@ -47,7 +57,12 @@ class TemplatedPage(webapp2.RequestHandler):
         if encoding is not None:
             self.response.content_type_params = {'charset', encoding}
         template = env.get_template(filename)
-        self.response.write(template.render())
+
+        template_params = {}
+        if filename == 'index.html':
+          template_params = get_index_template_params(appname)
+
+        self.response.write(template.render(template_params))
 
 
 app = webapp2.WSGIApplication([

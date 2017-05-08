@@ -1,13 +1,14 @@
 <!doctype html>
 <html>
 <head>
-  <script src="index.js"></script>
-  <link rel="manifest" href="manifest.json">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% if index_js %}<script src="index.js"></script>{% endif %}
+  {% if manifest_json %}<link rel="manifest" href="manifest.json">{% endif %}
+  {% if viewport %}<meta name="viewport" content="{{ viewport }}">{% endif %}
+  {% if referrer %}<meta name="referrer" content="origin">{% endif %}
 </head>
 <body>
   <h1>Marmots are the best.</h1>
-  <p>Site which is a valid web app.</p>
-  <div id="logs"></div>
+  <p>{{ description }}</p>
+  {% if index_js %}<div id="logs"></div>{% endif %}
 </body>
 </html>
