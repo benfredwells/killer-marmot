@@ -20,6 +20,7 @@ import copy
 import os.path
 
 # HTML defaults.
+DEFAULT_INDEX_JS = 'index.js'
 DEFAULT_VIEWPORT = 'width=device-width, initial-scale=1'
 
 # Manifest defaults.
@@ -76,7 +77,8 @@ DEFAULT_ICONS = make_icons()
 
 # Each app is represented by a dictionary with the following optional fields:
 # - description: String description of the app.
-# - index_js: Boolean; whether to load index.js.
+# - index_js: String filename of index.js. If omitted, no script. Can use
+#   DEFAULT_INDEX_JS.
 # - manifest_json: Boolean; whether to link to manifest.json.
 # - viewport: String value for the viewport meta tag. If omitted, no tag. Can
 #   use DEFAULT_VIEWPORT.
@@ -99,7 +101,7 @@ APPS = {
     'ios_and_web': {
         'description': 'Site which is a valid web app, but has a preferred iOS app '
                        'in its manifest.',
-        'index_js': True,
+        'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'web_stuff': True,
         'prefer_related_applications': True,
@@ -115,7 +117,7 @@ APPS = {
 
     'none': {
         'description': 'Site with no manifest.',
-        'index_js': True,
+        'index_js': DEFAULT_INDEX_JS,
     },
 
     'play_and_ios': {
@@ -129,7 +131,7 @@ APPS = {
     'play_and_web': {
         'description': 'Site which is a valid web app, but has a preferred play '
                        'app in its manifest.',
-        'index_js': True,
+        'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'web_stuff': True,
         'prefer_related_applications': True,
@@ -163,7 +165,7 @@ APPS = {
 
     'web': {
         'description': 'Site which is a valid web app.',
-        'index_js': True,
+        'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'web_stuff': True,
     },
@@ -171,7 +173,7 @@ APPS = {
     'web_and_ios': {
         'description': 'Site which is a valid web app, and also with a '
                        'non-preferred iOS app in its manifest.',
-        'index_js': True,
+        'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'web_stuff': True,
         'related_applications': [RELATED_APP_IOS],
@@ -180,7 +182,7 @@ APPS = {
     'web_and_play': {
         'description': 'Site which is a valid web, and also with a non-preferred '
                        'play app in its manifest.',
-        'index_js': True,
+        'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'web_stuff': True,
         'related_applications': [RELATED_APP_PLAY, RELATED_APP_PLAY_REAL],
@@ -188,7 +190,7 @@ APPS = {
 
     'web_broken': {
         'description': 'Site which is a broken web app.',
-        'index_js': True,
+        'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'viewport': 'minimum-scale=0.6, maximum-scale=5.0, '
                     'user-scalable=fixed, INITIAL-SCALE=1.0, '
@@ -200,7 +202,7 @@ APPS = {
 
     'web_no_meta_viewport': {
         'description': 'Site which is missing a viewport.',
-        'index_js': True,
+        'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'viewport': None,
         'web_stuff': True,
@@ -208,7 +210,7 @@ APPS = {
 
     'web_redispatch': {
         'description': 'Site which is a valid web app.',
-        'index_js': True,
+        'index_js': 'index_redispatch.js',
         'manifest_json': True,
         'web_stuff': True,
     },
