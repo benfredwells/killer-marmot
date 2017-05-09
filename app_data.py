@@ -57,14 +57,17 @@ RELATED_APP_IOS = collections.OrderedDict([
 ])
 
 
-def make_icons(name='marmot'):
+def make_icons(name='marmot', broken_sizes=False):
   """Makes the icons dict."""
   icons = []
   for size in (None, 48, 96, 128, 200, 480):
-    s = '' if size is None else '_%d' % size
+    size_suffix = '' if size is None else '_%d' % size
+    sizes = ('any' if size is None else
+             '%d' % size if broken_sizes else
+             '%dx%d' % (size, size))
     icon_dict = collections.OrderedDict([
-        ('src', '../%s%s.png' % (name, s)),
-        ('sizes', 'any' if size is None else '%dx%d' % (size, size)),
+        ('src', '../%s%s.png' % (name, size_suffix)),
+        ('sizes', sizes),
         ('type', 'image/png'),
         ('density', 1),
     ])
@@ -196,7 +199,7 @@ APPS = {
                     'user-scalable=fixed, INITIAL-SCALE=1.0, '
                     'width=device-width',
         'web_stuff': True,
-        'icons': make_icons(name='missing'),
+        'icons': make_icons(name='missing', broken_sizes=True),
         'display': None,
     },
 
