@@ -1,36 +1,43 @@
 {
   "name": "Killer Marmot",
   "short_name": "Marmot",
-  "icons": [{
-        "src": "../marmot1.png",
-        "sizes": "any",
-        "type": "image/png",
-        "density": 1
-      }, {
-        "src": "../marmot_481.png",
-        "sizes": "48",
-        "type": "image/png",
-        "density": 1
-      }, {
-        "src": "../marmot_961.png",
-        "sizes": "96",
-        "type": "image/png",
-        "density": 1
-      }, {
-        "src": "../marmot_1281.png",
-        "sizes": "128",
-        "type": "image/png",
-        "density": 1
-      }, {
-        "src": "../marmot_2001.png",
-        "sizes": "200",
-        "type": "image/png",
-        "density": 1
-      }, {
-        "src": "../marmot_4801.png",
-        "sizes": "480",
-        "type": "image/png",
-        "density": 1
-      }],
+  "icons": [
+    {
+      "src": "../marmot1.png",
+      "sizes": "any",
+      "type": "image/png",
+      "density": 1
+    },
+    {
+      "src": "../marmot_481.png",
+      "sizes": "48",
+      "type": "image/png",
+      "density": 1
+    },
+    {
+      "src": "../marmot_961.png",
+      "sizes": "96",
+      "type": "image/png",
+      "density": 1
+    },
+    {
+      "src": "../marmot_1281.png",
+      "sizes": "128",
+      "type": "image/png",
+      "density": 1
+    },
+    {
+      "src": "../marmot_2001.png",
+      "sizes": "200",
+      "type": "image/png",
+      "density": 1
+    },
+    {
+      "src": "../marmot_4801.png",
+      "sizes": "480",
+      "type": "image/png",
+      "density": 1
+    }
+  ],
   "start_url": "index.html"
 }
