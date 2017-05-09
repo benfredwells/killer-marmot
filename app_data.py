@@ -52,7 +52,7 @@ RELATED_APP_PLAY_NON_GOOGLE_REFERRER = collections.OrderedDict([
 ])
 RELATED_APP_IOS = collections.OrderedDict([
     ('platform', 'ios'),
-    ('id', 'basdfasdf'),
+    ('url', 'https://itunes.apple.com/au/app/crappybird/id123456789'),
 ])
 
 
