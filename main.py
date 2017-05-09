@@ -41,14 +41,25 @@ def build_manifest(appname):
     except KeyError:
       webapp2.abort(404, explanation='No such app: %s' % appname)
 
-    # TODO(mgiuca): Populate according to |data|.
+    # Create the manifest dictionary, tailoring it based on |data|.
     # Insert the items in the order they are documented in the Manifest spec.
     manifest = collections.OrderedDict()
-    manifest['name'] = app_data.DEFAULT_NAME
-    manifest['short_name'] = app_data.DEFAULT_SHORT_NAME
-    manifest['icons'] = app_data.DEFAULT_ICONS
-    manifest['display'] = app_data.DEFAULT_DISPLAY
-    manifest['start_url'] = app_data.DEFAULT_START_URL
+    if 'web_stuff' in data and data['web_stuff']:
+      manifest['name'] = app_data.DEFAULT_NAME
+      manifest['short_name'] = app_data.DEFAULT_SHORT_NAME
+      manifest['icons'] = app_data.DEFAULT_ICONS
+      manifest['display'] = app_data.DEFAULT_DISPLAY
+      manifest['start_url'] = app_data.DEFAULT_START_URL
+    if 'icons' in data:
+      if data['icons']:
+        manifest['icons'] = app_data.DEFAULT_ICONS
+      elif 'icons' in manifest:
+        del manifest['icons']
+    if 'display' in data:
+      if data['display'] is not None:
+        manifest['display'] = data['display']
+      elif 'display' in manifest:
+        del manifest['display']
 
     return json.dumps(manifest, indent=2, separators=(',', ': ')) + '\n'
 

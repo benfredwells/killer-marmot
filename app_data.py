@@ -64,6 +64,10 @@ DEFAULT_ICONS = [
 # - viewport: String value for the viewport meta tag. If omitted, no tag. Can
 #   use DEFAULT_VIEWPORT.
 # - referrer: Boolean; whether to include a referrer meta tag.
+# - web_stuff: Boolean; whether to include name, short_name, icons, display and
+#   start_url. Can be overridden by other fields.
+# - icons: Boolean; whether to include icons in manifest.
+# - display: String; display field for manifest. None for no display.
 APPS = {
     'ios_and_play': {
         'description': 'Site with a related iOS and play app in the manifest.',
@@ -75,6 +79,7 @@ APPS = {
                        'in its manifest.',
         'index_js': True,
         'manifest_json': True,
+        'web_stuff': True,
     },
 
     'ios': {
@@ -98,6 +103,7 @@ APPS = {
                        'app in its manifest.',
         'index_js': True,
         'manifest_json': True,
+        'web_stuff': True,
     },
 
     'play': {
@@ -124,6 +130,7 @@ APPS = {
         'index_js': True,
         'manifest_json': True,
         'viewport': DEFAULT_VIEWPORT,
+        'web_stuff': True,
     },
 
     'web_and_ios': {
@@ -132,6 +139,7 @@ APPS = {
         'index_js': True,
         'manifest_json': True,
         'viewport': DEFAULT_VIEWPORT,
+        'web_stuff': True,
     },
 
     'web_and_play': {
@@ -140,6 +148,7 @@ APPS = {
         'index_js': True,
         'manifest_json': True,
         'viewport': DEFAULT_VIEWPORT,
+        'web_stuff': True,
     },
 
     'web_broken': {
@@ -149,12 +158,16 @@ APPS = {
         'viewport': 'minimum-scale=0.6, maximum-scale=5.0, '
                     'user-scalable=fixed, INITIAL-SCALE=1.0, '
                     'width=device-width',
+        'web_stuff': True,
+        'icons': False,
+        'display': None,
     },
 
     'web_no_meta_viewport': {
         'description': 'Site which is missing a viewport.',
         'index_js': True,
         'manifest_json': True,
+        'web_stuff': True,
     },
 
     'web_redispatch': {
@@ -162,5 +175,6 @@ APPS = {
         'index_js': True,
         'manifest_json': True,
         'viewport': DEFAULT_VIEWPORT,
+        'web_stuff': True,
     },
 }
