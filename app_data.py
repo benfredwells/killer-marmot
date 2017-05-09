@@ -26,40 +26,6 @@ DEFAULT_NAME = 'Killer Marmot'
 DEFAULT_SHORT_NAME = 'Marmot'
 DEFAULT_START_URL = 'index.html'
 DEFAULT_DISPLAY = 'standalone'
-# TODO(mgiuca): Make icon dicts collections.OrderedDict to avoid random output.
-DEFAULT_ICONS = [
-    {
-        'src': '../marmot.png',
-        'sizes': 'any',
-        'type': 'image/png',
-        'density': 1
-    }, {
-        'src': '../marmot_48.png',
-        'sizes': '48x48',
-        'type': 'image/png',
-        'density': 1
-    }, {
-        'src': '../marmot_96.png',
-        'sizes': '96x96',
-        'type': 'image/png',
-        'density': 1
-    }, {
-        'src': '../marmot_128.png',
-        'sizes': '128x128',
-        'type': 'image/png',
-        'density': 1
-    }, {
-        'src': '../marmot_200.png',
-        'sizes': '200x200',
-        'type': 'image/png',
-        'density': 1
-    }, {
-        'src': '../marmot_480.png',
-        'sizes': '480x480',
-        'type': 'image/png',
-        'density': 1
-    },
-]
 RELATED_APP_PLAY = {
     'platform': 'play',
     'id': 'com.sbg.crappybird',
@@ -89,9 +55,25 @@ RELATED_APP_IOS = {
 }
 
 
-ICONS_BROKEN = copy.deepcopy(DEFAULT_ICONS)
-for icon in ICONS_BROKEN:
-  icon['src'] = os.path.splitext(icon['src'])[0] + '1.png'
+def make_icons(name='marmot'):
+  """Makes the icons dict."""
+  icons = []
+  for size in (None, 48, 96, 128, 200, 480):
+    s = '' if size is None else '_%d' % size
+    # TODO(mgiuca): Make icon dicts collections.OrderedDict to avoid random
+    # output.
+    icon_dict = {
+        'src': '../%s%s.png' % (name, s),
+        'sizes': 'any' if size is None else '%dx%d' % (size, size),
+        'type': 'image/png',
+        'density': 1,
+    }
+    icons.append(icon_dict)
+  return icons
+
+
+DEFAULT_ICONS = make_icons()
+
 
 # Each app is represented by a dictionary with the following optional fields:
 # - description: String description of the app.
@@ -215,7 +197,7 @@ APPS = {
                     'user-scalable=fixed, INITIAL-SCALE=1.0, '
                     'width=device-width',
         'web_stuff': True,
-        'icons': ICONS_BROKEN,
+        'icons': make_icons(name='missing'),
         'display': None,
     },
 
