@@ -15,6 +15,9 @@
 """This file defines the metadata for each app (used by the templating system).
 """
 
+import copy
+import os.path
+
 # HTML defaults.
 DEFAULT_VIEWPORT = 'width=device-width, initial-scale=1'
 
@@ -23,6 +26,7 @@ DEFAULT_NAME = 'Killer Marmot'
 DEFAULT_SHORT_NAME = 'Marmot'
 DEFAULT_START_URL = 'index.html'
 DEFAULT_DISPLAY = 'standalone'
+# TODO(mgiuca): Make icon dicts collections.OrderedDict to avoid random output.
 DEFAULT_ICONS = [
     {
         'src': '../marmot.png',
@@ -57,6 +61,11 @@ DEFAULT_ICONS = [
     },
 ]
 
+
+ICONS_BROKEN = copy.deepcopy(DEFAULT_ICONS)
+for icon in ICONS_BROKEN:
+  icon['src'] = os.path.splitext(icon['src'])[0] + '1.png'
+
 # Each app is represented by a dictionary with the following optional fields:
 # - description: String description of the app.
 # - index_js: Boolean; whether to load index.js.
@@ -66,7 +75,7 @@ DEFAULT_ICONS = [
 # - referrer: Boolean; whether to include a referrer meta tag.
 # - web_stuff: Boolean; whether to include name, short_name, icons, display and
 #   start_url. Can be overridden by other fields.
-# - icons: Boolean; whether to include icons in manifest.
+# - icons: List of dicts; manifest member.
 # - display: String; display field for manifest. None for no display.
 APPS = {
     'ios_and_play': {
@@ -159,7 +168,7 @@ APPS = {
                     'user-scalable=fixed, INITIAL-SCALE=1.0, '
                     'width=device-width',
         'web_stuff': True,
-        'icons': False,
+        'icons': ICONS_BROKEN,
         'display': None,
     },
 

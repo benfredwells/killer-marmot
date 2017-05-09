@@ -50,16 +50,12 @@ def build_manifest(appname):
       manifest['icons'] = app_data.DEFAULT_ICONS
       manifest['display'] = app_data.DEFAULT_DISPLAY
       manifest['start_url'] = app_data.DEFAULT_START_URL
-    if 'icons' in data:
-      if data['icons']:
-        manifest['icons'] = app_data.DEFAULT_ICONS
-      elif 'icons' in manifest:
-        del manifest['icons']
-    if 'display' in data:
-      if data['display'] is not None:
-        manifest['display'] = data['display']
-      elif 'display' in manifest:
-        del manifest['display']
+    for field in ('icons', 'display'):
+      if field in data:
+        if data[field] is not None:
+          manifest[field] = data[field]
+        elif field in manifest:
+          del manifest[field]
 
     return json.dumps(manifest, indent=2, separators=(',', ': ')) + '\n'
 
