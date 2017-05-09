@@ -17,6 +17,13 @@
 
 DEFAULT_VIEWPORT = 'width=device-width, initial-scale=1'
 
+# Each app is represented by a dictionary with the following optional fields:
+# - description: String description of the app.
+# - index_js: Boolean; whether to load index.js.
+# - manifest_json: Boolean; whether to link to manifest.json.
+# - viewport: String value for the viewport meta tag. If omitted, no tag. Can
+#   use DEFAULT_VIEWPORT.
+# - referrer: Boolean; whether to include a referrer meta tag.
 APPS = {
     'ios_and_play': {
         'description': 'Site with a related iOS and play app in the manifest.',
