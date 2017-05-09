@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import collections
+import json
 import mimetypes
 
 import jinja2
@@ -30,6 +32,25 @@ def get_index_template_params(appname):
       return app_data.APPS[appname]
     except KeyError:
       webapp2.abort(404, explanation='No such app: %s' % appname)
+
+
+def build_manifest(appname):
+    """Creates a manifest for the app."""
+    try:
+      data = app_data.APPS[appname]
+    except KeyError:
+      webapp2.abort(404, explanation='No such app: %s' % appname)
+
+    # TODO(mgiuca): Populate according to |data|.
+    # Insert the items in the order they are documented in the Manifest spec.
+    manifest = collections.OrderedDict()
+    manifest['name'] = app_data.DEFAULT_NAME
+    manifest['short_name'] = app_data.DEFAULT_SHORT_NAME
+    manifest['icons'] = app_data.DEFAULT_ICONS
+    manifest['display'] = app_data.DEFAULT_DISPLAY
+    manifest['start_url'] = app_data.DEFAULT_START_URL
+
+    return json.dumps(manifest, indent=2, separators=(',', ': ')) + '\n'
 
 
 class IndexRedirect(webapp2.RequestHandler):
@@ -56,13 +77,18 @@ class TemplatedPage(webapp2.RequestHandler):
         self.response.content_type = mime_type
         if encoding is not None:
             self.response.content_type_params = {'charset', encoding}
-        template = env.get_template(filename)
 
-        template_params = {}
-        if filename == 'index.html':
-          template_params = get_index_template_params(appname)
+        if filename == 'manifest.json':
+            response_body = build_manifest(appname)
+        else:
+            template = env.get_template(filename)
 
-        self.response.write(template.render(template_params))
+            template_params = {}
+            if filename == 'index.html':
+              template_params = get_index_template_params(appname)
+
+            response_body = template.render(template_params)
+        self.response.write(response_body)
 
 
 app = webapp2.WSGIApplication([

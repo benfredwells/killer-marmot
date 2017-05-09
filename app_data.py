@@ -15,7 +15,47 @@
 """This file defines the metadata for each app (used by the templating system).
 """
 
+# HTML defaults.
 DEFAULT_VIEWPORT = 'width=device-width, initial-scale=1'
+
+# Manifest defaults.
+DEFAULT_NAME = 'Killer Marmot'
+DEFAULT_SHORT_NAME = 'Marmot'
+DEFAULT_START_URL = 'index.html'
+DEFAULT_DISPLAY = 'standalone'
+DEFAULT_ICONS = [
+    {
+        'src': '../marmot.png',
+        'sizes': 'any',
+        'type': 'image/png',
+        'density': 1
+    }, {
+        'src': '../marmot_48.png',
+        'sizes': '48x48',
+        'type': 'image/png',
+        'density': 1
+    }, {
+        'src': '../marmot_96.png',
+        'sizes': '96x96',
+        'type': 'image/png',
+        'density': 1
+    }, {
+        'src': '../marmot_128.png',
+        'sizes': '128x128',
+        'type': 'image/png',
+        'density': 1
+    }, {
+        'src': '../marmot_200.png',
+        'sizes': '200x200',
+        'type': 'image/png',
+        'density': 1
+    }, {
+        'src': '../marmot_480.png',
+        'sizes': '480x480',
+        'type': 'image/png',
+        'density': 1
+    },
+]
 
 # Each app is represented by a dictionary with the following optional fields:
 # - description: String description of the app.
