@@ -60,6 +60,33 @@ DEFAULT_ICONS = [
         'density': 1
     },
 ]
+RELATED_APP_PLAY = {
+    'platform': 'play',
+    'id': 'com.sbg.crappybird',
+}
+RELATED_APP_PLAY_REAL = {
+    'platform': 'play',
+    'id': 'io.github.benfredwells.killermarmot',
+}
+RELATED_APP_PLAY_REFERRER = {
+    'platform': 'play',
+    'url': 'https://play.google.com/store/apps/details?id=com.sbg.crappybird&'
+           'referrer=utm_source%3Dgoogle%26utm_medium%3Dcpc%26utm_term%3D'
+           'podcast%252Bapps%26utm_content%3DdisplayAd1%26utm_campaign%3D'
+           'podcast%252Bgeneralkeywords',
+    'id': 'com.sbg.crappybird',
+}
+RELATED_APP_PLAY_NON_GOOGLE_REFERRER = {
+    'platform': 'play',
+    'url': 'http://a.localytics.com/android?id=com.google.samples.apps.iosched&'
+           'referrer=utm_source%3Dother_app_banners_local%26utm_campaign%3D'
+           'AppBanners%2520Local',
+    'id': 'com.google.samples.apps.iosched',
+}
+RELATED_APP_IOS = {
+    'platform': 'ios',
+    'id': 'basdfasdf',
+}
 
 
 ICONS_BROKEN = copy.deepcopy(DEFAULT_ICONS)
@@ -77,10 +104,14 @@ for icon in ICONS_BROKEN:
 #   start_url. Can be overridden by other fields.
 # - icons: List of dicts; manifest member.
 # - display: String; display field for manifest. None for no display.
+# - prefer_related_applications: Boolean; manifest member.
+# - related_applications: List of dicts; manifest member.
 APPS = {
     'ios_and_play': {
         'description': 'Site with a related iOS and play app in the manifest.',
         'manifest_json': True,
+        'prefer_related_applications': True,
+        'related_applications': [RELATED_APP_IOS, RELATED_APP_PLAY],
     },
 
     'ios_and_web': {
@@ -89,11 +120,15 @@ APPS = {
         'index_js': True,
         'manifest_json': True,
         'web_stuff': True,
+        'prefer_related_applications': True,
+        'related_applications': [RELATED_APP_IOS],
     },
 
     'ios': {
         'description': 'Site with a related iOS app in the manifest.',
         'manifest_json': True,
+        'prefer_related_applications': True,
+        'related_applications': [RELATED_APP_IOS],
     },
 
     'none': {
@@ -105,6 +140,8 @@ APPS = {
         'description': 'Site with a related play app, and iOS app, in its '
                        'manifest.',
         'manifest_json': True,
+        'prefer_related_applications': True,
+        'related_applications': [RELATED_APP_PLAY, RELATED_APP_IOS],
     },
 
     'play_and_web': {
@@ -113,11 +150,15 @@ APPS = {
         'index_js': True,
         'manifest_json': True,
         'web_stuff': True,
+        'prefer_related_applications': True,
+        'related_applications': [RELATED_APP_PLAY],
     },
 
     'play': {
         'description': 'Site with a related play app in the manifest.',
         'manifest_json': True,
+        'prefer_related_applications': True,
+        'related_applications': [RELATED_APP_PLAY],
     },
 
     'play_non_google_link_referrer': {
@@ -125,6 +166,8 @@ APPS = {
                        'in the manifest.',
         'manifest_json': True,
         'referrer': True,
+        'prefer_related_applications': True,
+        'related_applications': [RELATED_APP_PLAY_NON_GOOGLE_REFERRER],
     },
 
     'play_referrer': {
@@ -132,6 +175,8 @@ APPS = {
                        'the manifest.',
         'manifest_json': True,
         'referrer': True,
+        'prefer_related_applications': True,
+        'related_applications': [RELATED_APP_PLAY_REFERRER],
     },
 
     'web': {
@@ -149,6 +194,7 @@ APPS = {
         'manifest_json': True,
         'viewport': DEFAULT_VIEWPORT,
         'web_stuff': True,
+        'related_applications': [RELATED_APP_IOS],
     },
 
     'web_and_play': {
@@ -158,6 +204,7 @@ APPS = {
         'manifest_json': True,
         'viewport': DEFAULT_VIEWPORT,
         'web_stuff': True,
+        'related_applications': [RELATED_APP_PLAY, RELATED_APP_PLAY_REAL],
     },
 
     'web_broken': {

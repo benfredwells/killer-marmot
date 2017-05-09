@@ -50,7 +50,9 @@ def build_manifest(appname):
       manifest['icons'] = app_data.DEFAULT_ICONS
       manifest['display'] = app_data.DEFAULT_DISPLAY
       manifest['start_url'] = app_data.DEFAULT_START_URL
-    for field in ('icons', 'display'):
+    FIELDS = ('icons', 'display', 'related_applications',
+              'prefer_related_applications')
+    for field in FIELDS:
       if field in data:
         if data[field] is not None:
           manifest[field] = data[field]
