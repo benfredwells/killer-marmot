@@ -15,6 +15,7 @@
 """This file defines the metadata for each app (used by the templating system).
 """
 
+import collections
 import copy
 import os.path
 
@@ -26,33 +27,33 @@ DEFAULT_NAME = 'Killer Marmot'
 DEFAULT_SHORT_NAME = 'Marmot'
 DEFAULT_START_URL = 'index.html'
 DEFAULT_DISPLAY = 'standalone'
-RELATED_APP_PLAY = {
-    'platform': 'play',
-    'id': 'com.sbg.crappybird',
-}
-RELATED_APP_PLAY_REAL = {
-    'platform': 'play',
-    'id': 'io.github.benfredwells.killermarmot',
-}
-RELATED_APP_PLAY_REFERRER = {
-    'platform': 'play',
-    'url': 'https://play.google.com/store/apps/details?id=com.sbg.crappybird&'
-           'referrer=utm_source%3Dgoogle%26utm_medium%3Dcpc%26utm_term%3D'
-           'podcast%252Bapps%26utm_content%3DdisplayAd1%26utm_campaign%3D'
-           'podcast%252Bgeneralkeywords',
-    'id': 'com.sbg.crappybird',
-}
-RELATED_APP_PLAY_NON_GOOGLE_REFERRER = {
-    'platform': 'play',
-    'url': 'http://a.localytics.com/android?id=com.google.samples.apps.iosched&'
-           'referrer=utm_source%3Dother_app_banners_local%26utm_campaign%3D'
-           'AppBanners%2520Local',
-    'id': 'com.google.samples.apps.iosched',
-}
-RELATED_APP_IOS = {
-    'platform': 'ios',
-    'id': 'basdfasdf',
-}
+RELATED_APP_PLAY = collections.OrderedDict([
+    ('platform', 'play'),
+    ('id', 'com.sbg.crappybird'),
+])
+RELATED_APP_PLAY_REAL = collections.OrderedDict([
+    ('platform', 'play'),
+    ('id', 'io.github.benfredwells.killermarmot'),
+])
+RELATED_APP_PLAY_REFERRER = collections.OrderedDict([
+    ('platform', 'play'),
+    ('url', 'https://play.google.com/store/apps/details?id=com.sbg.crappybird&'
+            'referrer=utm_source%3Dgoogle%26utm_medium%3Dcpc%26utm_term%3D'
+            'podcast%252Bapps%26utm_content%3DdisplayAd1%26utm_campaign%3D'
+            'podcast%252Bgeneralkeywords'),
+    ('id', 'com.sbg.crappybird'),
+])
+RELATED_APP_PLAY_NON_GOOGLE_REFERRER = collections.OrderedDict([
+    ('platform', 'play'),
+    ('url', 'http://a.localytics.com/android?id=com.google.samples.apps.iosched'
+            '&referrer=utm_source%3Dother_app_banners_local%26utm_campaign%3D'
+            'AppBanners%2520Local'),
+     ('id', 'com.google.samples.apps.iosched'),
+])
+RELATED_APP_IOS = collections.OrderedDict([
+    ('platform', 'ios'),
+    ('id', 'basdfasdf'),
+])
 
 
 def make_icons(name='marmot'):
@@ -60,14 +61,12 @@ def make_icons(name='marmot'):
   icons = []
   for size in (None, 48, 96, 128, 200, 480):
     s = '' if size is None else '_%d' % size
-    # TODO(mgiuca): Make icon dicts collections.OrderedDict to avoid random
-    # output.
-    icon_dict = {
-        'src': '../%s%s.png' % (name, s),
-        'sizes': 'any' if size is None else '%dx%d' % (size, size),
-        'type': 'image/png',
-        'density': 1,
-    }
+    icon_dict = collections.OrderedDict([
+        ('src', '../%s%s.png' % (name, s)),
+        ('sizes', 'any' if size is None else '%dx%d' % (size, size)),
+        ('type', 'image/png'),
+        ('density', 1),
+    ])
     icons.append(icon_dict)
   return icons
 
