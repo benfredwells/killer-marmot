@@ -1,10 +1,13 @@
 {
-  "prefer_related_applications": true,
-  "related_applications": [{
-        "platform": "ios",
-        "id": "basdfasdf"
-      },{
-        "platform": "play",
-        "id": "com.sbg.crappybird"
-      }]
+  "related_applications": [
+    {
+      "platform": "ios",
+      "id": "basdfasdf"
+    },
+    {
+      "platform": "play",
+      "id": "com.sbg.crappybird"
+    }
+  ],
+  "prefer_related_applications": true
 }

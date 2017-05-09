@@ -1,16 +1,20 @@
 {
   "name": "Killer Marmot",
   "short_name": "Marmot",
-  "icons": [{
-        "src": "../marmot.png",
-        "sizes": "any",
-        "type": "image/png",
-        "density": 1
-      }],
-  "prefer_related_applications": true,
-  "related_applications": [{
-        "platform": "play",
-        "id": "com.sbg.crappybird"
-      }],
-  "start_url": "index.html"
+  "icons": [
+    {
+      "src": "../marmot.png",
+      "sizes": "any",
+      "type": "image/png",
+      "density": 1
+    }
+  ],
+  "start_url": "index.html",
+  "related_applications": [
+    {
+      "platform": "play",
+      "id": "com.sbg.crappybird"
+    }
+  ],
+  "prefer_related_applications": true
 }

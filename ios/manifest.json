@@ -1,6 +1,8 @@
 {
-  "related_applications": [{
-        "platform": "ios",
-        "id": "combgppybird"
-      }],
+  "related_applications": [
+    {
+      "platform": "ios",
+      "id": "combgppybird"
+    }
+  ]
 }
