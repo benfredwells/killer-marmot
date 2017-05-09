@@ -81,8 +81,9 @@ DEFAULT_ICONS = make_icons()
 # - viewport: String value for the viewport meta tag. If omitted, no tag. Can
 #   use DEFAULT_VIEWPORT.
 # - referrer: Boolean; whether to include a referrer meta tag.
-# - web_stuff: Boolean; whether to include name, short_name, icons, display and
-#   start_url. Can be overridden by other fields.
+# - web_stuff: Boolean; whether to include default viewport in index.html, and
+#   default name, short_name, icons, display and start_url in the manifest. Can
+#   be overridden by other fields.
 # - icons: List of dicts; manifest member.
 # - display: String; display field for manifest. None for no display.
 # - prefer_related_applications: Boolean; manifest member.
@@ -164,7 +165,6 @@ APPS = {
         'description': 'Site which is a valid web app.',
         'index_js': True,
         'manifest_json': True,
-        'viewport': DEFAULT_VIEWPORT,
         'web_stuff': True,
     },
 
@@ -173,7 +173,6 @@ APPS = {
                        'non-preferred iOS app in its manifest.',
         'index_js': True,
         'manifest_json': True,
-        'viewport': DEFAULT_VIEWPORT,
         'web_stuff': True,
         'related_applications': [RELATED_APP_IOS],
     },
@@ -183,7 +182,6 @@ APPS = {
                        'play app in its manifest.',
         'index_js': True,
         'manifest_json': True,
-        'viewport': DEFAULT_VIEWPORT,
         'web_stuff': True,
         'related_applications': [RELATED_APP_PLAY, RELATED_APP_PLAY_REAL],
     },
@@ -204,6 +202,7 @@ APPS = {
         'description': 'Site which is missing a viewport.',
         'index_js': True,
         'manifest_json': True,
+        'viewport': None,
         'web_stuff': True,
     },
 
@@ -211,7 +210,6 @@ APPS = {
         'description': 'Site which is a valid web app.',
         'index_js': True,
         'manifest_json': True,
-        'viewport': DEFAULT_VIEWPORT,
         'web_stuff': True,
     },
 }

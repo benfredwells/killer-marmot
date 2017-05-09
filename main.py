@@ -29,10 +29,15 @@ env = jinja2.Environment(loader=template_loader, autoescape=True)
 def get_index_template_params(appname):
     """Get the template parameters for index.html."""
     try:
-      return app_data.APPS[appname]
+      params = app_data.APPS[appname].copy()
     except KeyError:
       webapp2.abort(404, explanation='No such app: %s' % appname)
 
+    if 'web_stuff' in params and params['web_stuff']:
+      if 'viewport' not in params:
+        params['viewport'] = app_data.DEFAULT_VIEWPORT
+
+    return params
 
 def build_manifest(appname):
     """Creates a manifest for the app."""
