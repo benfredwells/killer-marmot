@@ -3,37 +3,37 @@
   "short_name": "Marmot",
   "icons": [
     {
-      "src": "../marmot1.png",
+      "src": "../missing.png",
       "sizes": "any",
       "type": "image/png",
       "density": 1
     },
     {
-      "src": "../marmot_481.png",
+      "src": "../missing_48.png",
       "sizes": "48",
       "type": "image/png",
       "density": 1
     },
     {
-      "src": "../marmot_961.png",
+      "src": "../missing_96.png",
       "sizes": "96",
       "type": "image/png",
       "density": 1
     },
     {
-      "src": "../marmot_1281.png",
+      "src": "../missing_128.png",
       "sizes": "128",
       "type": "image/png",
       "density": 1
     },
     {
-      "src": "../marmot_2001.png",
+      "src": "../missing_200.png",
       "sizes": "200",
       "type": "image/png",
       "density": 1
     },
     {
-      "src": "../marmot_4801.png",
+      "src": "../missing_480.png",
       "sizes": "480",
       "type": "image/png",
       "density": 1
