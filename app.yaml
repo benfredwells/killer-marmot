@@ -7,9 +7,9 @@ handlers:
 - url: /
   static_files: index.html
   upload: index.html
-- url: /([^/]*\.(html|js|png))
+- url: /([^/]*\.(js|png))
   static_files: \1
-  upload: ([^/]*\.(html|js|png))
+  upload: ([^/]*\.(js|png))
 
 # These JavaScript files are the same for each app.
 - url: /[a-z_]*/([^/]*\.js)
@@ -17,7 +17,7 @@ handlers:
   upload: static/[^/]*\.js
 
 # The other files are templated, changing based on the directory name.
-- url: /[a-z_]*(/(|index\.html|manifest\.json))?
+- url: /[a-z_]*(/(|manifest\.json))?
   script: main.app
 
 libraries:
