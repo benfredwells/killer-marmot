@@ -30,8 +30,8 @@ mimetypes.add_type('text/html', '.html')
 mimetypes.add_type('application/json', '.json')
 
 
-def get_index_template_params(appname):
-    """Get the template parameters for index.html."""
+def get_app_page_template_params(appname):
+    """Get the template parameters for the app page."""
     try:
       params = app_data.APPS[appname].copy()
     except KeyError:
@@ -88,7 +88,7 @@ class TemplatedPage(webapp2.RequestHandler):
     """
     def get(self, appname, filename):
         if not filename:
-            filename = 'index.html'
+            filename = 'app.html'
 
         mime_type, _ = mimetypes.guess_type(filename)
 
@@ -101,8 +101,8 @@ class TemplatedPage(webapp2.RequestHandler):
             template = env.get_template(filename)
 
             template_params = {}
-            if filename == 'index.html':
-              template_params = get_index_template_params(appname)
+            if filename == 'app.html':
+              template_params = get_app_page_template_params(appname)
 
             response_body = template.render(template_params)
         self.response.write(response_body)
