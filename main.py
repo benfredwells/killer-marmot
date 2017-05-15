@@ -86,11 +86,10 @@ class TemplatedPage(webapp2.RequestHandler):
         if not filename:
             filename = 'index.html'
 
-        mime_type, encoding = mimetypes.guess_type(filename)
+        mime_type, _ = mimetypes.guess_type(filename)
 
         self.response.content_type = mime_type
-        if encoding is not None:
-            self.response.content_type_params = {'charset', encoding}
+        self.response.content_type_params = {'charset': 'utf-8'}
 
         if filename == 'manifest.json':
             response_body = build_manifest(appname)
