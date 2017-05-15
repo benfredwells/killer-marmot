@@ -71,6 +71,19 @@ def build_manifest(appname):
     return json.dumps(manifest, indent=2, separators=(',', ': ')) + '\n'
 
 
+class IndexPage(webapp2.RequestHandler):
+    """
+    Serves URLs of the form "/$APPNAME/$FILENAME". The file is served from the
+    templates directory, modified specially for each individual app.
+    """
+    def get(self):
+        self.response.content_type = 'text/html'
+        self.response.content_type_params = {'charset': 'utf-8'}
+        template = env.get_template('index.html')
+        response_body = template.render()
+        self.response.write(response_body)
+
+
 class IndexRedirect(webapp2.RequestHandler):
     """
     Redirect by adding a '/' to the end of the URL (so that relative links are
@@ -109,6 +122,7 @@ class TemplatedPage(webapp2.RequestHandler):
 
 
 app = webapp2.WSGIApplication([
+    (r'/$', IndexPage),
     (r'/([^/]*)$', IndexRedirect),
     (r'/([^/]*)/([^/]*)', TemplatedPage),
 ], debug=True)
