@@ -25,6 +25,10 @@ import app_data
 template_loader = jinja2.FileSystemLoader('templates')
 env = jinja2.Environment(loader=template_loader, autoescape=True)
 
+# MIME types (the App Engine server doesn't seem to have the defaults loaded).
+mimetypes.add_type('text/html', '.html')
+mimetypes.add_type('application/json', '.json')
+
 
 def get_index_template_params(appname):
     """Get the template parameters for index.html."""
