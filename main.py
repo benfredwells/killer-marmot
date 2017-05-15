@@ -43,6 +43,13 @@ def get_app_page_template_params(appname):
 
     return params
 
+
+def get_app_list():
+    """Gets a list of apps and their descriptions."""
+    for name, data in sorted(app_data.APPS.iteritems()):
+      yield {'name': name, 'description': data.get('short_description', name)}
+
+
 def build_manifest(appname):
     """Creates a manifest for the app."""
     try:
@@ -80,7 +87,8 @@ class IndexPage(webapp2.RequestHandler):
         self.response.content_type = 'text/html'
         self.response.content_type_params = {'charset': 'utf-8'}
         template = env.get_template('index.html')
-        response_body = template.render()
+        app_list = list(get_app_list())
+        response_body = template.render({'apps': app_list})
         self.response.write(response_body)
 
 

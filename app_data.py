@@ -96,6 +96,7 @@ DEFAULT_ICONS = make_icons()
 APPS = {
     'ios_and_play': {
         'description': 'Site with a related iOS and play app in the manifest.',
+        'short_description': 'iOS app, also a play app',
         'manifest_json': True,
         'prefer_related_applications': True,
         'related_applications': [RELATED_APP_IOS, RELATED_APP_PLAY],
@@ -104,6 +105,7 @@ APPS = {
     'ios_and_web': {
         'description': 'Site which is a valid web app, but has a preferred iOS app '
                        'in its manifest.',
+        'short_description': 'iOS app, also a valid web app',
         'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'web_stuff': True,
@@ -113,6 +115,7 @@ APPS = {
 
     'ios': {
         'description': 'Site with a related iOS app in the manifest.',
+        'short_description': 'iOS app',
         'manifest_json': True,
         'prefer_related_applications': True,
         'related_applications': [RELATED_APP_IOS],
@@ -120,12 +123,14 @@ APPS = {
 
     'none': {
         'description': 'Site with no manifest.',
+        'short_description': 'No related apps',
         'index_js': DEFAULT_INDEX_JS,
     },
 
     'play_and_ios': {
         'description': 'Site with a related play app, and iOS app, in its '
                        'manifest.',
+        'short_description': 'Play app, with iOS app as well',
         'manifest_json': True,
         'prefer_related_applications': True,
         'related_applications': [RELATED_APP_PLAY, RELATED_APP_IOS],
@@ -134,6 +139,7 @@ APPS = {
     'play_and_web': {
         'description': 'Site which is a valid web app, but has a preferred play '
                        'app in its manifest.',
+        'short_description': 'Play app, also a valid web app',
         'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'web_stuff': True,
@@ -143,6 +149,7 @@ APPS = {
 
     'play': {
         'description': 'Site with a related play app in the manifest.',
+        'short_description': 'Play app',
         'manifest_json': True,
         'prefer_related_applications': True,
         'related_applications': [RELATED_APP_PLAY],
@@ -151,6 +158,7 @@ APPS = {
     'play_non_google_link_referrer': {
         'description': 'Site with a related play app (non-Play-Store referrer) '
                        'in the manifest.',
+        'short_description': 'Play app with non-Google referrer',
         'manifest_json': True,
         'referrer': True,
         'prefer_related_applications': True,
@@ -160,6 +168,7 @@ APPS = {
     'play_referrer': {
         'description': 'Site with a related play app (Play Store referrer) in '
                        'the manifest.',
+        'short_description': 'Play app with referrer',
         'manifest_json': True,
         'referrer': True,
         'prefer_related_applications': True,
@@ -168,6 +177,7 @@ APPS = {
 
     'web': {
         'description': 'Site which is a valid web app.',
+        'short_description': 'Web app',
         'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'web_stuff': True,
@@ -176,6 +186,7 @@ APPS = {
     'web_and_ios': {
         'description': 'Site which is a valid web app, and also with a '
                        'non-preferred iOS app in its manifest.',
+        'short_description': 'Web app, with iOS app as well',
         'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'web_stuff': True,
@@ -185,6 +196,7 @@ APPS = {
     'web_and_play': {
         'description': 'Site which is a valid web, and also with a non-preferred '
                        'play app in its manifest.',
+        'short_description': 'Web app, with play app as well',
         'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'web_stuff': True,
@@ -193,6 +205,7 @@ APPS = {
 
     'web_broken': {
         'description': 'Site which is a broken web app.',
+        'short_description': 'Web app, broken',
         'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'viewport': 'minimum-scale=0.6, maximum-scale=5.0, '
@@ -205,6 +218,7 @@ APPS = {
 
     'web_no_meta_viewport': {
         'description': 'Site which is missing a viewport.',
+        'short_description': 'Web app, with no meta-viewport',
         'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'viewport': None,
@@ -213,6 +227,7 @@ APPS = {
 
     'web_redispatch': {
         'description': 'Site which is a valid web app.',
+        'short_description': 'Web app, testing beforeinstallprompt',
         'index_js': 'index_redispatch.js',
         'manifest_json': True,
         'web_stuff': True,

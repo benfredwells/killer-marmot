@@ -7,15 +7,8 @@
 </head>
 <body>
 <h1>Marmot apps!</h1>
-<a href="none/">No related apps</a><br>
-<a href="web/">Web app</a><br>
-<a href="web_and_play/">Web app, with play app as well</a><br>
-<a href="web_and_ios/">Web app, with iOS app as well</a><br>
-<a href="play/">Play app</a><br>
-<a href="play_and_web/">Play app, also a valid web app</a><br>
-<a href="play_and_ios/">Play app, with iOS app as well</a><br>
-<a href="ios/">iOS app</a><br>
-<a href="ios_and_web/">iOS app, also a valid web app</a><br>
-<a href="ios_and_play/">iOS app, also a play app</a><br>
+{% for app in apps %}
+<a href="{{ app.name }}/">{{ app.description }}</a><br>
+{% endfor %}
 </body>
 </html>
