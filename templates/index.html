@@ -1,0 +1,14 @@
+ <!doctype html>
+<html>
+<head>
+  <script src="index.js"></script>
+  <link rel="manifest" href="manifest.json">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<h1>Marmot apps!</h1>
+{% for app in apps %}
+<a href="{{ app.name }}/">{{ app.description }}</a><br>
+{% endfor %}
+</body>
+</html>

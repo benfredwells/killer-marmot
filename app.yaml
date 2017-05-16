@@ -1,0 +1,41 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+# These static files are served at the top level.
+- url: /([^/]*\.(js|png))
+  static_files: \1
+  upload: ([^/]*\.(js|png))
+  secure: always
+
+# These JavaScript files are the same for each app.
+- url: /[a-z_]*/([^/]*\.js)
+  static_files: static/\1
+  upload: static/[^/]*\.js
+  secure: always
+
+# Main index page.
+- url: /
+  script: main.app
+  secure: always
+# The other files are templated, changing based on the directory name.
+- url: /[a-z_]*(/(|manifest\.json))?
+  script: main.app
+  secure: always
+
+libraries:
+- name: jinja2
+  version: "2.6"
+- name: webapp2
+  version: "2.5.2"
+
+skip_files:
+- ^android_app$
+  # Defaults:
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+- ^(.*/)?\.bak$

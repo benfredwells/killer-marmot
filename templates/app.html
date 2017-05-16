@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+<head>
+  {% if index_js %}<script src="{{ index_js }}"></script>{% endif %}
+  {% if manifest_json %}<link rel="manifest" href="manifest.json">{% endif %}
+  {% if viewport %}<meta name="viewport" content="{{ viewport }}">{% endif %}
+  {% if referrer %}<meta name="referrer" content="origin">{% endif %}
+</head>
+<body>
+  <h1>Marmots are the best.</h1>
+  <p>{{ description }}</p>
+  {% if index_js %}<div id="logs"></div>{% endif %}
+</body>
+</html>
