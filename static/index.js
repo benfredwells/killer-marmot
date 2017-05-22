@@ -97,24 +97,29 @@ window.addEventListener('appinstalled', e => {
   logMessage('Got appinstalled!!!');
 });
 
-window.addEventListener('load', async e => {
+async function showInstalledRelatedApps() {
   if (navigator.getInstalledRelatedApps === undefined) {
     logMessage('navigator.getInstalledRelatedApps is undefined');
-  } else {
-    let relatedApps;
-    try {
-      relatedApps = await navigator.getInstalledRelatedApps();
-    } catch (error) {
-      logMessage('getInstalledRelatedApps error: ' + error, true);
-      return;
-    }
-    logMessage('Installed related apps:');
-    for (let i = 0; i < relatedApps.length; i++) {
-      let app = relatedApps[i];
-      text = `id: ${JSON.stringify(app.id)}, `
-             + `platform: ${JSON.stringify(app.platform)}, `
-             + `url: ${JSON.stringify(app.url)}`;
-      logMessage(text);
-    }
+    return;
   }
+
+  let relatedApps;
+  try {
+    relatedApps = await navigator.getInstalledRelatedApps();
+  } catch (error) {
+    logMessage('getInstalledRelatedApps error: ' + error, true);
+    return;
+  }
+  logMessage('Installed related apps:');
+  for (let i = 0; i < relatedApps.length; i++) {
+    let app = relatedApps[i];
+    text = `id: ${JSON.stringify(app.id)}, `
+           + `platform: ${JSON.stringify(app.platform)}, `
+           + `url: ${JSON.stringify(app.url)}`;
+    logMessage(text);
+  }
+}
+
+window.addEventListener('load', e => {
+  showInstalledRelatedApps();
 });
