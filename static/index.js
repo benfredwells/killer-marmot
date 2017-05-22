@@ -31,51 +31,7 @@ function sleep(milliseconds) {
 
 // Creates a new <div> for logs relating to a particular function.
 function createLogSection(title) {
-  let logsDiv = document.querySelector('#logs');
-  let sectionDiv = document.createElement('div');
-  logsDiv.appendChild(sectionDiv);
-  sectionDiv.className = 'log-section';
-
-  let titleH2 = document.createElement('h2');
-  sectionDiv.appendChild(titleH2);
-  titleH2.appendChild(document.createTextNode(title));
-
-  return sectionDiv;
-}
-
-// Logs a message to the given section, and console.
-function logMessage(section, message, isError) {
-  // Insert a paragraph into the section.
-  var p = document.createElement('p');
-  section.appendChild(p);
-  p.appendChild(document.createTextNode(message));
-  if (isError)
-    p.style.color = 'red';
-
-  // Also log to the console.
-  if (isError)
-    console.error(message);
-  else
-    console.log(message);
-}
-
-// Logs a clickable link to the given section. Returns a promise that resolves
-// when the user clicks the link.
-function logClickableLink(section, text) {
-  // Insert a paragraph into the section.
-  var p = document.createElement('p');
-  section.appendChild(p);
-  var a = document.createElement('a');
-  p.appendChild(a);
-  a.setAttribute('href', '');
-  a.appendChild(document.createTextNode(text));
-
-  return new Promise((resolve, reject) => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      resolve()
-    });
-  });
+  return createLogSectionInDiv(document.querySelector('#logs'), title);
 }
 
 async function logUserChoice(section, e) {
