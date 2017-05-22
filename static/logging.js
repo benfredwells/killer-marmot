@@ -31,7 +31,7 @@ class LogSection {
     this.div.appendChild(p);
     p.appendChild(document.createTextNode(message));
     if (isError)
-      p.style.color = 'red';
+      p.className = 'error';
 
     // Also log to the console.
     if (isError)
