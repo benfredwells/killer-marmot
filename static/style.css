@@ -29,6 +29,29 @@ a:visited {
 
 h1 {
   font-size: 1.5em;
+  color: #07395f;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.quote {
+  display: flex;
+}
+
+.quote h1, .quote p {
+  display: flex;
+}
+
+.quote p:before {
+  content: "“";
+  font-size: 1.5em;
+}
+
+.quote p:after {
+  content: "”";
+  font-size: 1.5em;
 }
 
 p.error {
