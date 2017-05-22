@@ -29,12 +29,25 @@ function sleep(milliseconds) {
   });
 }
 
-// Logs a message to the page, and console.
-function logMessage(message, isError) {
-  // Insert a paragraph into the page.
-  var logsDiv = document.querySelector('#logs');
+// Creates a new <div> for logs relating to a particular function.
+function createLogSection(title) {
+  let logsDiv = document.querySelector('#logs');
+  let sectionDiv = document.createElement('div');
+  logsDiv.appendChild(sectionDiv);
+  sectionDiv.className = 'log-section';
+
+  let titleH2 = document.createElement('h2');
+  sectionDiv.appendChild(titleH2);
+  titleH2.appendChild(document.createTextNode(title));
+
+  return sectionDiv;
+}
+
+// Logs a message to the given section, and console.
+function logMessage(section, message, isError) {
+  // Insert a paragraph into the section.
   var p = document.createElement('p');
-  logsDiv.appendChild(p);
+  section.appendChild(p);
   p.appendChild(document.createTextNode(message));
   if (isError)
     p.style.color = 'red';
@@ -46,13 +59,12 @@ function logMessage(message, isError) {
     console.log(message);
 }
 
-// Logs a clickable link to the page. Returns a promise that resolves when the
-// user clicks the link.
-function logClickableLink(text) {
-  // Insert a paragraph into the page.
-  var logsDiv = document.querySelector('#logs');
+// Logs a clickable link to the given section. Returns a promise that resolves
+// when the user clicks the link.
+function logClickableLink(section, text) {
+  // Insert a paragraph into the section.
   var p = document.createElement('p');
-  logsDiv.appendChild(p);
+  section.appendChild(p);
   var a = document.createElement('a');
   p.appendChild(a);
   a.setAttribute('href', '');
@@ -66,54 +78,57 @@ function logClickableLink(text) {
   });
 }
 
-async function logUserChoice(e) {
-  logMessage('userChoice is: ' + e.userChoice);
+async function logUserChoice(section, e) {
+  logMessage(section, 'userChoice is: ' + e.userChoice);
   await sleep(1000);
   if (!e) {
-    logMessage('No event????', true);
+    logMessage(section, 'No event????', true);
     return;
   }
 
-  logMessage('Timer time!');
+  logMessage(section, 'Timer time!');
   try {
     let {platform, outcome} = await e.userChoice;
-    logMessage('platform is: \'' + platform + '\'');
-    logMessage('outcome is: \'' + outcome + '\'');
+    logMessage(section, 'platform is: \'' + platform + '\'');
+    logMessage(section, 'outcome is: \'' + outcome + '\'');
   } catch (e) {
-    logMessage('Boo! an error', true);
+    logMessage(section, 'Boo! an error', true);
   }
 }
 
 window.addEventListener('beforeinstallprompt', async e => {
-  logMessage('Got beforeinstallprompt!!!');
-  logMessage('platforms: ' + e.platforms);
-  logMessage('Should I cancel it? Hmmmm .... ');
+  let logs = createLogSection('beforeinstallprompt');
+  logMessage(logs, 'Got beforeinstallprompt!!!');
+  logMessage(logs, 'platforms: ' + e.platforms);
+  logMessage(logs, 'Should I cancel it? Hmmmm .... ');
 
   if (Math.random() > 0.5) {
-    logMessage('Yeah why not. Cancelled!');
+    logMessage(logs, 'Yeah why not. Cancelled!');
     e.preventDefault();
-    await logClickableLink('Show the prompt after all.');
+    await logClickableLink(logs, 'Show the prompt after all.');
     try {
       await e.prompt();
-      logMessage('prompt() resolved');
+      logMessage(logs, 'prompt() resolved');
     } catch (ex) {
-      logMessage('prompt() rejected with ' + ex, true);
+      logMessage(logs, 'prompt() rejected with ' + ex, true);
     }
-    logUserChoice(e);
+    logUserChoice(logs, e);
     return;
   }
 
-  logMessage('No, let\'s see the banner');
-  logUserChoice(e);
+  logMessage(logs, 'No, let\'s see the banner');
+  logUserChoice(logs, e);
 });
 
 window.addEventListener('appinstalled', e => {
-  logMessage('Got appinstalled!!!');
+  let logs = createLogSection('appinstalled');
+  logMessage(logs, 'Got appinstalled!!!');
 });
 
 async function showInstalledRelatedApps() {
+  let logs = createLogSection('getInstalledRelatedApps');
   if (navigator.getInstalledRelatedApps === undefined) {
-    logMessage('navigator.getInstalledRelatedApps is undefined');
+    logMessage(logs, 'navigator.getInstalledRelatedApps is undefined');
     return;
   }
 
@@ -121,16 +136,16 @@ async function showInstalledRelatedApps() {
   try {
     relatedApps = await navigator.getInstalledRelatedApps();
   } catch (error) {
-    logMessage('getInstalledRelatedApps error: ' + error, true);
+    logMessage(logs, 'getInstalledRelatedApps error: ' + error, true);
     return;
   }
-  logMessage('Installed related apps:');
+  logMessage(logs, 'Installed related apps:');
   for (let i = 0; i < relatedApps.length; i++) {
     let app = relatedApps[i];
     text = `id: ${JSON.stringify(app.id)}, `
            + `platform: ${JSON.stringify(app.platform)}, `
            + `url: ${JSON.stringify(app.url)}`;
-    logMessage(text);
+    logMessage(logs, text);
   }
 }
 
