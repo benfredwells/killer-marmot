@@ -31,60 +31,60 @@ function sleep(milliseconds) {
 
 // Creates a new <div> for logs relating to a particular function.
 function createLogSection(title) {
-  return createLogSectionInDiv(document.querySelector('#logs'), title);
+  return new LogSection(document.querySelector('#logs'), title);
 }
 
 async function logUserChoice(section, e) {
-  logMessage(section, 'userChoice is: ' + e.userChoice);
+  section.logMessage('userChoice is: ' + e.userChoice);
   await sleep(1000);
   if (!e) {
-    logMessage(section, 'No event????', true);
+    section.logMessage('No event????', true);
     return;
   }
 
-  logMessage(section, 'Timer time!');
+  section.logMessage('Timer time!');
   try {
     let {platform, outcome} = await e.userChoice;
-    logMessage(section, 'platform is: \'' + platform + '\'');
-    logMessage(section, 'outcome is: \'' + outcome + '\'');
+    section.logMessage('platform is: \'' + platform + '\'');
+    section.logMessage('outcome is: \'' + outcome + '\'');
   } catch (e) {
-    logMessage(section, 'Boo! an error', true);
+    section.logMessage('Boo! an error', true);
   }
 }
 
 window.addEventListener('beforeinstallprompt', async e => {
   let logs = createLogSection('beforeinstallprompt');
-  logMessage(logs, 'Got beforeinstallprompt!!!');
-  logMessage(logs, 'platforms: ' + e.platforms);
-  logMessage(logs, 'Should I cancel it? Hmmmm .... ');
+  logs.logMessage('Got beforeinstallprompt!!!');
+  logs.logMessage('platforms: ' + e.platforms);
+  logs.logMessage('Should I cancel it? Hmmmm .... ');
 
   if (Math.random() > 0.5) {
-    logMessage(logs, 'Yeah why not. Cancelled!');
+    logs.logMessage('Yeah why not. Cancelled!');
     e.preventDefault();
-    await logClickableLink(logs, 'Show the prompt after all.');
+    await logs.logClickableLink('Show the prompt after all.');
     try {
       await e.prompt();
-      logMessage(logs, 'prompt() resolved');
+      logs.logMessage('prompt() resolved');
     } catch (ex) {
-      logMessage(logs, 'prompt() rejected with ' + ex, true);
+      logs.logMessage('prompt() rejected with ' + ex, true);
     }
     logUserChoice(logs, e);
     return;
   }
 
-  logMessage(logs, 'No, let\'s see the banner');
+  logs.logMessage('No, let\'s see the banner');
   logUserChoice(logs, e);
 });
 
 window.addEventListener('appinstalled', e => {
   let logs = createLogSection('appinstalled');
-  logMessage(logs, 'Got appinstalled!!!');
+  logs.logMessage('Got appinstalled!!!');
 });
 
 async function showInstalledRelatedApps() {
   let logs = createLogSection('getInstalledRelatedApps');
   if (navigator.getInstalledRelatedApps === undefined) {
-    logMessage(logs, 'navigator.getInstalledRelatedApps is undefined');
+    logs.logMessage('navigator.getInstalledRelatedApps is undefined');
     return;
   }
 
@@ -92,16 +92,16 @@ async function showInstalledRelatedApps() {
   try {
     relatedApps = await navigator.getInstalledRelatedApps();
   } catch (error) {
-    logMessage(logs, 'getInstalledRelatedApps error: ' + error, true);
+    logs.logMessage('getInstalledRelatedApps error: ' + error, true);
     return;
   }
-  logMessage(logs, 'Installed related apps:');
+  logs.logMessage('Installed related apps:');
   for (let i = 0; i < relatedApps.length; i++) {
     let app = relatedApps[i];
     text = `id: ${JSON.stringify(app.id)}, `
            + `platform: ${JSON.stringify(app.platform)}, `
            + `url: ${JSON.stringify(app.url)}`;
-    logMessage(logs, text);
+    logs.logMessage(text);
   }
 }
 
