@@ -1,8 +1,8 @@
 <!doctype html>
 <html>
 <head>
-  {% if index_js %}<script src="{{ index_js }}"></script>
-  <script src="logging.js"></script>{% endif %}
+  {% if index_js %}<script src="../static/{{ index_js }}"></script>
+  <script src="../static/logging.js"></script>{% endif %}
   {% if manifest_json %}<link rel="manifest" href="manifest.json">{% endif %}
   {% if viewport %}<meta name="viewport" content="{{ viewport }}">{% endif %}
   {% if referrer %}<meta name="referrer" content="origin">{% endif %}
