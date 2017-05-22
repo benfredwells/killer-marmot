@@ -4,9 +4,9 @@ threadsafe: true
 
 handlers:
 # These static files are served at the top level.
-- url: /([^/]*\.(js|png))
+- url: /([^/]*\.png)
   static_files: \1
-  upload: ([^/]*\.(js|png))
+  upload: ([^/]*\.png)
   secure: always
 
 # These JavaScript files are the same for each app.
