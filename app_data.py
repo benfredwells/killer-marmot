@@ -66,7 +66,7 @@ def make_icons(name='marmot', broken_sizes=False):
              '%d' % size if broken_sizes else
              '%dx%d' % (size, size))
     icon_dict = collections.OrderedDict([
-        ('src', '../static/%s%s.png' % (name, size_suffix)),
+        ('src', '../%s%s.png' % (name, size_suffix)),
         ('sizes', sizes),
         ('type', 'image/png'),
         ('density', 1),
