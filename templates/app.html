@@ -3,15 +3,35 @@
 <head>
   {% if index_js %}<script src="{{ index_js }}"></script>
   <script src="logging.js"></script>{% endif %}
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="icon" href="marmot_48.png">
   {% if manifest_json %}<link rel="manifest" href="manifest.json">{% endif %}
   {% if viewport %}<meta name="viewport" content="{{ viewport }}">{% endif %}
   {% if referrer %}<meta name="referrer" content="origin">{% endif %}
+  <title>Killer Marmot: {{ short_description }}</title>
   <!-- Origin Trial Token, feature = getInstalledRelatedApps, origin = https://killer-marmot.appspot.com, expires = 2017-06-26 -->
   <meta http-equiv="origin-trial" data-feature="getInstalledRelatedApps" data-expires="2017-06-26" content="AuxkYsoi9IrGTWt5xfe5hv526DT80yfBI3Gx8ellZN8ajCbX7WFnC9UB1yWWq9aCeZi0CufWzC0KXztxnW3d2wEAAABfeyJvcmlnaW4iOiJodHRwczovL2tpbGxlci1tYXJtb3QuYXBwc3BvdC5jb206NDQzIiwiZmVhdHVyZSI6Ikluc3RhbGxlZEFwcCIsImV4cGlyeSI6MTQ5ODUzODYwM30=">
 </head>
 <body>
-  <h1>Marmots are the best.</h1>
-  <p>{{ description }}</p>
+  <div class="quote">
+    <h1>Killer Marmot: {{ short_description }}</h1>
+    <div class="spacer"></div>
+    <p>Marmots are the best.</p>
+    <img src="marmot_96.png">
+  </div>
+  <p>
+    This is a test for <a href="https://developers.google.com/web/progressive-web-apps/">Progressive
+      Web Apps</a>.
+    {{ description }}
+  </p>
   {% if index_js %}<div id="logs"></div>{% endif %}
+  <p>
+    <a href="/">Home</a>
+    ·
+    <a href="https://github.com/benfredwells/killer-marmot">Fork me on
+      GitHub</a>
+    ·
+    Copyright 2017 Google Inc.
+  </p>
 </body>
 </html>
