@@ -3,16 +3,10 @@ api_version: 1
 threadsafe: true
 
 handlers:
-# These static files are served at the top level.
-- url: /([^/]*\.(js|png))
-  static_files: \1
-  upload: ([^/]*\.(js|png))
-  secure: always
-
-# These JavaScript files are the same for each app.
-- url: /[a-z_]*/([^/]*\.js)
+# These files are the same for each app.
+- url: /[a-z_]*/([^/]*\.(js|png))
   static_files: static/\1
-  upload: static/[^/]*\.js
+  upload: static/[^/]*\.(js|png)
   secure: always
 
 # Main index page.
