@@ -26,7 +26,7 @@ DEFAULT_VIEWPORT = 'width=device-width, initial-scale=1'
 # Manifest defaults.
 DEFAULT_NAME = 'Killer Marmot'
 DEFAULT_SHORT_NAME = 'Marmot'
-DEFAULT_START_URL = 'index.html'
+DEFAULT_START_URL = '.'
 DEFAULT_DISPLAY = 'standalone'
 RELATED_APP_PLAY = collections.OrderedDict([
     ('platform', 'play'),
