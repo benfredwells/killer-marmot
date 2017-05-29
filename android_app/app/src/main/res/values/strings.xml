@@ -13,6 +13,12 @@
           \"namespace\": \"web\",
           \"site\": \"https://killer-marmot.appspot.com\"
         }
+      }, {
+        \"relation\": [\"delegate_permission/common.share_location\"],
+        \"target\": {
+          \"namespace\": \"web\",
+          \"site\": \"http://localhost:8080\"
+        }
       }]
     </string>
 </resources>
