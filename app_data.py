@@ -30,7 +30,7 @@ DEFAULT_START_URL = '.'
 DEFAULT_DISPLAY = 'standalone'
 RELATED_APP_PLAY = collections.OrderedDict([
     ('platform', 'play'),
-    ('id', 'com.sbg.crappybird'),
+    ('id', 'com.google.samples.apps.iosched'),
 ])
 RELATED_APP_PLAY_REAL = collections.OrderedDict([
     ('platform', 'play'),
@@ -38,11 +38,12 @@ RELATED_APP_PLAY_REAL = collections.OrderedDict([
 ])
 RELATED_APP_PLAY_REFERRER = collections.OrderedDict([
     ('platform', 'play'),
-    ('url', 'https://play.google.com/store/apps/details?id=com.sbg.crappybird&'
+    ('url', 'https://play.google.com/store/apps/details?'
+            'id=com.google.samples.apps.iosched&'
             'referrer=utm_source%3Dgoogle%26utm_medium%3Dcpc%26utm_term%3D'
             'podcast%252Bapps%26utm_content%3DdisplayAd1%26utm_campaign%3D'
             'podcast%252Bgeneralkeywords'),
-    ('id', 'com.sbg.crappybird'),
+    ('id', 'com.google.samples.apps.iosched'),
 ])
 RELATED_APP_PLAY_NON_GOOGLE_REFERRER = collections.OrderedDict([
     ('platform', 'play'),
@@ -53,7 +54,7 @@ RELATED_APP_PLAY_NON_GOOGLE_REFERRER = collections.OrderedDict([
 ])
 RELATED_APP_IOS = collections.OrderedDict([
     ('platform', 'ios'),
-    ('url', 'https://itunes.apple.com/au/app/crappybird/id123456789'),
+    ('url', 'https://itunes.apple.com/us/app/google-i-o-2017/id1109898820'),
 ])
 
 
