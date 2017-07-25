@@ -52,6 +52,14 @@ RELATED_APP_PLAY_NON_GOOGLE_REFERRER = collections.OrderedDict([
             'AppBanners%2520Local'),
      ('id', 'com.google.samples.apps.iosched'),
 ])
+RELATED_APP_PLAY_INSTANT = collections.OrderedDict([
+    ('platform', 'play'),
+    ('id', 'instantapp'),
+])
+RELATED_APP_PLAY_INSTANT_HOLDBACK = collections.OrderedDict([
+    ('platform', 'play'),
+    ('id', 'instantapp:holdback'),
+])
 RELATED_APP_IOS = collections.OrderedDict([
     ('platform', 'ios'),
     ('url', 'https://itunes.apple.com/us/app/google-i-o-2017/id1109898820'),
@@ -154,6 +162,16 @@ APPS = {
         'manifest_json': True,
         'prefer_related_applications': True,
         'related_applications': [RELATED_APP_PLAY],
+    },
+
+    'play_instantapp': {
+        'description': 'Site with a related play instant app in the manifest.',
+        'short_description': 'Play instant app',
+        'manifest_json': True,
+        'prefer_related_applications': True,
+        'related_applications': [RELATED_APP_PLAY_REAL,
+                                 RELATED_APP_PLAY_INSTANT,
+                                 RELATED_APP_PLAY_INSTANT_HOLDBACK],
     },
 
     'play_non_google_link_referrer': {
