@@ -4,9 +4,9 @@ threadsafe: true
 
 handlers:
 # These files are the same for each app.
-- url: /[a-z_]*/([^/]*\.(css|js|png))
+- url: /[a-z_]*/([^/]*\.(css|js|png|svg))
   static_files: static/\1
-  upload: static/[^/]*\.(css|js|png)
+  upload: static/[^/]*\.(css|js|png|svg)
   secure: always
 
 # Main index page.
