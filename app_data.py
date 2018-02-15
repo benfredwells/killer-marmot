@@ -251,4 +251,18 @@ APPS = {
         'manifest_json': True,
         'web_stuff': True,
     },
+
+    'web_svg': {
+        'description': 'Site which is a valid web app and has an SVG icon.',
+        'short_description': 'Web app with SVG icon',
+        'index_js': DEFAULT_INDEX_JS,
+        'manifest_json': True,
+        'web_stuff': True,
+        'icons': [collections.OrderedDict([
+                  ('src', 'marmot.svg'),
+                  ('sizes', 'any'),
+                  ('type', 'image/svg+xml'),
+                 ])],
+    },
+
 }
