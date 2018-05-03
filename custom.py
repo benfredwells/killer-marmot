@@ -61,7 +61,10 @@ def build_custom_manifest(b64manifest, insert_icons=False):
     if insert_icons and 'icons' not in manifest:
       manifest['icons'] = app_data.DEFAULT_ICONS
 
-    # TODO: Basic validation.
+    # Basic validation to make sure a user can't create a URL that runs unknown
+    # code, then send the link to other users.
+    if 'serviceworker' in manifest:
+      return 400, 'Custom manifest cannot have "serviceworker".'
 
     # Re-encode JSON so that it is formatted nicely.
     return 200, json.dumps(manifest, indent=2, separators=(',', ': ')) + '\n'
