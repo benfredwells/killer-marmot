@@ -61,3 +61,13 @@ def build_custom_manifest(b64manifest):
 
     # Re-encode JSON so that it is formatted nicely.
     return 200, json.dumps(manifest, indent=2, separators=(',', ': ')) + '\n'
+
+
+def encode_manifest(manifest_string):
+    """Creates a URL-safe-base-64-encoded manifest string from a full manifest.
+
+    Raises a ValueError if the string is not valid JSON.
+    """
+    manifest = json.loads(manifest_string)
+    manifest_minified = json.dumps(manifest)
+    return base64.urlsafe_b64encode(manifest_minified)

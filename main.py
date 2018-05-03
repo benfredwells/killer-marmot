@@ -51,7 +51,7 @@ def get_app_list():
       yield {'name': name, 'description': data.get('short_description', name)}
 
 
-def build_manifest(appname):
+def build_manifest(appname, set_icons=True):
     """Creates a manifest for the app."""
     try:
       data = app_data.APPS[appname]
@@ -64,7 +64,8 @@ def build_manifest(appname):
     if 'web_stuff' in data and data['web_stuff']:
       manifest['name'] = app_data.DEFAULT_NAME
       manifest['short_name'] = app_data.DEFAULT_SHORT_NAME
-      manifest['icons'] = app_data.DEFAULT_ICONS
+      if set_icons:
+        manifest['icons'] = app_data.DEFAULT_ICONS
       manifest['display'] = app_data.DEFAULT_DISPLAY
       manifest['start_url'] = app_data.DEFAULT_START_URL
     FIELDS = ('icons', 'display', 'related_applications',
@@ -160,8 +161,32 @@ class CustomApp(webapp2.RequestHandler):
         self.response.write(response_body)
 
 
+class CreateCustom(webapp2.RequestHandler):
+    """Redirects to a custom app URL based on the given manifest.
+
+    Accepts POST requests containing a manifest document. A GET request
+    redirects to the default custom app.
+    """
+    def get(self):
+        # Just get the default manifest ("web").
+        manifest_string = build_manifest('web', set_icons=False)
+        self.redirect_using_manifest(manifest_string)
+
+    def redirect_using_manifest(self, manifest_string):
+        try:
+            b64manifest = custom.encode_manifest(manifest_string)
+        except ValueError:
+            self.response.status = 400
+            self.response.write('Invalid JSON for manifest.')
+            return
+
+        self.response.status = 301
+        self.response.location = '/custom/' + b64manifest + '/'
+
+
 app = webapp2.WSGIApplication([
     (r'/$', IndexPage),
+    (r'/custom/', CreateCustom),
     (r'/custom/[A-Za-z0-9\-_=]*', IndexRedirect),
     (r'/[^/]*$', IndexRedirect),
     (r'/custom/([A-Za-z0-9\-_=]*)/([^/]*)', CustomApp),
