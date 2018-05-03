@@ -151,13 +151,20 @@ class CustomApp(webapp2.RequestHandler):
             status, response_body = custom.build_custom_manifest(b64manifest)
             self.response.status = status
         else:
-            template = env.get_template(filename)
+            status, manifest_string = custom.build_custom_manifest(b64manifest)
+            self.response.status = status
 
-            template_params = {}
-            if filename == 'app.html':
-              template_params = custom.get_template_params()
+            if status != 200:
+                # Just show the error message.
+                response_body = manifest_string
+            else:
+                template = env.get_template(filename)
 
-            response_body = template.render(template_params)
+                template_params = {}
+                if filename == 'app.html':
+                  template_params = custom.get_template_params()
+
+                response_body = template.render(template_params)
         self.response.write(response_body)
 
 
