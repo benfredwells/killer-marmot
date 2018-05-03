@@ -4,6 +4,10 @@ threadsafe: true
 
 handlers:
 # These files are the same for each app.
+- url: /custom/[A-Za-z0-9\-_=]*/([^/]*\.(css|js|png|svg))
+  static_files: static/\1
+  upload: static/[^/]*\.(css|js|png|svg)
+  secure: always
 - url: /[a-z_]*/([^/]*\.(css|js|png|svg))
   static_files: static/\1
   upload: static/[^/]*\.(css|js|png|svg)
@@ -11,6 +15,10 @@ handlers:
 
 # Main index page.
 - url: /
+  script: main.app
+  secure: always
+# Custom pages.
+- url: /custom/([A-Za-z0-9\-_=]*)(/(|manifest\.json))?
   script: main.app
   secure: always
 # The other files are templated, changing based on the directory name.

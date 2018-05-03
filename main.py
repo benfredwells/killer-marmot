@@ -20,6 +20,7 @@ import jinja2
 import webapp2
 
 import app_data
+import custom
 
 
 template_loader = jinja2.FileSystemLoader('templates')
@@ -129,8 +130,39 @@ class TemplatedPage(webapp2.RequestHandler):
         self.response.write(response_body)
 
 
+class CustomApp(webapp2.RequestHandler):
+    """
+    Serves URLs of the form "/custom/$B64MANIFEST/$FILENAME". The
+    $B64MANIFEST is the app's manifest file, with whitespace removed,
+    URL-safe-base-64-encoded. This allows the user to construct and
+    bookmark any manifest they like.
+    """
+    def get(self, b64manifest, filename):
+        if not filename:
+            filename = 'app.html'
+
+        mime_type, _ = mimetypes.guess_type(filename)
+
+        self.response.content_type = mime_type
+        self.response.content_type_params = {'charset': 'utf-8'}
+
+        if filename == 'manifest.json':
+            status, response_body = custom.build_custom_manifest(b64manifest)
+            self.response.status = status
+        else:
+            template = env.get_template(filename)
+
+            template_params = {}
+            if filename == 'app.html':
+              template_params = custom.get_template_params()
+
+            response_body = template.render(template_params)
+        self.response.write(response_body)
+
+
 app = webapp2.WSGIApplication([
     (r'/$', IndexPage),
     (r'/([^/]*)$', IndexRedirect),
+    (r'/custom/([A-Za-z0-9\-_=]*)/([^/]*)', CustomApp),
     (r'/([^/]*)/([^/]*)', TemplatedPage),
 ], debug=True)
