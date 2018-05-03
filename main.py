@@ -98,7 +98,7 @@ class IndexRedirect(webapp2.RequestHandler):
     Redirect by adding a '/' to the end of the URL (so that relative links are
     correct).
     """
-    def get(self, appname):
+    def get(self):
         self.response.status = 301
         self.response.location = self.request.uri + '/'
 
@@ -162,7 +162,7 @@ class CustomApp(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     (r'/$', IndexPage),
-    (r'/([^/]*)$', IndexRedirect),
+    (r'/[^/]*$', IndexRedirect),
     (r'/custom/([A-Za-z0-9\-_=]*)/([^/]*)', CustomApp),
     (r'/([^/]*)/([^/]*)', TemplatedPage),
 ], debug=True)
