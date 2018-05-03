@@ -162,6 +162,7 @@ class CustomApp(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     (r'/$', IndexPage),
+    (r'/custom/[A-Za-z0-9\-_=]*', IndexRedirect),
     (r'/[^/]*$', IndexRedirect),
     (r'/custom/([A-Za-z0-9\-_=]*)/([^/]*)', CustomApp),
     (r'/([^/]*)/([^/]*)', TemplatedPage),
