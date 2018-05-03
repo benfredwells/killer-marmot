@@ -53,6 +53,10 @@ def build_custom_manifest(b64manifest):
     except ValueError:
       return 400, 'Invalid JSON for manifest.'
 
+    # Insert default icons if none included.
+    if 'icons' not in manifest:
+      manifest['icons'] = app_data.DEFAULT_ICONS
+
     # TODO: Basic validation.
 
     # Re-encode JSON so that it is formatted nicely.
