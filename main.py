@@ -148,7 +148,8 @@ class CustomApp(webapp2.RequestHandler):
         self.response.content_type_params = {'charset': 'utf-8'}
 
         if filename == 'manifest.json':
-            status, response_body = custom.build_custom_manifest(b64manifest)
+            status, response_body = \
+                custom.build_custom_manifest(b64manifest, insert_icons=True)
             self.response.status = status
         else:
             status, manifest_string = custom.build_custom_manifest(b64manifest)
@@ -162,7 +163,7 @@ class CustomApp(webapp2.RequestHandler):
 
                 template_params = {}
                 if filename == 'app.html':
-                  template_params = custom.get_template_params()
+                  template_params = custom.get_template_params(manifest_string)
 
                 response_body = template.render(template_params)
         self.response.write(response_body)
@@ -177,6 +178,10 @@ class CreateCustom(webapp2.RequestHandler):
     def get(self):
         # Just get the default manifest ("web").
         manifest_string = build_manifest('web', set_icons=False)
+        self.redirect_using_manifest(manifest_string)
+
+    def post(self):
+        manifest_string = self.request.POST['manifest']
         self.redirect_using_manifest(manifest_string)
 
     def redirect_using_manifest(self, manifest_string):

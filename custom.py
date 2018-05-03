@@ -23,16 +23,17 @@ import base64
 import json
 
 
-def get_template_params():
+def get_template_params(manifest_string):
     """Get the template parameters for a custom app page."""
     params = app_data.APPS['web'].copy()
     params['viewport'] = app_data.DEFAULT_VIEWPORT
     params['description'] = 'The manifest is customized via the URL.'
     params['short_description'] = 'Custom app'
+    params['custom_manifest'] = manifest_string
     return params
 
 
-def build_custom_manifest(b64manifest):
+def build_custom_manifest(b64manifest, insert_icons=False):
     """Creates a manifest from a URL-safe-base-64-encoded manifest string.
 
     Returns (HTTP status code, body).
@@ -57,7 +58,7 @@ def build_custom_manifest(b64manifest):
       return 400, 'Invalid JSON for manifest.'
 
     # Insert default icons if none included.
-    if 'icons' not in manifest:
+    if insert_icons and 'icons' not in manifest:
       manifest['icons'] = app_data.DEFAULT_ICONS
 
     # TODO: Basic validation.
