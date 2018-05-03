@@ -90,6 +90,8 @@ class IndexPage(webapp2.RequestHandler):
         self.response.content_type_params = {'charset': 'utf-8'}
         template = env.get_template('index.html')
         app_list = list(get_app_list())
+        app_list.append({'name': 'custom',
+                         'description': 'App with custom manifest'})
         response_body = template.render({'apps': app_list})
         self.response.write(response_body)
 
