@@ -16,6 +16,8 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import collections
+
 import app_data
 import base64
 import json
@@ -49,7 +51,8 @@ def build_custom_manifest(b64manifest):
 
     # Parse JSON string as JSON object.
     try:
-      manifest = json.loads(manifest_original)
+      manifest = json.loads(manifest_original,
+                            object_pairs_hook=collections.OrderedDict)
     except ValueError:
       return 400, 'Invalid JSON for manifest.'
 
@@ -68,6 +71,7 @@ def encode_manifest(manifest_string):
 
     Raises a ValueError if the string is not valid JSON.
     """
-    manifest = json.loads(manifest_string)
+    manifest = json.loads(manifest_string,
+                          object_pairs_hook=collections.OrderedDict)
     manifest_minified = json.dumps(manifest)
     return base64.urlsafe_b64encode(manifest_minified)
