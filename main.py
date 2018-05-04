@@ -20,6 +20,7 @@ import jinja2
 import webapp2
 
 import app_data
+import custom
 
 
 template_loader = jinja2.FileSystemLoader('templates')
@@ -50,7 +51,7 @@ def get_app_list():
       yield {'name': name, 'description': data.get('short_description', name)}
 
 
-def build_manifest(appname):
+def build_manifest(appname, set_icons=True):
     """Creates a manifest for the app."""
     try:
       data = app_data.APPS[appname]
@@ -63,7 +64,8 @@ def build_manifest(appname):
     if 'web_stuff' in data and data['web_stuff']:
       manifest['name'] = app_data.DEFAULT_NAME
       manifest['short_name'] = app_data.DEFAULT_SHORT_NAME
-      manifest['icons'] = app_data.DEFAULT_ICONS
+      if set_icons:
+        manifest['icons'] = app_data.DEFAULT_ICONS
       manifest['display'] = app_data.DEFAULT_DISPLAY
       manifest['start_url'] = app_data.DEFAULT_START_URL
     FIELDS = ('icons', 'display', 'related_applications',
@@ -88,6 +90,8 @@ class IndexPage(webapp2.RequestHandler):
         self.response.content_type_params = {'charset': 'utf-8'}
         template = env.get_template('index.html')
         app_list = list(get_app_list())
+        app_list.append({'name': 'custom',
+                         'description': 'App with custom manifest'})
         response_body = template.render({'apps': app_list})
         self.response.write(response_body)
 
@@ -97,7 +101,7 @@ class IndexRedirect(webapp2.RequestHandler):
     Redirect by adding a '/' to the end of the URL (so that relative links are
     correct).
     """
-    def get(self, appname):
+    def get(self):
         self.response.status = 301
         self.response.location = self.request.uri + '/'
 
@@ -129,8 +133,76 @@ class TemplatedPage(webapp2.RequestHandler):
         self.response.write(response_body)
 
 
+class CustomApp(webapp2.RequestHandler):
+    """
+    Serves URLs of the form "/custom/$B64MANIFEST/$FILENAME". The
+    $B64MANIFEST is the app's manifest file, with whitespace removed,
+    URL-safe-base-64-encoded. This allows the user to construct and
+    bookmark any manifest they like.
+    """
+    def get(self, b64manifest, filename):
+        if not filename:
+            filename = 'app.html'
+
+        mime_type, _ = mimetypes.guess_type(filename)
+
+        self.response.content_type = mime_type
+        self.response.content_type_params = {'charset': 'utf-8'}
+
+        if filename == 'manifest.json':
+            status, response_body = \
+                custom.build_custom_manifest(b64manifest, insert_icons=True)
+            self.response.status = status
+        else:
+            status, manifest_string = custom.build_custom_manifest(b64manifest)
+            self.response.status = status
+
+            if status != 200:
+                # Just show the error message.
+                response_body = manifest_string
+            else:
+                template = env.get_template(filename)
+
+                template_params = {}
+                if filename == 'app.html':
+                  template_params = custom.get_template_params(manifest_string)
+
+                response_body = template.render(template_params)
+        self.response.write(response_body)
+
+
+class CreateCustom(webapp2.RequestHandler):
+    """Redirects to a custom app URL based on the given manifest.
+
+    Accepts POST requests containing a manifest document. A GET request
+    redirects to the default custom app.
+    """
+    def get(self):
+        # Just get the default manifest ("web").
+        manifest_string = build_manifest('web', set_icons=False)
+        self.redirect_using_manifest(manifest_string)
+
+    def post(self):
+        manifest_string = self.request.POST['manifest']
+        self.redirect_using_manifest(manifest_string)
+
+    def redirect_using_manifest(self, manifest_string):
+        try:
+            b64manifest = custom.encode_manifest(manifest_string)
+        except ValueError:
+            self.response.status = 400
+            self.response.write('Invalid JSON for manifest.')
+            return
+
+        self.response.status = 301
+        self.response.location = '/custom/' + b64manifest + '/'
+
+
 app = webapp2.WSGIApplication([
     (r'/$', IndexPage),
-    (r'/([^/]*)$', IndexRedirect),
+    (r'/custom/', CreateCustom),
+    (r'/custom/[A-Za-z0-9\-_=]*', IndexRedirect),
+    (r'/[^/]*$', IndexRedirect),
+    (r'/custom/([A-Za-z0-9\-_=]*)/([^/]*)', CustomApp),
     (r'/([^/]*)/([^/]*)', TemplatedPage),
 ], debug=True)

@@ -24,6 +24,18 @@
       Web Apps</a>.
     {{ description }}
   </p>
+  {% if custom_manifest %}
+  <div class="log-section">
+    <h2>Manifest</h2>
+    <form action="/custom/" method="post">
+      <p>This app has the following custom manifest:</p>
+      <textarea cols="80" rows="20" name="manifest">{{custom_manifest}}</textarea>
+      <p>Editing the manifest will create a new custom app and redirect to
+      it. The app has the default icons unless new icons are specified.</p>
+      <p><input type="submit" value="Update" /></p>
+    </form>
+  </div>
+  {% endif %}
   {% if index_js %}<div id="logs"></div>{% endif %}
   <p>
     <a href="/">Home</a>
