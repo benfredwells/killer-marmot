@@ -107,4 +107,13 @@ async function showInstalledRelatedApps() {
 
 window.addEventListener('load', e => {
   showInstalledRelatedApps();
+
+  // Set "continue" URL for POST-and-redirect button.
+  let continueUrl = new URL(document.location);
+  continueUrl.hash = '';
+  document.querySelector('#continue_field').value = continueUrl;
+
+  if (document.location.hash == '#cameBack') {
+    document.querySelector('#cameback').style.display = 'block';
+  }
 });

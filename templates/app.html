@@ -36,7 +36,21 @@
     </form>
   </div>
   {% endif %}
-  {% if index_js %}<div id="logs"></div>{% endif %}
+  {% if index_js %}<div id="logs"></div>
+  <div class="log-section">
+    <h2>POST-and-redirect</h2>
+    <p>Click this button to send a POST request to another origin, which will
+       subsequently redirect back here:</p>
+    <p>
+      <!-- See https://github.com/piotrswigon/redirectonpost -->
+      <form method="POST" action="https://redirectonpost.appspot.com">
+        <!-- value must be set to current URL (by onload event) -->
+        <input type="hidden" id="continue_field" name="continue" />
+        <input type="submit" value="Post!" />
+      </form>
+    </p>
+    <p id="cameback" style="display: none">I see you're back!</p>
+  </div>{% endif %}
   <p>
     <a href="/">Home</a>
     ·
