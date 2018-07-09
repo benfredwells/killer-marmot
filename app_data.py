@@ -69,7 +69,7 @@ RELATED_APP_IOS = collections.OrderedDict([
 def make_icons(name='marmot', broken_sizes=False):
   """Makes the icons dict."""
   icons = []
-  for size in (None, 48, 96, 128, 200, 480):
+  for size in (None, 48, 96, 128, 200, 480, 512):
     size_suffix = '' if size is None else '_%d' % size
     sizes = ('any' if size is None else
              '%d' % size if broken_sizes else
