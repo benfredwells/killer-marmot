@@ -46,9 +46,9 @@ def get_app_page_template_params(appname):
 
 
 def get_app_list():
-    """Gets a list of apps and their descriptions."""
+    """Gets a list of apps and their explanations."""
     for name, data in sorted(app_data.APPS.iteritems()):
-      yield {'name': name, 'description': data.get('short_description', name)}
+      yield {'name': name, 'explanation': data.get('short_explanation', name)}
 
 
 def build_manifest(appname, set_icons=True):
@@ -63,6 +63,7 @@ def build_manifest(appname, set_icons=True):
     manifest = collections.OrderedDict()
     if 'web_stuff' in data and data['web_stuff']:
       manifest['name'] = app_data.DEFAULT_NAME
+      manifest['description'] = app_data.DEFAULT_DESCRIPTION
       manifest['short_name'] = app_data.DEFAULT_SHORT_NAME
       if set_icons:
         manifest['icons'] = app_data.DEFAULT_ICONS
@@ -91,7 +92,7 @@ class IndexPage(webapp2.RequestHandler):
         template = env.get_template('index.html')
         app_list = list(get_app_list())
         app_list.append({'name': 'custom',
-                         'description': 'App with custom manifest'})
+                         'explanation': 'App with custom manifest'})
         response_body = template.render({'apps': app_list})
         self.response.write(response_body)
 

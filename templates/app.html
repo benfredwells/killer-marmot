@@ -8,13 +8,13 @@
   {% if manifest_json %}<link rel="manifest" href="manifest.json">{% endif %}
   {% if viewport %}<meta name="viewport" content="{{ viewport }}">{% endif %}
   {% if referrer %}<meta name="referrer" content="origin">{% endif %}
-  <title>Killer Marmot: {{ short_description }}</title>
+  <title>Killer Marmot: {{ short_explanation }}</title>
   <!-- Origin Trial Token, feature = getInstalledRelatedApps, origin = https://killer-marmot.appspot.com, expires = 2017-10-02 -->
   <meta http-equiv="origin-trial" data-feature="getInstalledRelatedApps" data-expires="2017-10-02" content="Asx0ImrLjVZ+vCVuW82Qv3VwafGfpV4gOjw2qUsfWHVZ5vk/6pxSX+h5jIPTzxc5KeLBSZtRkckTCKeRK8+yOgUAAABfeyJvcmlnaW4iOiJodHRwczovL2tpbGxlci1tYXJtb3QuYXBwc3BvdC5jb206NDQzIiwiZmVhdHVyZSI6Ikluc3RhbGxlZEFwcCIsImV4cGlyeSI6MTUwNjkxNTgxNH0=">
 </head>
 <body>
   <div class="quote">
-    <h1>Killer Marmot: {{ short_description }}</h1>
+    <h1>Killer Marmot: {{ short_explanation }}</h1>
     <div class="spacer"></div>
     <p>Marmots are the best.</p>
     <img src="marmot_96.png">
@@ -22,7 +22,7 @@
   <p>
     This is a test for <a href="https://developers.google.com/web/progressive-web-apps/">Progressive
       Web Apps</a>.
-    {{ description }}
+    {{ explanation }}
   </p>
   {% if custom_manifest %}
   <div class="log-section">

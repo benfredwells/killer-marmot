@@ -27,8 +27,8 @@ def get_template_params(manifest_string):
     """Get the template parameters for a custom app page."""
     params = app_data.APPS['web'].copy()
     params['viewport'] = app_data.DEFAULT_VIEWPORT
-    params['description'] = 'The manifest is customized via the URL.'
-    params['short_description'] = 'Custom app'
+    params['explanation'] = 'The manifest is customized via the URL.'
+    params['short_explanation'] = 'Custom app'
     params['custom_manifest'] = manifest_string
     return params
 

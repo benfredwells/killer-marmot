@@ -26,6 +26,8 @@ DEFAULT_VIEWPORT = 'width=device-width, initial-scale=1'
 # Manifest defaults.
 DEFAULT_NAME = 'Killer Marmot'
 DEFAULT_SHORT_NAME = 'Marmot'
+DEFAULT_DESCRIPTION = ('A Progressive Web App for testing Progressive Web App '
+                       'support across various browsers.')
 DEFAULT_START_URL = '.'
 DEFAULT_DISPLAY = 'standalone'
 RELATED_APP_PLAY = collections.OrderedDict([
@@ -88,7 +90,8 @@ DEFAULT_ICONS = make_icons()
 
 
 # Each app is represented by a dictionary with the following optional fields:
-# - description: String description of the app.
+# - explanation: String explanation of the app (used in the HTML pages, not the
+#   manifest).
 # - index_js: String filename of index.js. If omitted, no script. Can use
 #   DEFAULT_INDEX_JS.
 # - manifest_json: Boolean; whether to link to manifest.json.
@@ -104,17 +107,17 @@ DEFAULT_ICONS = make_icons()
 # - related_applications: List of dicts; manifest member.
 APPS = {
     'ios_and_play': {
-        'description': 'Site with a related iOS and play app in the manifest.',
-        'short_description': 'iOS app, also a play app',
+        'explanation': 'Site with a related iOS and play app in the manifest.',
+        'short_explanation': 'iOS app, also a play app',
         'manifest_json': True,
         'prefer_related_applications': True,
         'related_applications': [RELATED_APP_IOS, RELATED_APP_PLAY],
     },
 
     'ios_and_web': {
-        'description': 'Site which is a valid web app, but has a preferred iOS app '
+        'explanation': 'Site which is a valid web app, but has a preferred iOS app '
                        'in its manifest.',
-        'short_description': 'iOS app, also a valid web app',
+        'short_explanation': 'iOS app, also a valid web app',
         'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'web_stuff': True,
@@ -123,32 +126,32 @@ APPS = {
     },
 
     'ios': {
-        'description': 'Site with a related iOS app in the manifest.',
-        'short_description': 'iOS app',
+        'explanation': 'Site with a related iOS app in the manifest.',
+        'short_explanation': 'iOS app',
         'manifest_json': True,
         'prefer_related_applications': True,
         'related_applications': [RELATED_APP_IOS],
     },
 
     'none': {
-        'description': 'Site with no manifest.',
-        'short_description': 'No related apps',
+        'explanation': 'Site with no manifest.',
+        'short_explanation': 'No related apps',
         'index_js': DEFAULT_INDEX_JS,
     },
 
     'play_and_ios': {
-        'description': 'Site with a related play app, and iOS app, in its '
+        'explanation': 'Site with a related play app, and iOS app, in its '
                        'manifest.',
-        'short_description': 'Play app, with iOS app as well',
+        'short_explanation': 'Play app, with iOS app as well',
         'manifest_json': True,
         'prefer_related_applications': True,
         'related_applications': [RELATED_APP_PLAY, RELATED_APP_IOS],
     },
 
     'play_and_web': {
-        'description': 'Site which is a valid web app, but has a preferred play '
+        'explanation': 'Site which is a valid web app, but has a preferred play '
                        'app in its manifest.',
-        'short_description': 'Play app, also a valid web app',
+        'short_explanation': 'Play app, also a valid web app',
         'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'web_stuff': True,
@@ -157,8 +160,8 @@ APPS = {
     },
 
     'play': {
-        'description': 'Site with a related play app in the manifest.',
-        'short_description': 'Play app',
+        'explanation': 'Site with a related play app in the manifest.',
+        'short_explanation': 'Play app',
         'manifest_json': True,
         'index_js': DEFAULT_INDEX_JS,
         'prefer_related_applications': True,
@@ -166,8 +169,8 @@ APPS = {
     },
 
     'play_instantapp': {
-        'description': 'Site with a related play instant app in the manifest.',
-        'short_description': 'Play instant app',
+        'explanation': 'Site with a related play instant app in the manifest.',
+        'short_explanation': 'Play instant app',
         'manifest_json': True,
         'index_js': DEFAULT_INDEX_JS,
         'prefer_related_applications': True,
@@ -177,9 +180,9 @@ APPS = {
     },
 
     'play_non_google_link_referrer': {
-        'description': 'Site with a related play app (non-Play-Store referrer) '
+        'explanation': 'Site with a related play app (non-Play-Store referrer) '
                        'in the manifest.',
-        'short_description': 'Play app with non-Google referrer',
+        'short_explanation': 'Play app with non-Google referrer',
         'manifest_json': True,
         'index_js': DEFAULT_INDEX_JS,
         'referrer': True,
@@ -188,9 +191,9 @@ APPS = {
     },
 
     'play_referrer': {
-        'description': 'Site with a related play app (Play Store referrer) in '
+        'explanation': 'Site with a related play app (Play Store referrer) in '
                        'the manifest.',
-        'short_description': 'Play app with referrer',
+        'short_explanation': 'Play app with referrer',
         'manifest_json': True,
         'index_js': DEFAULT_INDEX_JS,
         'referrer': True,
@@ -199,17 +202,17 @@ APPS = {
     },
 
     'web': {
-        'description': 'Site which is a valid web app.',
-        'short_description': 'Web app',
+        'explanation': 'Site which is a valid web app.',
+        'short_explanation': 'Web app',
         'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'web_stuff': True,
     },
 
     'web_and_ios': {
-        'description': 'Site which is a valid web app, and also with a '
+        'explanation': 'Site which is a valid web app, and also with a '
                        'non-preferred iOS app in its manifest.',
-        'short_description': 'Web app, with iOS app as well',
+        'short_explanation': 'Web app, with iOS app as well',
         'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'web_stuff': True,
@@ -217,9 +220,9 @@ APPS = {
     },
 
     'web_and_play': {
-        'description': 'Site which is a valid web, and also with a non-preferred '
+        'explanation': 'Site which is a valid web, and also with a non-preferred '
                        'play app in its manifest.',
-        'short_description': 'Web app, with play app as well',
+        'short_explanation': 'Web app, with play app as well',
         'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'web_stuff': True,
@@ -227,8 +230,8 @@ APPS = {
     },
 
     'web_broken': {
-        'description': 'Site which is a broken web app.',
-        'short_description': 'Web app, broken',
+        'explanation': 'Site which is a broken web app.',
+        'short_explanation': 'Web app, broken',
         'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'viewport': 'minimum-scale=0.6, maximum-scale=5.0, '
@@ -240,8 +243,8 @@ APPS = {
     },
 
     'web_no_meta_viewport': {
-        'description': 'Site which is missing a viewport.',
-        'short_description': 'Web app, with no meta-viewport',
+        'explanation': 'Site which is missing a viewport.',
+        'short_explanation': 'Web app, with no meta-viewport',
         'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'viewport': None,
@@ -249,16 +252,16 @@ APPS = {
     },
 
     'web_redispatch': {
-        'description': 'Site which is a valid web app.',
-        'short_description': 'Web app, testing beforeinstallprompt',
+        'explanation': 'Site which is a valid web app.',
+        'short_explanation': 'Web app, testing beforeinstallprompt',
         'index_js': 'index_redispatch.js',
         'manifest_json': True,
         'web_stuff': True,
     },
 
     'web_svg': {
-        'description': 'Site which is a valid web app and has an SVG icon.',
-        'short_description': 'Web app with SVG icon',
+        'explanation': 'Site which is a valid web app and has an SVG icon.',
+        'short_explanation': 'Web app with SVG icon',
         'index_js': DEFAULT_INDEX_JS,
         'manifest_json': True,
         'web_stuff': True,
