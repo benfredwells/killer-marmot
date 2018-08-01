@@ -34,46 +34,71 @@ function createLogSection(title) {
   return new LogSection(document.querySelector('#logs'), title);
 }
 
-async function logUserChoice(section, e) {
-  section.logMessage('userChoice is: ' + e.userChoice);
-  await sleep(1000);
-  if (!e) {
-    section.logMessage('No event????', true);
-    return;
-  }
+// Get the current document's query parameters.
+// Expected query parameters:
+// - action={'none', 'cancel', 'preempt', 'auto', 'manual'}: beforeinstallprompt
+//          behavior.
+//     none: do nothing.
+//     cancel: call preventDefault().
+//     preempt: call prompt() without preventDefault().
+//     auto: call preventDefault(), wait, then call prompt().
+//     manual (default): call preventDefault(), then add a button which calls
+//         prompt().
+// - timer=<int>: time to wait in seconds, if action is 'preempt' or 'auto'.
+QUERY_PARAMS = {};
+{
+  for (const [n, v] of new URL(document.location).searchParams)
+    QUERY_PARAMS[n] = v;
 
-  section.logMessage('Timer time!');
-  try {
-    let {platform, outcome} = await e.userChoice;
-    section.logMessage('platform is: \'' + platform + '\'');
-    section.logMessage('outcome is: \'' + outcome + '\'');
-  } catch (e) {
-    section.logMessage('Boo! an error', true);
-  }
+  // Set defaults.
+  if (!QUERY_PARAMS.action)
+    QUERY_PARAMS.action = 'manual';
+  if (!QUERY_PARAMS.timer)
+    QUERY_PARAMS.timer = 1;
 }
 
 window.addEventListener('beforeinstallprompt', async e => {
   let logs = createLogSection('beforeinstallprompt');
-  logs.logMessage('Got beforeinstallprompt!!!');
-  logs.logMessage('platforms: ' + e.platforms);
-  logs.logMessage('Should I cancel it? Hmmmm .... ');
+  logs.logMessage(
+      'Got beforeinstallprompt! {platforms: ' + JSON.stringify(e.platforms) +
+      '}');
 
-  if (Math.random() > 0.5) {
-    logs.logMessage('Yeah why not. Cancelled!');
+  const action = QUERY_PARAMS.action;
+  const timer = QUERY_PARAMS.timer;
+
+  if (action !== 'none' && action !== 'preempt') {
+    logs.logMessage('Calling preventDefault().');
     e.preventDefault();
-    await logs.logClickableLink('Show the prompt after all.');
-    try {
-      await e.prompt();
-      logs.logMessage('prompt() resolved');
-    } catch (ex) {
-      logs.logMessage('prompt() rejected with ' + ex, true);
-    }
-    logUserChoice(logs, e);
-    return;
   }
 
-  logs.logMessage('No, let\'s see the banner');
-  logUserChoice(logs, e);
+  if (action === 'manual') {
+    await logs.logClickableLink('Show the prompt after all.');
+  } else if (action === 'auto' && timer > 0) {
+    logs.logMessage(`Sleeping for ${timer} second${timer == '1' ? '' : 's'}.`);
+    await sleep(timer * 1000);
+  }
+
+  if (action === 'preempt' || action === 'auto' || action === 'manual') {
+    if (action !== 'manual')
+      logs.logMessage('Explicitly calling prompt().');
+    try {
+      const r = await e.prompt();
+      if (r === e.userChoice)
+        r = '[userChoice promise]';
+      logs.logMessage('prompt() resolved: ' + r);
+    } catch (ex) {
+      logs.logMessage('prompt() rejected: ' + ex, true);
+    }
+  }
+
+  try {
+    let {platform, outcome} = await e.userChoice;
+    logs.logMessage(
+        `userChoice resolved: \{platform: ${JSON.stringify(platform)}, ` +
+        `outcome: ${JSON.stringify(outcome)}\}`);
+  } catch (e) {
+    logs.logMessage('userChoice rejected: ' + e, true);
+  }
 });
 
 window.addEventListener('appinstalled', e => {
@@ -116,4 +141,7 @@ window.addEventListener('load', e => {
   if (document.location.hash == '#cameBack') {
     document.querySelector('#cameback').style.display = 'block';
   }
+
+  document.querySelector('#bip_' + QUERY_PARAMS.action).checked = true;
+  document.querySelector('#bip_timer').value = QUERY_PARAMS.timer;
 });
