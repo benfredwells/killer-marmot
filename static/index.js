@@ -35,14 +35,6 @@ function createLogSection(title) {
 }
 
 async function logUserChoice(section, e) {
-  section.logMessage('userChoice is: ' + e.userChoice);
-  await sleep(1000);
-  if (!e) {
-    section.logMessage('No event????', true);
-    return;
-  }
-
-  section.logMessage('Timer time!');
   try {
     let {platform, outcome} = await e.userChoice;
     section.logMessage('platform is: \'' + platform + '\'');
@@ -73,6 +65,8 @@ window.addEventListener('beforeinstallprompt', async e => {
   }
 
   logs.logMessage('No, let\'s see the banner');
+  await sleep(1000);
+  logs.logMessage('Timer time!');
   logUserChoice(logs, e);
 });
 
