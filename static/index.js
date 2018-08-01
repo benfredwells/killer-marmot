@@ -46,6 +46,12 @@ QUERY_PARAMS = {};
 {
   for (const [n, v] of new URL(document.location).searchParams)
     QUERY_PARAMS[n] = v;
+
+  // Set defaults.
+  if (!QUERY_PARAMS.action)
+    QUERY_PARAMS.action = 'manual';
+  if (!QUERY_PARAMS.timer)
+    QUERY_PARAMS.timer = 0;
 }
 
 window.addEventListener('beforeinstallprompt', async e => {
@@ -54,8 +60,8 @@ window.addEventListener('beforeinstallprompt', async e => {
       'Got beforeinstallprompt! {platforms: ' + JSON.stringify(e.platforms) +
       '}');
 
-  const action = QUERY_PARAMS.action || 'manual';
-  const timer = QUERY_PARAMS.timer || 0;
+  const action = QUERY_PARAMS.action;
+  const timer = QUERY_PARAMS.timer;
 
   if (action !== 'none') {
     logs.logMessage('Calling preventDefault().');
@@ -132,4 +138,7 @@ window.addEventListener('load', e => {
   if (document.location.hash == '#cameBack') {
     document.querySelector('#cameback').style.display = 'block';
   }
+
+  document.querySelector('#bip_' + QUERY_PARAMS.action).checked = true;
+  document.querySelector('#bip_timer').value = QUERY_PARAMS.timer;
 });
