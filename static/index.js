@@ -34,6 +34,13 @@ function createLogSection(title) {
   return new LogSection(document.querySelector('#logs'), title);
 }
 
+// Get the current document's query parameters.
+QUERY_PARAMS = {};
+{
+  for (const [n, v] of new URL(document.location).searchParams)
+    QUERY_PARAMS[n] = v;
+}
+
 async function logUserChoice(section, e) {
   try {
     let {platform, outcome} = await e.userChoice;
@@ -48,9 +55,10 @@ window.addEventListener('beforeinstallprompt', async e => {
   let logs = createLogSection('beforeinstallprompt');
   logs.logMessage('Got beforeinstallprompt!!!');
   logs.logMessage('platforms: ' + e.platforms);
+  const timer = QUERY_PARAMS.timer;
   logs.logMessage('Should I cancel it? Hmmmm .... ');
 
-  if (Math.random() > 0.5) {
+  if (timer === undefined) {
     logs.logMessage('Yeah why not. Cancelled!');
     e.preventDefault();
     await logs.logClickableLink('Show the prompt after all.');
@@ -64,9 +72,15 @@ window.addEventListener('beforeinstallprompt', async e => {
     return;
   }
 
-  logs.logMessage('No, let\'s see the banner');
-  await sleep(1000);
-  logs.logMessage('Timer time!');
+  if (timer > 0) {
+    logs.logMessage(
+        'No, let\'s see the banner in ' + timer +
+        ' shakes of a marmot\'s tail.');
+    await sleep(timer * 1000);
+    logs.logMessage('Timer time!');
+  } else {
+    logs.logMessage('No, let\'s see the banner NOW.');
+  }
   logUserChoice(logs, e);
 });
 
