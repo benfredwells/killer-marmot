@@ -35,53 +35,61 @@ function createLogSection(title) {
 }
 
 // Get the current document's query parameters.
+// Expected query parameters:
+// - action={'none', 'cancel', 'auto', 'manual'}: beforeinstallprompt behavior.
+//     none: wait, then do nothing.
+//     cancel: cancel event, wait, then do nothing.
+//     auto: cancel event, wait, then call prompt().
+//     manual (default): cancel event, then add a button which calls prompt().
+// - timer=<int>: time to wait in seconds, if action is not 'manual'.
 QUERY_PARAMS = {};
 {
   for (const [n, v] of new URL(document.location).searchParams)
     QUERY_PARAMS[n] = v;
 }
 
-async function logUserChoice(section, e) {
-  try {
-    let {platform, outcome} = await e.userChoice;
-    section.logMessage('platform is: \'' + platform + '\'');
-    section.logMessage('outcome is: \'' + outcome + '\'');
-  } catch (e) {
-    section.logMessage('Boo! an error', true);
-  }
-}
-
 window.addEventListener('beforeinstallprompt', async e => {
   let logs = createLogSection('beforeinstallprompt');
-  logs.logMessage('Got beforeinstallprompt!!!');
-  logs.logMessage('platforms: ' + e.platforms);
-  const timer = QUERY_PARAMS.timer;
-  logs.logMessage('Should I cancel it? Hmmmm .... ');
+  logs.logMessage(
+      'Got beforeinstallprompt! {platforms: ' + JSON.stringify(e.platforms) +
+      '}');
 
-  if (timer === undefined) {
-    logs.logMessage('Yeah why not. Cancelled!');
+  const action = QUERY_PARAMS.action || 'manual';
+  const timer = QUERY_PARAMS.timer || 0;
+
+  if (action !== 'none') {
+    logs.logMessage('Calling preventDefault().');
     e.preventDefault();
-    await logs.logClickableLink('Show the prompt after all.');
-    try {
-      await e.prompt();
-      logs.logMessage('prompt() resolved');
-    } catch (ex) {
-      logs.logMessage('prompt() rejected with ' + ex, true);
-    }
-    logUserChoice(logs, e);
-    return;
   }
 
-  if (timer > 0) {
-    logs.logMessage(
-        'No, let\'s see the banner in ' + timer +
-        ' shakes of a marmot\'s tail.');
+  if (action === 'manual') {
+    await logs.logClickableLink('Show the prompt after all.');
+  } else if (timer > 0) {
+    logs.logMessage(`Sleeping for ${timer} second${timer == '1' ? '' : 's'}.`);
     await sleep(timer * 1000);
-    logs.logMessage('Timer time!');
-  } else {
-    logs.logMessage('No, let\'s see the banner NOW.');
   }
-  logUserChoice(logs, e);
+
+  if (action === 'auto' || action === 'manual') {
+    if (action === 'auto')
+      logs.logMessage('Explicitly calling prompt().');
+    try {
+      const r = await e.prompt();
+      if (r === e.userChoice)
+        r = '[userChoice promise]';
+      logs.logMessage('prompt() resolved: ' + r);
+    } catch (ex) {
+      logs.logMessage('prompt() rejected: ' + ex, true);
+    }
+  }
+
+  try {
+    let {platform, outcome} = await e.userChoice;
+    logs.logMessage(
+        `userChoice resolved: \{platform: ${JSON.stringify(platform)}, ` +
+        `outcome: ${JSON.stringify(outcome)}\}`);
+  } catch (e) {
+    logs.logMessage('userChoice rejected: ' + e, true);
+  }
 });
 
 window.addEventListener('appinstalled', e => {
