@@ -52,7 +52,7 @@ QUERY_PARAMS = {};
   if (!QUERY_PARAMS.action)
     QUERY_PARAMS.action = 'manual';
   if (!QUERY_PARAMS.timer)
-    QUERY_PARAMS.timer = 0;
+    QUERY_PARAMS.timer = 1;
 }
 
 window.addEventListener('beforeinstallprompt', async e => {
