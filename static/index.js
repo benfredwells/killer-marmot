@@ -37,11 +37,12 @@ function createLogSection(title) {
 // Get the current document's query parameters.
 // Expected query parameters:
 // - action={'none', 'cancel', 'auto', 'manual'}: beforeinstallprompt behavior.
-//     none: wait, then do nothing.
-//     cancel: cancel event, wait, then do nothing.
-//     auto: cancel event, wait, then call prompt().
-//     manual (default): cancel event, then add a button which calls prompt().
-// - timer=<int>: time to wait in seconds, if action is not 'manual'.
+//     none: do nothing.
+//     cancel: call preventDefault().
+//     auto: call preventDefault(), wait, then call prompt().
+//     manual (default): call preventDefault(), then add a button which calls
+//         prompt().
+// - timer=<int>: time to wait in seconds, if action is 'auto'.
 QUERY_PARAMS = {};
 {
   for (const [n, v] of new URL(document.location).searchParams)
@@ -63,14 +64,14 @@ window.addEventListener('beforeinstallprompt', async e => {
   const action = QUERY_PARAMS.action;
   const timer = QUERY_PARAMS.timer;
 
-  if (action !== 'none') {
+  if (action !== 'none' && action !== 'preempt') {
     logs.logMessage('Calling preventDefault().');
     e.preventDefault();
   }
 
   if (action === 'manual') {
     await logs.logClickableLink('Show the prompt after all.');
-  } else if (timer > 0) {
+  } else if (action === 'auto' && timer > 0) {
     logs.logMessage(`Sleeping for ${timer} second${timer == '1' ? '' : 's'}.`);
     await sleep(timer * 1000);
   }

@@ -56,13 +56,13 @@
     <form method="GET">
       <p>
         <input type="radio" name="action" id="bip_none" value="none">
-        <label for="bip_none">None (wait, then do nothing).</label><br>
+        <label for="bip_none">None (do nothing).</label><br>
         <input type="radio" name="action" id="bip_cancel" value="cancel">
-        <label for="bip_cancel">Cancel (cancel event, wait, then do nothing).</label><br>
+        <label for="bip_cancel">Cancel (call preventDefault).</label><br>
         <input type="radio" name="action" id="bip_auto" value="auto">
-        <label for="bip_auto">Auto (cancel event, wait, then call prompt()).</label><br>
+        <label for="bip_auto">Auto (call preventDefault, wait, then call prompt).</label><br>
         <input type="radio" name="action" id="bip_manual" value="manual">
-        <label for="bip_manual">Manual (cancel event, then add a button which calls prompt()).</label><br>
+        <label for="bip_manual">Manual (call preventDefault, then add a button which calls prompt).</label><br>
       </p>
       <p>Timer: <input name="timer" id="bip_timer" size="1" /> seconds</p>
       <p><input type="submit" value="Try it" /></p>
