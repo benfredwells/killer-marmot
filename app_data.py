@@ -88,6 +88,15 @@ def make_icons(name='marmot', broken_sizes=False):
 
 DEFAULT_ICONS = make_icons()
 
+# Special case: Add the "maskable" icon.
+DEFAULT_ICONS.append(collections.OrderedDict([
+    ('src', 'maskable.png'),
+    ('sizes', '432x432'),
+    ('type', 'image/png'),
+    ('purpose', 'maskable'),
+    ('density', 1),
+]))
+
 
 # Each app is represented by a dictionary with the following optional fields:
 # - explanation: String explanation of the app (used in the HTML pages, not the
