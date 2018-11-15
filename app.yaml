@@ -22,7 +22,7 @@ handlers:
   script: main.app
   secure: always
 # The other files are templated, changing based on the directory name.
-- url: /[a-z_]*(/(|manifest\.json))?
+- url: /[a-z_]*(/(|manifest\.json|maskable.html))?
   script: main.app
   secure: always
 
