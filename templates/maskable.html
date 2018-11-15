@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="icon" href="marmot_48.png">
+  {% if manifest_json %}<link rel="manifest" href="manifest.json">{% endif %}
+  {% if viewport %}<meta name="viewport" content="{{ viewport }}">{% endif %}
+  {% if referrer %}<meta name="referrer" content="origin">{% endif %}
+  <title>Killer Marmot: Maskable icon guide</title>
+</head>
+<body>
+  <div class="quote">
+    <h1>Killer Marmot: Maskable icon guide</h1>
+    <div class="spacer"></div>
+    <p>Maskable icons are the best.</p>
+    <img src="marmot_96.png">
+  </div>
+  <p>This app has a "<a href="https://www.w3.org/TR/appmanifest/#icon-masks">maskable icon</a>",
+     which is the following image:</p>
+  <p><img src="maskable.png"></p>
+  <p>If the operating system supports maskable icons, the app icon should be the
+     above picture, with the outer part cropped away in a platform-defined
+     shape. The cropping <strong>must not</strong> extend beyond the yellow area
+     in this diagram:</p>
+  <p><img src="maskable-measurements.svg" width="432"></p>
+  <p>
+    <a href="/">Home</a>
+    ·
+    <a href=".">Up</a>
+    ·
+    <a href="https://github.com/benfredwells/killer-marmot">Fork me on
+      GitHub</a>
+    ·
+    Copyright 2017 Google Inc.
+  </p>
+</body>
+</html>

@@ -126,9 +126,9 @@ class TemplatedPage(webapp2.RequestHandler):
         else:
             template = env.get_template(filename)
 
-            template_params = {}
-            if filename == 'app.html':
-              template_params = get_app_page_template_params(appname)
+            # Pages other than the app page (like maskable.html) also use the
+            # app page template params.
+            template_params = get_app_page_template_params(appname)
 
             response_body = template.render(template_params)
         self.response.write(response_body)
