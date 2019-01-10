@@ -71,9 +71,11 @@
     </form>
   </div>{% endif %}
   {% if index_js %}<div class="log-section" id="badge_section">
-    <h2>Badging</h2>
+    <h2>Badging: Set/Clear the PWA's badge.</h2>
     <p><input name="badge" id="badge_content" size="1"/> <button id="set_badge">Set Badge</button></p>
     <p><button id="clear_badge">Clear Badge</button></p>
+    <a href="https://github.com/WICG/badging/blob/master/explainer.md">Explanation of Badging</a>
+    <p>Note: this will only work if the PWA is installed and running in a window.</p>
   </div>{% endif %}
   <p><a href="maskable.html">Explanation of maskable icons</a></p>
   <p>

@@ -154,7 +154,6 @@ const setupBadgeSection = () => {
   if (!badgeSection) {
     return;
   }
-
   // Check the API is available.
   if (!window.Badge) {
     console.log("Badge API not detected :'(");
