@@ -165,7 +165,17 @@ const setupBadgeSection = () => {
   }
 
   const setBadgeButton = document.querySelector('#set_badge');
-  setBadgeButton.addEventListener('click', () => window.Badge.set(document.querySelector('#badge_content').value));
+  setBadgeButton.addEventListener('click', () => {
+    const badgeContent = document.querySelector('#badge_content').value;
+    // If the badge content is empty set a flag.
+    if (badgeContent === '') {
+      window.Badge.set();
+    }
+    // Otherwise, set the badge to our badge content.
+    else {
+      window.Badge.set(badgeContent);
+    }
+  });
 
   const clearBadgeButton = document.querySelector('#clear_badge');
   clearBadgeButton.addEventListener('click', window.Badge.clear);
