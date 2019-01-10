@@ -70,6 +70,11 @@
       <p><input type="submit" value="Try it" /></p>
     </form>
   </div>{% endif %}
+  {% if index_js %}<div class="log-section" id="badge_section">
+    <h2>Badging</h2>
+    <p><input name="badge" id="badge_content" size="1"/> <button id="set_badge">Set Badge</button></p>
+    <p><button id="clear_badge">Clear Badge</button></p>
+  </div>{% endif %}
   <p><a href="maskable.html">Explanation of maskable icons</a></p>
   <p>
     <a href="/">Home</a>

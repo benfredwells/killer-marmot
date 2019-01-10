@@ -144,4 +144,29 @@ window.addEventListener('load', e => {
 
   document.querySelector('#bip_' + QUERY_PARAMS.action).checked = true;
   document.querySelector('#bip_timer').value = QUERY_PARAMS.timer;
+
+  setupBadgeSection();
 });
+
+const setupBadgeSection = () => {
+  const badgeSection = document.querySelector('#badge_section');
+
+  if (!badgeSection) {
+    return;
+  }
+
+  // Check the API is available.
+  if (!window.Badge) {
+    console.log("Badge API not detected :'(");
+
+    // If the Badging API is not available, hide the section.
+    badgeSection.remove();
+    return;
+  }
+
+  const setBadgeButton = document.querySelector('#set_badge');
+  setBadgeButton.addEventListener('click', () => window.Badge.set(document.querySelector('#badge_content').value));
+
+  const clearBadgeButton = document.querySelector('#clear_badge');
+  clearBadgeButton.addEventListener('click', window.Badge.clear);
+};
