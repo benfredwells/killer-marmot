@@ -11,6 +11,7 @@
   <title>Killer Marmot: {{ short_explanation }}</title>
   <!-- Origin Trial Token, feature = getInstalledRelatedApps, origin = https://killer-marmot.appspot.com, expires = 2017-10-02 -->
   <meta http-equiv="origin-trial" data-feature="getInstalledRelatedApps" data-expires="2017-10-02" content="Asx0ImrLjVZ+vCVuW82Qv3VwafGfpV4gOjw2qUsfWHVZ5vk/6pxSX+h5jIPTzxc5KeLBSZtRkckTCKeRK8+yOgUAAABfeyJvcmlnaW4iOiJodHRwczovL2tpbGxlci1tYXJtb3QuYXBwc3BvdC5jb206NDQzIiwiZmVhdHVyZSI6Ikluc3RhbGxlZEFwcCIsImV4cGlyeSI6MTUwNjkxNTgxNH0=">
+  <meta http-equiv="origin-trial" data-feature="badging" data-expires="2019-03-06" content="AmyTX2Vd6c2SmVbendI+N+MY4Vo/8bf8Xwsj8GUrxv2fF7J7DnOZa6IoQeh6Ng9Z0hZ5G21ATwp40GHY70YpNg4AAABaeyJvcmlnaW4iOiJodHRwczovL2tpbGxlci1tYXJtb3QuYXBwc3BvdC5jb206NDQzIiwiZmVhdHVyZSI6IkJhZGdpbmciLCJleHBpcnkiOjE1NTE4MjQyMjJ9">
 </head>
 <body>
   <div class="quote">
@@ -69,6 +70,13 @@
       <p>Timer: <input name="timer" id="bip_timer" size="1" /> seconds</p>
       <p><input type="submit" value="Try it" /></p>
     </form>
+  </div>{% endif %}
+  {% if index_js %}<div class="log-section" id="badge_section">
+    <h2>Badging: Set/Clear the PWA's badge.</h2>
+    <p><input name="badge" id="badge_content" size="1"/> <button id="set_badge">Set Badge</button></p>
+    <p><button id="clear_badge">Clear Badge</button></p>
+    <a href="https://github.com/WICG/badging/blob/master/explainer.md">Explanation of Badging</a>
+    <p>Note: this will only work if the PWA is installed and running in a window.</p>
   </div>{% endif %}
   <p><a href="maskable.html">Explanation of maskable icons</a></p>
   <p>
