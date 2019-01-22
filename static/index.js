@@ -150,12 +150,13 @@ window.addEventListener('load', e => {
 
 const setupBadgeSection = () => {
   const badgeSection = document.querySelector('#badge_section');
+  const badgeAPI = window.Badge || window.ExperimentalBadge;
 
   if (!badgeSection) {
     return;
   }
-  // Check the API is available.
-  if (!window.Badge) {
+  // Check that the API is available.
+  if (!badgeAPI) {
     console.log("Badge API not detected :'(");
 
     // If the Badging API is not available, hide the section.
@@ -168,14 +169,14 @@ const setupBadgeSection = () => {
     const badgeContent = document.querySelector('#badge_content').value;
     // If the badge content is empty set a flag.
     if (badgeContent === '') {
-      window.Badge.set();
+      badgeAPI.set();
     }
     // Otherwise, set the badge to our badge content.
     else {
-      window.Badge.set(badgeContent);
+      badgeAPI.set(badgeContent);
     }
   });
 
   const clearBadgeButton = document.querySelector('#clear_badge');
-  clearBadgeButton.addEventListener('click', window.Badge.clear);
+  clearBadgeButton.addEventListener('click', badgeAPI.clear);
 };
