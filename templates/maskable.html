@@ -9,7 +9,11 @@
   <title>Killer Marmot: Maskable icon guide</title>
   <script>
     if ('serviceWorker' in navigator) {
+      // Register our service worker for just this page.
       navigator.serviceWorker.register('sw-maskable.js', { scope: 'maskable.html' });
+
+      // Register our application wide service worker.
+      navigator.serviceWorker.register('sw.js');
     }
   </script>
 </head>
