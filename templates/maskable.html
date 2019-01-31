@@ -7,6 +7,11 @@
   {% if viewport %}<meta name="viewport" content="{{ viewport }}">{% endif %}
   {% if referrer %}<meta name="referrer" content="origin">{% endif %}
   <title>Killer Marmot: Maskable icon guide</title>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw-maskable.js', { scope: 'maskable.html' });
+    }
+  </script>
 </head>
 <body>
   <div class="quote">
