@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="icon" href="marmot_48.png">
+  {% if manifest_json %}<link rel="manifest" href="manifest.json">{% endif %}
+  {% if viewport %}<meta name="viewport" content="{{ viewport }}">{% endif %}
+  {% if referrer %}<meta name="referrer" content="origin">{% endif %}
+  <title>Killer Marmot: Maskable icon guide</title>
+  <script>
+    const reload = () => {
+      const appSWDelayInput = document.getElementById('app-sw-delay');
+      const pageSWDelayInput = document.getElementById('page-sw-delay');
+
+      const queryString = `?app-sw-delay=${appSWDelayInput.value}&page-sw-delay=${pageSWDelayInput.value}`;
+      window.location.search = queryString;
+    };
+
+    const delayedRegister = (serviceWorkerParams) => {
+        setTimeout(async () => {
+         if ('serviceWorker' in navigator) {
+             await navigator.serviceWorker.register(serviceWorkerParams.name, serviceWorkerParams.options);
+             console.log("Registered service worker " + serviceWorkerParams.name);
+         }
+        }, serviceWorkerParams.delay);
+    };
+
+    const unregisterWorkersAndReload = async () => {
+        if (!('serviceWorker' in navigator)) {
+          return;
+        }
+
+        const registrations = await navigator.serviceWorker.getRegistrations();
+
+        for (const registration of registrations) {
+            console.log(`Unregistering ${registration.active.scriptURL}...`);
+            const result = await registration.unregister();
+            console.log(`Unregister ${result ? "succeeded" : "failed"}`);
+        }
+
+        reload();
+    };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const appSWDelay = urlParams.get('app-sw-delay') || 0;
+    const pageSWDelay = urlParams.get('page-sw-delay') || 0;
+
+    delayedRegister({
+        name: 'multi-sw.js',
+        options: { scope: 'multi-sw.html' },
+        delay: pageSWDelay
+    });
+
+    delayedRegister({
+        name: 'sw.js',
+        delay: appSWDelay
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const appSWDelayInput = document.getElementById('app-sw-delay');
+      const pageSWDelayInput = document.getElementById('page-sw-delay');
+
+      appSWDelayInput.setAttribute('value', appSWDelay);
+      pageSWDelayInput.setAttribute('value', pageSWDelay);
+    })
+  </script>
+</head>
+<body>
+  <div class="quote">
+    <h1>Killer Marmot: Multiple Service Workers</h1>
+    <div class="spacer"></div>
+    <p>Service workers everywhere!.</p>
+    <img src="marmot_96.png">
+  </div>
+  <p>This page registers multiple service workers for different scopes. One is app wide and one is just for this page.</p>
+  <p>The app should be installable when the app wide service worker has been installed (and not before).</p>
+  <p>
+      <p>
+        <label for="app-sw-delay">Delay registering app service worker for</label>
+        <input name="app-sw-delay" id="app-sw-delay" size="10"/>
+        ms
+      </p>    
+      <div class="spacer"></div>
+
+      <p>
+        <label for="app-sw-delay">Delay registering page service worker for</label>
+        <input name="page-sw-delay" id="page-sw-delay" size="10"/>
+        ms
+      </p> 
+      <p>
+        <button onclick="unregisterWorkersAndReload()">Unregister Workers and Reload</button>
+    </p>
+  </p>
+  <p>
+    <a href="/">Home</a>
+    ·
+    <a href=".">Up</a>
+    ·
+    <a href="https://github.com/benfredwells/killer-marmot">Fork me on
+      GitHub</a>
+    ·
+    Copyright 2018 Google Inc.
+  </p>
+</body>
+</html>
