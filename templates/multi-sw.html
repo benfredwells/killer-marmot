@@ -42,18 +42,18 @@
     };
 
     const urlParams = new URLSearchParams(window.location.search);
-    const appSWDelay = urlParams.get('app-sw-delay');
-    const pageSWDelay = urlParams.get('page-sw-delay');
+    const appSWDelay = urlParams.get('app-sw-delay') || 0;
+    const pageSWDelay = urlParams.get('page-sw-delay') || 0;
 
     delayedRegister({
-        name: 'sw-multi.js',
+        name: 'multi-sw.js',
         options: { scope: 'multi-sw.html' },
-        delay: pageSWDelay || 0
+        delay: pageSWDelay
     });
 
     delayedRegister({
         name: 'sw.js',
-        delay: appSWDelay || 0
+        delay: appSWDelay
     });
 
     document.addEventListener('DOMContentLoaded', () => {

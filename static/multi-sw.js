@@ -5,7 +5,7 @@ importScripts('serviceworker-cache-polyfill.js');
 // nested service workers.
 let CACHE_NAME = 'killer-marmot-maskable-v1';
 let urlsToCache = [
- 'maskable.html',
+ 'multi-sw.html',
  'style.css',
  'marmot_48.png',
  'marmot_96.png'
