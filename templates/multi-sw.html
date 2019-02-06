@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="icon" href="marmot_48.png">
+  {% if manifest_json %}<link rel="manifest" href="manifest.json">{% endif %}
+  {% if viewport %}<meta name="viewport" content="{{ viewport }}">{% endif %}
+  {% if referrer %}<meta name="referrer" content="origin">{% endif %}
+  <title>Killer Marmot: Maskable icon guide</title>
+  <script>
+    const delayedRegister = (serviceWorkerParams) => {
+        setTimeout(async () => {
+         if ('serviceWorker' in navigator) {
+             navigator.serviceWorker.register(serviceWorkerParams.name, serviceWorkerParams.options);
+         }
+        }, serviceWorkerParams.delay);
+    };
+
+    const tryUnregisterAllServiceWorkers = async () => {
+        if (!('serviceWorker' in navigator)) {
+          return;
+        }
+
+        const registrations = await navigator.serviceWorker.getRegistrations();
+
+        for (const registration of registrations) {
+            console.log(`Unregistering ${registration.active.scriptURL}...`);
+            const result = await registration.unregister();
+            console.log(`Unregister ${result ? "succeeded" : "failed"}`);
+        }
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const appSWDelay = window
+    delayedRegister({
+        name: 'sw-maskable.js',
+        options: { scope: 'maskable.html' },
+        delay: 500
+    });
+
+    delayedRegister({
+        name: 'sw.js',
+        delay: 1000
+    });
+  </script>
+</head>
+<body>
+  <div class="quote">
+    <h1>Killer Marmot: Multiple Service Workers</h1>
+    <div class="spacer"></div>
+    <p>Service workers everywhere!.</p>
+    <img src="marmot_96.png">
+  </div>
+  <p>This page registers multiple service workers for different scopes. One is app wide and one is just for this page.</p>
+  <p>The app should be installable when the app wide service worker has been installed (and not before).</p>
+  <p>
+      Note: If you are using this as a test page, you'll probably want to clear storage between page loads, as the install button in Chrome doesn't disappear when service workers are unregistered.
+  </p>
+  <p>
+      <p>
+        <input name="app-sw-delay" id="app-sw-delay" size="2"/>
+      </p>
+      <p>
+        <input name="page-sw-delay" id="page-sw-delay" size="2"/>
+      </p> 
+      <p>
+        <button onclick="tryUnregisterAllServiceWorkers()">Unregister Workers</button>
+    </p>
+  </p>
+  <p>
+    <a href="/">Home</a>
+    ·
+    <a href=".">Up</a>
+    ·
+    <a href="https://github.com/benfredwells/killer-marmot">Fork me on
+      GitHub</a>
+    ·
+    Copyright 2018 Google Inc.
+  </p>
+</body>
+</html>
