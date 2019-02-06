@@ -8,6 +8,7 @@ let urlsToCache = [
  'maskable.html',
  'style.css',
  'marmot_48.png',
+ 'marmot_96.png'
 ];
 
 self.addEventListener('install', event => {
