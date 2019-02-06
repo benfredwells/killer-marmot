@@ -7,11 +7,7 @@ let CACHE_NAME = 'killer-marmot-maskable-v1';
 let urlsToCache = [
  'maskable.html',
  'style.css',
- 'marmot_96.png',
- 'maskable.png',
- 'maskable-measurements.svg',
  'marmot_48.png',
- 'marmot.png'
 ];
 
 self.addEventListener('install', event => {
