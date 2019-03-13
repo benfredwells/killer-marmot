@@ -62,15 +62,31 @@ def build_manifest(appname, set_icons=True):
     # Insert the items in the order they are documented in the Manifest spec.
     manifest = collections.OrderedDict()
     if 'web_stuff' in data and data['web_stuff']:
-      manifest['name'] = app_data.DEFAULT_NAME
+      manifest['name'] = app_data.DEFAULT_NAME + ': Files'
       manifest['description'] = app_data.DEFAULT_DESCRIPTION
       manifest['short_name'] = app_data.DEFAULT_SHORT_NAME
       if set_icons:
         manifest['icons'] = app_data.DEFAULT_ICONS
       manifest['display'] = app_data.DEFAULT_DISPLAY
       manifest['start_url'] = app_data.DEFAULT_START_URL
+      manifest['file_handler'] = [
+        { 
+          'name': 'raw',
+          'accept': [
+            '.csv',
+            'text/csv'
+          ]
+        },
+        {
+          'name': 'graph',
+          'accept': [
+            '.svg',
+            'image/svg+xml'
+          ]
+        }
+      ]
     FIELDS = ('icons', 'display', 'related_applications',
-              'prefer_related_applications')
+              'prefer_related_applications', 'file_handler')
     for field in FIELDS:
       if field in data:
         if data[field] is not None:

@@ -20,3 +20,30 @@ self.addEventListener('install', function(event) {
 // Required to be installable.
 self.addEventListener('fetch', function(event) {
 });
+
+self.addEventListener('launch', event => {
+  event.preventDefault();
+  console.log('Prevent default: ', event.preventDefault);
+  console.log("ermhagerd we fired the event!!!!!!!!");
+  console.log(event);
+  console.log(event.files);
+  event.waitUntil(new Promise(async (accept) => {
+    const file = await event.files[0].getFile();
+    console.log(file);
+
+    const reader = await new FileReader();
+    reader.onload = async readEvent => {
+      console.log('File Contents: ', readEvent.target.result);
+
+      const writer = await event.files[0].createWriter();
+      console.log(writer);
+      await writer.write(file.size, new Blob(['FooBarHelloWorld\n']));
+    }
+    reader.readAsText(file);
+    
+    setTimeout(() => {
+      console.log("done! doine");
+      accept();
+    }, 1000);
+  }))
+});
