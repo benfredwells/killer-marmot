@@ -146,6 +146,7 @@ window.addEventListener('load', e => {
   document.querySelector('#bip_timer').value = QUERY_PARAMS.timer;
 
   setupBadgeSection();
+  setupNavigationSection();
 });
 
 const setupBadgeSection = () => {
@@ -180,3 +181,24 @@ const setupBadgeSection = () => {
   const clearBadgeButton = document.querySelector('#clear_badge');
   clearBadgeButton.addEventListener('click', badgeAPI.clear);
 };
+
+const setupNavigationSection = () => {
+  const storageKey = 'last-navigate-url';
+
+  const navigateButton = document.querySelector('#navigate_button');
+  const navigateInput = document.querySelector('#navigate_url');
+  const lastSeenValue = localStorage.getItem(storageKey);
+  navigateInput.setAttribute('value', lastSeenValue || 'example.com');
+
+  const doNavigation = () => {
+    let url = navigateInput.value;
+    localStorage.setItem(storageKey, url);
+
+    if (!url.startsWith('http')) url = 'http://' + url;
+
+    window.location = url;
+  };
+
+  navigateButton.addEventListener('click', doNavigation);
+  navigateInput.addEventListener('keypress', event => event.keyCode === 13 && doNavigation());
+}
