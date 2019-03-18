@@ -202,3 +202,17 @@ const setupNavigationSection = () => {
   navigateButton.addEventListener('click', doNavigation);
   navigateInput.addEventListener('keypress', event => event.keyCode === 13 && doNavigation());
 }
+
+window.navigator.serviceWorker.addEventListener("message", event => {
+  if (!event.data.files || !event.data.files.length)
+    return;
+  console.log("Launched by SW!!");
+  const file = event.data.files[0];
+
+  const reader = new FileReader();
+  reader.onload = f => {
+    console.log(`Read File ${file.name}`);
+    console.log('Contents:\n', f.target.result);
+  };
+  reader.readAsText(file);
+});

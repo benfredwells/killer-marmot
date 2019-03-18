@@ -21,6 +21,8 @@ self.addEventListener('install', function(event) {
 self.addEventListener('fetch', function(event) {
 });
 
+const delay = (time) => new Promise(accept => setTimeout(accept, time));
+
 self.addEventListener('launch', event => {
   event.preventDefault();
   console.log('Prevent default: ', event.preventDefault);
@@ -28,21 +30,21 @@ self.addEventListener('launch', event => {
   console.log(event);
   console.log(event.files);
   event.waitUntil(new Promise(async (accept) => {
+    // Let the client window open...
+    // TODO: Make the launch event properly trusted so we can open windows ourselves.
+    await delay(1000);
+    const allClients = await clients.matchAll({ includeUncontrolled: true });
+
+    const client = allClients[0] || clients.openWindow('/');
+
+    // We can't pass writable file handles, so pass the readable handle.
     const file = await event.files[0].getFile();
-    console.log(file);
+    console.log("Passing", file, "to client!");
 
-    const reader = await new FileReader();
-    reader.onload = async readEvent => {
-      console.log('File Contents: ', readEvent.target.result);
-
-      const writer = await event.files[0].createWriter();
-      console.log(writer);
-      await writer.write(file.size, new Blob(['FooBarHelloWorld\n']));
-    }
-    reader.readAsText(file);
+    client.postMessage({ files: [file], message: "Launch me!" });
     
     setTimeout(() => {
-      console.log("done! doine");
+      console.log("done!");
       accept();
     }, 1000);
   }))
