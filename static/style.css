@@ -70,8 +70,16 @@ div.log-section h2 {
   font-size: 0.8em;
 }
 
+div.log-section h3 {
+  font-size: 0.8em;
+}
+
 @media all and (display-mode: browser) {
   .hide-in-browser {
     display: none;
   }
+}
+
+.hide {
+  display: none;
 }

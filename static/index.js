@@ -203,16 +203,34 @@ const setupNavigationSection = () => {
   navigateInput.addEventListener('keypress', event => event.keyCode === 13 && doNavigation());
 }
 
+const addLaunchedFile = (file) => {
+  const section = document.getElementById('file_handling_section');
+  // Ensure the container is visible.
+  section.classList.remove("hide");
+
+  const container = document.getElementById('launched_files_container');
+  const template = document.getElementById('launched_file_template');
+  const element = template.content.cloneNode(true);
+
+  const elementNameContainer = element.querySelector("[name='file_name']");
+  elementNameContainer.innerText = file.name;
+
+  const elementContentContainer = element.querySelector("[name='file_contents']");
+  elementContentContainer.innerText = "Loading...";
+  
+  container.appendChild(element);
+  
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    // When we've loaded the file, set the content to the file.
+    elementContentContainer.innerText = event.target.result;
+  }
+  reader.readAsText(file);
+}
+
 window.navigator.serviceWorker.addEventListener("message", event => {
-  if (!event.data.files || !event.data.files.length)
+  if (!event.data.files)
     return;
   console.log("Launched by SW!!");
-  const file = event.data.files[0];
-
-  const reader = new FileReader();
-  reader.onload = f => {
-    console.log(`Read File ${file.name}`);
-    console.log('Contents:\n', f.target.result);
-  };
-  reader.readAsText(file);
+  event.data.files.forEach(addLaunchedFile);
 });
