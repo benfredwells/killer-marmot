@@ -194,7 +194,7 @@ const setupNavigationSection = () => {
     let url = navigateInput.value;
     localStorage.setItem(storageKey, url);
 
-    if (!url.startsWith('http')) url = 'http://' + url;
+    if (url.indexOf('://') === -1) url = 'http://' + url;
 
     window.location = url;
   };
