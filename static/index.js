@@ -147,6 +147,13 @@ window.addEventListener('load', e => {
 
   setupBadgeSection();
   setupNavigationSection();
+
+  console.log(window.getLaunchParams);
+  window.getLaunchParams && window.getLaunchParams().then(launchParams => {
+    if (launchParams.cause !== 'file_handler') return;
+
+    launchParams.files.forEach(addLaunchedFile);
+  });
 });
 
 const setupBadgeSection = () => {
@@ -203,7 +210,10 @@ const setupNavigationSection = () => {
   navigateInput.addEventListener('keypress', event => event.keyCode === 13 && doNavigation());
 }
 
-const addLaunchedFile = (file) => {
+const addLaunchedFile = async (file) => {
+  let readHandle = file.createWriter ? await file.getFile() : file;
+  let writeHandle = file.createWriter ? file : undefined;
+
   const section = document.getElementById('file_handling_section');
   // Ensure the container is visible.
   section.classList.remove("hide");
@@ -213,19 +223,29 @@ const addLaunchedFile = (file) => {
   const element = template.content.cloneNode(true);
 
   const elementNameContainer = element.querySelector("[name='file_name']");
-  elementNameContainer.innerText = file.name;
+  elementNameContainer.innerText = readHandle.name;
 
   const elementContentContainer = element.querySelector("[name='file_contents']");
   elementContentContainer.innerText = "Loading...";
+
+  const saveButton = element.querySelector("[name='save_button']");
+  if (!writeHandle) saveButton.classList.add('hide');
+
+  saveButton.addEventListener('click', async () => {
+    let writer = await writeHandle.createWriter();
+    console.log(elementContentContainer.value);
+    await writer.write(0, new Blob([elementContentContainer.value]));
+    await writer.truncate(elementContentContainer.value.length);
+  });
   
   container.appendChild(element);
   
   const reader = new FileReader();
   reader.onload = (event) => {
     // When we've loaded the file, set the content to the file.
-    elementContentContainer.innerText = event.target.result;
+    elementContentContainer.value = event.target.result;
   }
-  reader.readAsText(file);
+  reader.readAsText(readHandle);
 }
 
 window.navigator.serviceWorker.addEventListener("message", event => {

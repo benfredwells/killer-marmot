@@ -34,13 +34,13 @@ mimetypes.add_type('application/json', '.json')
 def get_app_page_template_params(appname):
     """Get the template parameters for the app page."""
     try:
-      params = app_data.APPS[appname].copy()
+        params = app_data.APPS[appname].copy()
     except KeyError:
-      webapp2.abort(404, explanation='No such app: %s' % appname)
+        webapp2.abort(404, explanation='No such app: %s' % appname)
 
     if 'web_stuff' in params and params['web_stuff']:
-      if 'viewport' not in params:
-        params['viewport'] = app_data.DEFAULT_VIEWPORT
+        if 'viewport' not in params:
+            params['viewport'] = app_data.DEFAULT_VIEWPORT
 
     return params
 
@@ -48,51 +48,54 @@ def get_app_page_template_params(appname):
 def get_app_list():
     """Gets a list of apps and their explanations."""
     for name, data in sorted(app_data.APPS.iteritems()):
-      yield {'name': name, 'explanation': data.get('short_explanation', name)}
+        yield {'name': name, 'explanation': data.get('short_explanation', name)}
 
 
 def build_manifest(appname, set_icons=True):
     """Creates a manifest for the app."""
     try:
-      data = app_data.APPS[appname]
+        data = app_data.APPS[appname]
     except KeyError:
-      webapp2.abort(404, explanation='No such app: %s' % appname)
+        webapp2.abort(404, explanation='No such app: %s' % appname)
 
     # Create the manifest dictionary, tailoring it based on |data|.
     # Insert the items in the order they are documented in the Manifest spec.
     manifest = collections.OrderedDict()
     if 'web_stuff' in data and data['web_stuff']:
-      manifest['name'] = app_data.DEFAULT_NAME + ': Files'
-      manifest['description'] = app_data.DEFAULT_DESCRIPTION
-      manifest['short_name'] = app_data.DEFAULT_SHORT_NAME
-      if set_icons:
-        manifest['icons'] = app_data.DEFAULT_ICONS
-      manifest['display'] = app_data.DEFAULT_DISPLAY
-      manifest['start_url'] = app_data.DEFAULT_START_URL
-      manifest['file_handler'] = [
-        { 
-          'name': 'raw',
-          'accept': [
-            '.csv',
-            'text/csv'
-          ]
-        },
-        {
-          'name': 'graph',
-          'accept': [
-            '.svg',
-            'image/svg+xml'
-          ]
+        manifest['name'] = app_data.DEFAULT_NAME + ': Files'
+        manifest['description'] = app_data.DEFAULT_DESCRIPTION
+        manifest['short_name'] = app_data.DEFAULT_SHORT_NAME
+        if set_icons:
+            manifest['icons'] = app_data.DEFAULT_ICONS
+        manifest['display'] = app_data.DEFAULT_DISPLAY
+        manifest['start_url'] = app_data.DEFAULT_START_URL
+        manifest['file_handler'] = {
+            'action': '.',
+            'files': [
+                {
+                    'name': 'raw',
+                    'accept': [
+                        '.csv',
+                        'text/csv'
+                    ]
+                },
+                {
+                    'name': 'graph',
+                    'accept': [
+                        '.svg',
+                        'image/svg+xml'
+                    ]
+                }
+            ]
         }
-      ]
     FIELDS = ('icons', 'display', 'related_applications',
               'prefer_related_applications', 'file_handler')
     for field in FIELDS:
-      if field in data:
-        if data[field] is not None:
-          manifest[field] = data[field]
-        elif field in manifest:
-          del manifest[field]
+        if field in data:
+            if data[field] is not None:
+                manifest[field] = data[field]
+            elif field in manifest:
+                del manifest[field]
 
     return json.dumps(manifest, indent=2, separators=(',', ': ')) + '\n'
 
@@ -102,6 +105,7 @@ class IndexPage(webapp2.RequestHandler):
     Serves URLs of the form "/$APPNAME/$FILENAME". The file is served from the
     templates directory, modified specially for each individual app.
     """
+
     def get(self):
         self.response.content_type = 'text/html'
         self.response.content_type_params = {'charset': 'utf-8'}
@@ -118,6 +122,7 @@ class IndexRedirect(webapp2.RequestHandler):
     Redirect by adding a '/' to the end of the URL (so that relative links are
     correct).
     """
+
     def get(self):
         self.response.status = 301
         self.response.location = self.request.uri + '/'
@@ -128,6 +133,7 @@ class TemplatedPage(webapp2.RequestHandler):
     Serves URLs of the form "/$APPNAME/$FILENAME". The file is served from the
     templates directory, modified specially for each individual app.
     """
+
     def get(self, appname, filename):
         if not filename:
             filename = 'app.html'
@@ -157,6 +163,7 @@ class CustomApp(webapp2.RequestHandler):
     URL-safe-base-64-encoded. This allows the user to construct and
     bookmark any manifest they like.
     """
+
     def get(self, b64manifest, filename):
         if not filename:
             filename = 'app.html'
@@ -182,7 +189,8 @@ class CustomApp(webapp2.RequestHandler):
 
                 template_params = {}
                 if filename == 'app.html':
-                  template_params = custom.get_template_params(manifest_string)
+                    template_params = custom.get_template_params(
+                        manifest_string)
 
                 response_body = template.render(template_params)
         self.response.write(response_body)
@@ -194,6 +202,7 @@ class CreateCustom(webapp2.RequestHandler):
     Accepts POST requests containing a manifest document. A GET request
     redirects to the default custom app.
     """
+
     def get(self):
         # Just get the default manifest ("web").
         manifest_string = build_manifest('web', set_icons=False)

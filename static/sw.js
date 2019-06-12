@@ -19,6 +19,7 @@ self.addEventListener('install', function(event) {
 
 // Required to be installable.
 self.addEventListener('fetch', function(event) {
+  console.log('There was a fetch!!');
 });
 
 const delay = (time) => new Promise(accept => setTimeout(accept, time));
@@ -38,7 +39,12 @@ self.addEventListener('launch', event => {
     const client = allClients[0] || clients.openWindow('/');
 
     // We can't pass writable file handles, so pass the readable handle.
-    const file = await event.files[0].getFile();
+    const handle = event.files[0];
+    let file = await handle.getFile();
+    const writer = await handle.createWriter();
+    await writer.write(file.size, new Blob(["Hello World Foo Bar\n"]))
+
+    file = await handle.getFile();
     console.log("Passing", file, "to client!");
 
     client.postMessage({ files: [file], message: "Launch me!" });
