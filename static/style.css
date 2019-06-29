@@ -71,7 +71,7 @@ div.log-section h2 {
 }
 
 @media all and (display-mode: browser) {
-  #badge_section {
+  .hide-in-browser {
     display: none;
   }
 }
