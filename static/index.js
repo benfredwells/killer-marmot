@@ -148,12 +148,7 @@ window.addEventListener('load', e => {
   setupBadgeSection();
   setupNavigationSection();
 
-  console.log(window.getLaunchParams);
-  window.getLaunchParams && window.getLaunchParams().then(launchParams => {
-    if (launchParams.cause !== 'file_handler') return;
-
-    launchParams.files.forEach(addLaunchedFile);
-  });
+  window.launchParams && window.launchParams.files.forEach(addLaunchedFile);
 });
 
 const setupBadgeSection = () => {
