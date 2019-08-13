@@ -1,7 +1,10 @@
 
 window.addEventListener('load', () => {
-  if (!window.launchParams)
+  if (!window.launchParams
+    || !window.launchParams.files
+    || !window.launchParams.files.length) {
     return;
+  }
 
   // Ensure the section is visible.
   const fileHandlingSection = document.getElementById('file_handling_section');
