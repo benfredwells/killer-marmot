@@ -247,10 +247,3 @@ const addLaunchedFile = async (file) => {
     console.log(err);
   }
 }
-
-window.navigator.serviceWorker.addEventListener("message", event => {
-  if (!event.data.files)
-    return;
-  console.log("Launched by SW!!");
-  event.data.files.forEach(addLaunchedFile);
-});
