@@ -232,15 +232,20 @@ const addLaunchedFile = async (file) => {
     await writer.write(0, new Blob([elementContentContainer.value]));
     await writer.truncate(elementContentContainer.value.length);
   });
-  
+
   container.appendChild(element);
-  
+
+  try {
   const reader = new FileReader();
   reader.onload = (event) => {
     // When we've loaded the file, set the content to the file.
     elementContentContainer.value = event.target.result;
   }
-  reader.readAsText(readHandle);
+
+    reader.readAsText(readHandle);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 window.navigator.serviceWorker.addEventListener("message", event => {
