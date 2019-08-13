@@ -30,6 +30,18 @@ DEFAULT_DESCRIPTION = ('A Progressive Web App for testing Progressive Web App '
                        'support across various browsers.')
 DEFAULT_START_URL = '.'
 DEFAULT_DISPLAY = 'standalone'
+DEFAULT_FILE_HANDLER = {
+    'action': '.',
+    'files': [
+        {
+            'name': 'Marmot',
+            'accept': [
+                '.marmot',
+                'application/vnd.marmot'
+            ]
+        }
+    ]
+}
 RELATED_APP_PLAY = collections.OrderedDict([
     ('platform', 'play'),
     ('id', 'com.google.samples.apps.iosched'),
