@@ -150,18 +150,13 @@ window.addEventListener('load', e => {
 });
 
 const setupBadgeSection = () => {
-  const badgeSection = document.querySelector('#badge_section');
+  const logs = new LogSection(document.querySelector('#badge_section'));
   const badgeAPI = window.Badge || window.ExperimentalBadge;
 
-  if (!badgeSection) {
-    return;
-  }
   // Check that the API is available.
   if (!badgeAPI) {
-    console.log("Badge API not detected :'(");
-
-    // If the Badging API is not available, hide the section.
-    badgeSection.remove();
+    logs.logMessage("Badge and ExperimentalBadge are undefined.");
+    document.querySelector('#badge_section_contents').remove();
     return;
   }
 
