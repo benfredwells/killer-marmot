@@ -149,12 +149,11 @@ window.addEventListener('load', e => {
   setupNavigationSection();
 });
 
-function setBadge() {
-  console.log(arguments);
+function setBadge(...args) {
   if (navigator.setExperimentalAppBadge)
-    navigator.setExperimentalAppBadge.apply(navigator, arguments);
+    navigator.setExperimentalAppBadge.apply(navigator, args);
   else if (window.ExperimentalBadge)
-    ExperimentalBadge.set.apply(null, arguments);
+    ExperimentalBadge.set.apply(null, args);
 }
 
 function clearBadge() {
