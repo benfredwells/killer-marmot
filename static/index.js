@@ -149,13 +149,30 @@ window.addEventListener('load', e => {
   setupNavigationSection();
 });
 
+function setBadge() {
+  console.log(arguments);
+  if (navigator.setExperimentalAppBadge)
+    navigator.setExperimentalAppBadge.apply(navigator, arguments);
+  else if (window.ExperimentalBadge)
+    ExperimentalBadge.set.apply(null, arguments);
+}
+
+function clearBadge() {
+  if (navigator.clearExperimentalAppBadge)
+    navigator.clearExperimentalAppBadge();
+  else if (window.ExperimentalBadge)
+    ExperimentalBadge.clear();
+}
+
+function badgeAPIAvailable() {
+  return !!(navigator.setExperimentalAppBadge || window.ExperimentalBadge);
+}
+
 const setupBadgeSection = () => {
   const logs = new LogSection(document.querySelector('#badge_section'));
-  const badgeAPI = window.Badge || window.ExperimentalBadge;
-
-  // Check that the API is available.
-  if (!badgeAPI) {
-    logs.logMessage("Badge and ExperimentalBadge are undefined.");
+  if (!badgeAPIAvailable) {
+    logs.logMessage("navigator.setExperimentalAppBadge and ExperimentalBadge "
+                    + "(deprecated) are undefined.");
     document.querySelector('#badge_section_contents').remove();
     return;
   }
@@ -165,16 +182,16 @@ const setupBadgeSection = () => {
     const badgeContent = document.querySelector('#badge_content').value;
     // If the badge content is empty set a flag.
     if (badgeContent === '') {
-      badgeAPI.set();
+      setBadge();
     }
     // Otherwise, set the badge to our badge content.
     else {
-      badgeAPI.set(badgeContent);
+      setBadge(badgeContent);
     }
   });
 
   const clearBadgeButton = document.querySelector('#clear_badge');
-  clearBadgeButton.addEventListener('click', badgeAPI.clear);
+  clearBadgeButton.addEventListener('click', clearBadge);
 };
 
 const setupNavigationSection = () => {
