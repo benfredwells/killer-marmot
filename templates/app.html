@@ -2,6 +2,7 @@
 <html>
 <head>
   {% if index_js %}<script src="{{ index_js }}"></script>
+  <script src="file_handling.js"></script>
   <script src="logging.js"></script>{% endif %}
   <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="icon" href="marmot_48.png">
@@ -81,7 +82,12 @@
     <h2>Navigation Tests.</h2>
     <p><input name="navigate" id="navigate_url" size="20" type="text"/> <button id="navigate_button">Navigate</button></p>
     <p>This should be used to test how PWAs work when navigating to other sites.</p>
-  </div>{% endif %}
+  </div>
+  <div class="log-section hide" id="file_handling_section">
+      <h2>File Handling.</h2>
+      <div id="launched_files_container"></div>
+      <p>This provides a list of the contents of launched files.</p>
+    </div>{% endif %}
   <p><a href="maskable.html">Explanation of maskable icons</a></p>
   <p><a href="multi-sw.html">Test page with multiple service workers</a></p>
   <p>
@@ -93,4 +99,14 @@
     Copyright 2017 Google Inc.
   </p>
 </body>
+<template id="launched_file_template">
+  <div>
+    <h3>File: <span name="file_name"></span></h3>
+    <textarea name="file_contents" cols=80 rows=10 style='white-space: pre-wrap'>
+    </textarea>
+    <br/>
+    <button name="save_button">Save</button>
+    <br>
+  </div>
+</template>
 </html>
