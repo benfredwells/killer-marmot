@@ -151,9 +151,9 @@ window.addEventListener('load', e => {
 
 function setBadge(...args) {
   if (navigator.setExperimentalAppBadge)
-    navigator.setExperimentalAppBadge.apply(navigator, args);
+    navigator.setExperimentalAppBadge(...args);
   else if (window.ExperimentalBadge)
-    ExperimentalBadge.set.apply(null, args);
+    ExperimentalBadge.set(...args);
 }
 
 function clearBadge() {
