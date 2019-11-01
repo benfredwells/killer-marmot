@@ -163,9 +163,8 @@ function clearBadge() {
     ExperimentalBadge.clear();
 }
 
-function badgeAPIAvailable() {
-  return !!(navigator.setExperimentalAppBadge || window.ExperimentalBadge);
-}
+const badgeAPIAvailable =
+    !!(navigator.setExperimentalAppBadge || window.ExperimentalBadge);
 
 const setupBadgeSection = () => {
   const logs = new LogSection(document.querySelector('#badge_section'));
