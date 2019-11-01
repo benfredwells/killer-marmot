@@ -1,6 +1,10 @@
 <!doctype html>
 <html>
 <head>
+  <!-- Origin Trial Token, feature = Badging, origin = https://killer-marmot.appspot.com, expires = 2019-12-04 -->
+  <meta http-equiv="origin-trial" content="ArdlIIOjDvqzGuoUlmOnD61Ep8bE9HFOQ8D9j/wIlQidGmDGmJADnEHeXT0Bo+wLNnOWeFsGO336HonSvn3ZcAQAAABaeyJvcmlnaW4iOiJodHRwczovL2tpbGxlci1tYXJtb3QuYXBwc3BvdC5jb206NDQzIiwiZmVhdHVyZSI6IkJhZGdpbmciLCJleHBpcnkiOjE1NzU0MTc1OTl9">
+  <!-- Origin Trial Token, feature = Badging V2, origin = https://killer-marmot.appspot.com, expires = 2019-12-13 -->
+  <meta http-equiv="origin-trial" content="Auksq5kSoX8H/kF9Z4k/vD340L6qHPFrb9BMLVqQ4ru2cqZ4VDNE6Nn5vFwhZkG1fzEDDOaFxq6Q8QO89cBm7AQAAABceyJvcmlnaW4iOiJodHRwczovL2tpbGxlci1tYXJtb3QuYXBwc3BvdC5jb206NDQzIiwiZmVhdHVyZSI6IkJhZGdpbmdWMiIsImV4cGlyeSI6MTU3NjE5MjU1M30=">
   {% if index_js %}<script src="{{ index_js }}"></script>
   <script src="file_handling.js"></script>
   <script src="logging.js"></script>{% endif %}
@@ -10,8 +14,6 @@
   {% if viewport %}<meta name="viewport" content="{{ viewport }}">{% endif %}
   {% if referrer %}<meta name="referrer" content="origin">{% endif %}
   <title>Killer Marmot: {{ short_explanation }}</title>
-  <!-- Origin Trial Token, feature = Badging V2, origin = https://killer-marmot.appspot.com, expires = 2019-10-31 -->
-  <meta http-equiv="origin-trial" content="As3qw04y4DJnNYawPKeXHM9T/Is5KjW3X+VhsN2yRf4V9CApX2NIhvxVHyi0Pwk59Yc0A8Bxlos67eNO1H+dbwwAAABceyJvcmlnaW4iOiJodHRwczovL2tpbGxlci1tYXJtb3QuYXBwc3BvdC5jb206NDQzIiwiZmVhdHVyZSI6IkJhZGdpbmdWMiIsImV4cGlyeSI6MTU3MjQ4Njc1N30=">
 </head>
 <body>
   <div class="quote">
@@ -70,16 +72,17 @@
       <p>Timer: <input name="timer" id="bip_timer" size="1" /> seconds</p>
       <p><input type="submit" value="Try it" /></p>
     </form>
-  </div>{% endif %}
-  {% if index_js %}<div class="log-section hide-in-browser" id="badge_section">
-    <h2>Badging: Set/Clear the PWA's badge.</h2>
-    <p><input name="badge" id="badge_content" size="1"/> <button id="set_badge">Set Badge</button></p>
-    <p><button id="clear_badge">Clear Badge</button></p>
-    <a href="https://github.com/WICG/badging/blob/master/explainer.md">Explanation of Badging</a>
-    <p>Note: this will only work if the PWA is installed and running in a window.</p>
+  </div>
+  <div class="log-section" id="badge_section">
+    <h2>Badging</h2>
+    <div id="badge_section_contents">
+      <p><input name="badge" id="badge_content" size="1"/> <button id="set_badge">Set Badge</button></p>
+      <p><button id="clear_badge">Clear Badge</button></p>
+      <a href="https://github.com/WICG/badging/blob/master/explainer.md">Explanation of Badging</a>
+    </div>
   </div>
   <div class="log-section hide-in-browser" id="navigation_section">
-    <h2>Navigation Tests.</h2>
+    <h2>Navigation tests</h2>
     <p><input name="navigate" id="navigate_url" size="20" type="text"/> <button id="navigate_button">Navigate</button></p>
     <p>This should be used to test how PWAs work when navigating to other sites.</p>
   </div>

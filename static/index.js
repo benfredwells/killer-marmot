@@ -149,19 +149,29 @@ window.addEventListener('load', e => {
   setupNavigationSection();
 });
 
+function setBadge(...args) {
+  if (navigator.setExperimentalAppBadge)
+    navigator.setExperimentalAppBadge(...args);
+  else if (window.ExperimentalBadge)
+    ExperimentalBadge.set(...args);
+}
+
+function clearBadge() {
+  if (navigator.clearExperimentalAppBadge)
+    navigator.clearExperimentalAppBadge();
+  else if (window.ExperimentalBadge)
+    ExperimentalBadge.clear();
+}
+
+const badgeAPIAvailable =
+    !!(navigator.setExperimentalAppBadge || window.ExperimentalBadge);
+
 const setupBadgeSection = () => {
-  const badgeSection = document.querySelector('#badge_section');
-  const badgeAPI = window.Badge || window.ExperimentalBadge;
-
-  if (!badgeSection) {
-    return;
-  }
-  // Check that the API is available.
-  if (!badgeAPI) {
-    console.log("Badge API not detected :'(");
-
-    // If the Badging API is not available, hide the section.
-    badgeSection.remove();
+  const logs = new LogSection(document.querySelector('#badge_section'));
+  if (!badgeAPIAvailable) {
+    logs.logMessage("navigator.setExperimentalAppBadge and ExperimentalBadge "
+                    + "(deprecated) are undefined.");
+    document.querySelector('#badge_section_contents').remove();
     return;
   }
 
@@ -170,16 +180,16 @@ const setupBadgeSection = () => {
     const badgeContent = document.querySelector('#badge_content').value;
     // If the badge content is empty set a flag.
     if (badgeContent === '') {
-      badgeAPI.set();
+      setBadge();
     }
     // Otherwise, set the badge to our badge content.
     else {
-      badgeAPI.set(badgeContent);
+      setBadge(badgeContent);
     }
   });
 
   const clearBadgeButton = document.querySelector('#clear_badge');
-  clearBadgeButton.addEventListener('click', badgeAPI.clear);
+  clearBadgeButton.addEventListener('click', clearBadge);
 };
 
 const setupNavigationSection = () => {

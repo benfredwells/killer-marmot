@@ -14,7 +14,14 @@
 
 class LogSection {
   // Creates a new <div> for logs relating to a particular function.
+  // If logsDiv is an existing log-section class, just creates a LogSection
+  // object for that existing <div>, rather than creating a new <div>.
   constructor(logsDiv, title) {
+    if (logsDiv.classList.contains('log-section')) {
+      this.div = logsDiv;
+      return;
+    }
+
     this.div = document.createElement('div');
     logsDiv.appendChild(this.div);
     this.div.className = 'log-section';
