@@ -150,27 +150,33 @@ window.addEventListener('load', e => {
 });
 
 function setBadge(...args) {
-  if (navigator.setExperimentalAppBadge)
+  if (navigator.setAppBadge)
+    navigator.setAppBadge(...args);
+  else if (navigator.setExperimentalAppBadge)
     navigator.setExperimentalAppBadge(...args);
   else if (window.ExperimentalBadge)
     ExperimentalBadge.set(...args);
 }
 
 function clearBadge() {
-  if (navigator.clearExperimentalAppBadge)
+  if (navigator.clearAppBadge)
+    navigator.clearAppBadge();
+  else if (navigator.clearExperimentalAppBadge)
     navigator.clearExperimentalAppBadge();
   else if (window.ExperimentalBadge)
     ExperimentalBadge.clear();
 }
 
 const badgeAPIAvailable =
-    !!(navigator.setExperimentalAppBadge || window.ExperimentalBadge);
+    !!(navigator.setAppBadge
+      || navigator.setExperimentalAppBadge
+      || window.ExperimentalBadge);
 
 const setupBadgeSection = () => {
   const logs = new LogSection(document.querySelector('#badge_section'));
   if (!badgeAPIAvailable) {
-    logs.logMessage("navigator.setExperimentalAppBadge and ExperimentalBadge "
-                    + "(deprecated) are undefined.");
+    logs.logMessage("navigator.setAppBadge, navigator.setExperimentalAppBadge"
+                    + "and ExperimentalBadge (deprecated) are undefined.");
     document.querySelector('#badge_section_contents').remove();
     return;
   }
